@@ -172,7 +172,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/lookmix-vue/js/chunk-vendors.8f2fa452.js"
   },
   {
-    "revision": "f7b16427349bcd1298644611eea0ea0f",
+    "revision": "6ef8bad85401e2d14cc5dbf52ccef5ef",
     "url": "/lookmix-vue/manifest.json"
   },
   {

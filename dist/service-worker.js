@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/lookmix-vue/precache-manifest.f3149b5e611986f25b2066a62967a93a.js"
+  "/lookmix-vue/precache-manifest.5ed18e72b17810aeb506b78cc829a622.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "lookmix"});
