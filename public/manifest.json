@@ -4,8 +4,8 @@
   "theme_color": "#ffb6c1ad",
   "background_color": "#ffb6c1ad",
   "display": "standalone",
-  "scope": "http://localhost:8080",
-  "start_url": "http://localhost:8080/login",
+  "scope": "https://lookmix.github.io/lookmix-vue/#/",
+  "start_url": "https://lookmix.github.io/lookmix-vue/#/login",
   "icons": [
     {
       "src": "icons/icon-72x72.png",
