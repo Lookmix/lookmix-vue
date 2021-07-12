@@ -160,7 +160,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/lookmix-vue/icons/icon-original.svg"
   },
   {
-    "revision": "1e2770f0ef1198e51ffa5fa7d2a083b9",
+    "revision": "b2334197104fb205e9d9155264d90178",
     "url": "/lookmix-vue/index.html"
   },
   {
