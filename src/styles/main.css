@@ -1,3 +1,17 @@
+html {
+  font-family: Rubik, sans-serif !important;
+}
+.v-application {
+  font-family: Rubik, sans-serif !important;
+}
 .overflow-hidden {
   overflow: hidden;
+}
+.hide-select-drag-effect {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
 }
