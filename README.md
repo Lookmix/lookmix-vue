@@ -12,7 +12,15 @@ npm run serve
 
 ### Compiles and minifies for production
 ```
+git checkout gh-pages
+
 npm run build
+
+git add .
+
+git commit -m "Updating dist"
+
+git subtree push --prefix dist origin gh-pages
 ```
 
 ### Lints and fixes files
