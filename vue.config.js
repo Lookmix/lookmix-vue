@@ -4,5 +4,9 @@ module.exports = {
   : '/',
   transpileDependencies: [
     'vuetify'
-  ]
+  ],
+  pwa: {
+    themeColor: '#ffb6c1ad', //#FFFFFF
+    manifestPath: 'manifest.json'
+  }
 }
