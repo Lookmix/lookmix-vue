@@ -70,6 +70,7 @@
               text
               rounded
               small
+              @click="redirectToNewAccount()"
             >
               Criar uma conta
             </v-btn>
@@ -94,9 +95,15 @@
 
 <script>
 import { mask } from 'vue-the-mask'
+import * as utils from './../utils.js'
 
 export default {
   directives: { mask },
+  mounted () {
+    const darkTheme = this.$vuetify.theme.dark
+
+    utils.updateMetaTagTheme(darkTheme, '#ffb6c1ad')
+  },
   data () {
     return {
       phone: "",
@@ -120,6 +127,11 @@ export default {
         default: return 326
       }
     }
+  },
+  methods: {
+    redirectToNewAccount () {
+      this.$router.push('/new-user')
+    },
   }
 }
 </script>
