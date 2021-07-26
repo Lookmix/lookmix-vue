@@ -9,6 +9,7 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
+      name: 'Looks semanais',
       redirect: '/weekly-looks'
     }
   ].concat(publicPrivateroutes)
