@@ -1,12 +1,5 @@
 <template>
-  <div
-    style="margin-top: 0px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      height: 100%;
-      background: #ffb6c1ad;"
-  >
+  <div>
     <v-card    
       style="margin: auto; height: 530px;"
       elevation="3"
@@ -85,8 +78,6 @@
               Recuperar senha
             </v-btn>
           </div>
-
-
         </form>
       </v-card-text>
     </v-card>
@@ -113,10 +104,6 @@ export default {
         required: value => !!value || 'O número do celular deve ser preenchido',
         requiredPassword: value => !!value || 'A senha deve ser preenchida',
         phoneLength: value => value && value.length < 15 ? 'O número está incorreto' : true,
-        email: value => {
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          return pattern.test(value) || 'Invalid e-mail.'
-        },
       },
     }
   },
