@@ -5,8 +5,9 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 
+const HTTP_PROTOCOL = window.location.protocol
 const VUE_APP_HOST_API = process.env.NODE_ENV === 'production' ? 'api.lookmix.app/' : 'localhost'
-const VUE_APP_PORT_API = process.env.NODE_ENV === 'production' ? '' : ':5000'
+const VUE_APP_PORT_API = process.env.NODE_ENV === 'production' ? '' : ':5000/api'
 
 export default new Vuex.Store({
   state: {
@@ -18,12 +19,10 @@ export default new Vuex.Store({
   mutations: {
   },
   actions: {
-    verifyDuplicatedPhone () {
-      const protocol = window.location.protocol
+    verifyDuplicatedPhone ({ state }, data) {
+      const url = `${HTTP_PROTOCOL}//${VUE_APP_HOST_API}${VUE_APP_PORT_API}/usuarios/is_phone_unique`
 
-      const url = `${protocol}//${VUE_APP_HOST_API}${VUE_APP_PORT_API}/`
-
-      return axios.get(url)
+      return axios.get(`${url}/${data}`)
     }
   },
   modules: {
