@@ -19,9 +19,10 @@
         <form autocomplete="off">
           <v-text-field
             filled
+            :append-icon="isPhoneUnique ? 'mdi-emoticon-cool-outline' : isPhoneUnique === undefined ? 'mdi-emoticon-neutral-outline' : 'mdi-emoticon-sad-outline'"
             color="secondary"
             v-model="phone"
-            :rules="[rules.required, rules.phoneLength]"
+            :rules="[rules.required, rules.phoneLength, rules.unique]"
             required
             label="Número do celular *"
             type="tel"
@@ -82,9 +83,10 @@ export default {
         required: value => !!value || 'O número do celular deve ser preenchido',
         requiredPassword: value => !!value || 'A senha deve ser preenchida',
         phoneLength: value => value && value.length < 15 ? 'O número está incorreto' : true,
+        unique: true
       },
       ongoingRequest: null,
-      isDuplicatedPhone: false,
+      isPhoneUnique: undefined,
       validatingPhone: false
     }
   },
@@ -105,20 +107,28 @@ export default {
     },
     validatePhoneDuplication () {
       this.validatingPhone = true
+      this.isPhoneUnique = undefined
+      this.rules.unique = true
 
       clearTimeout(this.ongoingRequest);
 
       this.ongoingRequest = setTimeout(() => {
-        this.verifyDuplicatedPhone()
-        .then((response) => {
-          this.isDuplicatedPhone = response.data;
-        })
-        .catch((error)=> {
-          console.log(error)
-        })
-        .finally(() => {
-          this.validatingPhone = false
-        })
+        let phone = this.phone.replace(/\D/g, '')
+
+        this.verifyDuplicatedPhone(phone)
+          .then((response) => {
+            this.isPhoneUnique = response.data.is_unique
+
+            if (!this.isPhoneUnique) {
+              this.rules.unique = "Alguém já usa esse, você digitou correto?"
+            }
+          })
+          .catch((error)=> {
+            console.log(error)
+          })
+          .finally(() => {
+            this.validatingPhone = false
+          })
       }, 3000);
     }
   }
