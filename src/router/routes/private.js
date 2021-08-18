@@ -7,9 +7,8 @@ const routes = [
   //   path: '/accounts',
   //   name: 'accounts',
   //   component: Accounts
+  //   meta: { public: false }
   // }
 ]
 
-export default routes.map(route => {
-  return { ...route, meta: { public: false } }
-})
+export default routes
