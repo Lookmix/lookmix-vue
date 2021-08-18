@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import publicPrivateroutes from '@/router/routes/publicPrivateRoutes.js'
+import publicPrivateRoutes from '@/router/routes/publicPrivateRoutes.js'
 import store from '@/store/index.js'
 
 Vue.use(VueRouter)
@@ -12,7 +12,7 @@ const router = new VueRouter({
       name: 'Looks semanais',
       redirect: '/weekly-looks'
     }
-  ].concat(publicPrivateroutes)
+  ].concat(publicPrivateRoutes)
 })
 router.beforeEach((to, from, next) => {
   const authenticated = store.state.user.authenticated
