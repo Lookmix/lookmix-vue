@@ -68,15 +68,11 @@
               Criar uma conta
             </v-btn>
 
-            <v-btn
+            <div
               style="width: 150px; margin: 15px auto auto auto;"
-              text
-              small
-              rounded
-              :ripple="false"
             >
-              Recuperar senha
-            </v-btn>
+              <DialogConfirmPhone/>
+            </div>
           </div>
         </form>
       </v-card-text>
@@ -87,8 +83,12 @@
 <script>
 import { mask } from 'vue-the-mask'
 import * as utils from './../utils.js'
+import DialogConfirmPhone from './../components/auth/DialogConfirmPhone.vue'
 
 export default {
+  components: {
+    DialogConfirmPhone
+  },
   directives: { mask },
   mounted () {
     const darkTheme = this.$vuetify.theme.dark
