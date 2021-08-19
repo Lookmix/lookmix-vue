@@ -14,6 +14,8 @@ npm run serve
 ```
 git checkout gh-pages
 
+git rebase main
+
 npm run build
 
 git add .
