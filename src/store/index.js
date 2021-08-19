@@ -6,7 +6,7 @@ import axios from 'axios'
 Vue.use(Vuex)
 
 const HTTP_PROTOCOL = window.location.protocol
-const VUE_APP_HOST_API = process.env.NODE_ENV === 'production' ? 'api.lookmix.app/' : 'localhost'
+const VUE_APP_HOST_API = process.env.NODE_ENV === 'production' ? 'api.lookmix.app' : 'localhost'
 const VUE_APP_PORT_API = process.env.NODE_ENV === 'production' ? '' : ':5000/api'
 
 export default new Vuex.Store({
