@@ -1,11 +1,13 @@
 <template>
   <div>
     <v-dialog
+      persistent
       v-model="dialog"
       width="310"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
+          style="margin-left: -3px;"
           v-bind="attrs"
           v-on="on"
           text
@@ -19,14 +21,16 @@
 
       <v-card
         elevation="0"
+        v-if="dialog"
       >
         <v-card-title>
           {{ title }}
         </v-card-title>
 
         <v-stepper 
-          v-model="e1" 
-          elevation="0" 
+          v-if="dialog"
+          v-model="currentStep" 
+          elevation="0"
           flat 
           height="400"
         >
@@ -35,7 +39,7 @@
           >
             <v-stepper-step
               color="accent"
-              :complete="e1 > 1"
+              :complete="currentStep > 1"
               step="1"
             >
               Número telefonico
@@ -44,7 +48,7 @@
             <v-divider></v-divider>
 
             <v-stepper-step
-              :complete="e1 > 2"
+              :complete="currentStep > 2"
               step="2"
               color="accent"
             >
@@ -54,6 +58,7 @@
             <v-divider></v-divider>
 
             <v-stepper-step 
+              :complete="currentStep > 3"
               step="3"
               color="accent"
             >
@@ -71,18 +76,18 @@
 
                 <br>
 
-                <form 
-                  novalidate
-                  action=""
+                <v-form 
+                  v-model="formValid"
+                  @submit="$event.preventDefault()"
                   autocomplete="off" 
                   style="padding-bottom: 30px; max-height: 116px;"
                 >
                   <v-text-field
                     filled
+                    autocomple="off"
                     color="secondary"
                     v-model="phone"
                     :rules="[rules.required, rules.phoneLength, rules.exists]"
-                    required
                     label="Número do celular *"
                     type="tel"
                     placeholder="(00) 91234-5678"
@@ -92,7 +97,7 @@
                     @keyup="rules.exists = true"
                     :loading="validatingPhone"
                   />
-                </form>
+                </v-form>
               </div>
 
               <div style="display: flex;">
@@ -100,7 +105,7 @@
                   text
                   small
                   rounded
-                  @click="dialog = false"
+                  @click="closeDialog()"
                 >
                   Cancelar
                 </v-btn>
@@ -108,10 +113,11 @@
                 <v-spacer/>
 
                 <v-btn
-                  text
+                  outlined
                   rounded
                   color="secondary"
                   small
+                  :disabled="!formValid"
                   @click="validatePhoneDuplication()"
                 >
                   Próximo
@@ -128,7 +134,7 @@
                   text
                   small
                   rounded
-                  @click="el = 0"
+                  @click="currentStep = 1"
                 >
                   Voltar
                 </v-btn>
@@ -136,9 +142,10 @@
                 <v-spacer/>
 
                 <v-btn
-                  text
+                  outlined
                   rounded
                   color="secondary"
+                  @click="currentStep = 3"
                   small
                 >
                   Próximo
@@ -150,16 +157,23 @@
               <div>
               </div>
 
-              <v-btn
-                color="primary"
-                @click="e1 = 1"
-              >
-                Continue
-              </v-btn>
+              <div style="display: flex;">
+                <v-btn text small rounded @click="currentStep = 2">
+                  Voltar
+                </v-btn>
 
-              <v-btn text>
-                Cancel
-              </v-btn>
+                <v-spacer/>
+
+                <v-btn
+                  small
+                  color="secondary"
+                  @click="currentStep = 1"
+                  rounded
+                  outlined
+                >
+                  Concluir
+                </v-btn>
+              </div>
             </v-stepper-content>
           </v-stepper-items>
         </v-stepper>
@@ -176,7 +190,8 @@ export default {
   directives: { mask },
   data () {
     return {
-      e1: 1,
+      formValid: false,
+      currentStep: 1,
       title: "Recuperação de senha",
       dialog: false,
       rules: {
@@ -207,7 +222,7 @@ export default {
           if (notExists) {
             this.rules.exists = "Não encontramos esse número na base de dados"
           } else {
-            this.e1 = 2
+            this.currentStep = 2
           }
         })
         .catch((error)=> {
@@ -216,7 +231,11 @@ export default {
         .finally(() => {
           this.validatingPhone = false
         })
-    }
+    },
+    closeDialog () {
+      this.phone = ""
+      this.dialog = false
+    },
   }
 }
 </script>
