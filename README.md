@@ -22,8 +22,7 @@ git add .
 
 git commit -m "Updating dist"
 
-git subtree push --prefix dist origin gh-pages
-```
+git push origin `git subtree split --prefix dist gh-pages`:gh-pages --force```
 
 ### Lints and fixes files
 ```
