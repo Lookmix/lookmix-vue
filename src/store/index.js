@@ -7,7 +7,8 @@ Vue.use(Vuex)
 
 const HTTP_PROTOCOL = window.location.protocol
 const VUE_APP_HOST_API = process.env.NODE_ENV === 'production' ? 'api.lookmix.app' : 'localhost'
-const VUE_APP_PORT_API = process.env.NODE_ENV === 'production' ? '' : ':5000/api'
+const VUE_APP_PORT_API = process.env.NODE_ENV === 'production' ? '80' : '5000'
+const DOMAIN = `${HTTP_PROTOCOL}//${VUE_APP_HOST_API}:${VUE_APP_PORT_API}`
 
 export default new Vuex.Store({
   state: {
@@ -20,10 +21,26 @@ export default new Vuex.Store({
   },
   actions: {
     verifyDuplicatedPhone ({ state }, data) {
-      const url = `${HTTP_PROTOCOL}//${VUE_APP_HOST_API}${VUE_APP_PORT_API}/usuarios/is_phone_unique`
+      const url = `${DOMAIN}/users/is_phone_unique`
 
-      return axios.get(`${url}/${data}`)
-    }
+      return axios.get(`${url}`, {
+        params: {
+          phone: data
+        }
+      })
+    },
+    sendVerifyCode ({ state }, data) {
+      const url = `${DOMAIN}/auth/send_verify_code`
+
+      return axios.get(`${url}`, {
+        params: {
+          phone: data
+        }
+      })      
+    },
+    createAccount ({ state }, data) {
+
+    },
   },
   modules: {
   }
