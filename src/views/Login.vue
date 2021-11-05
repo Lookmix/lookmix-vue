@@ -71,7 +71,7 @@
             <div
               style="width: 150px; margin: 15px auto auto auto;"
             >
-              <DialogConfirmPhone/>
+              <DialogConfirmPhone :resetPassword="true"/>
             </div>
           </div>
         </form>
