@@ -1,30 +1,29 @@
 <template>
   <div>
+    <v-btn
+      :style="{'margin-left': resetPassword ? '-3px' : 'unset' }"
+      :text="resetPassword"
+      small
+      rounded
+      :outlined="!resetPassword"
+      :color="resetPassword ? '' : 'secondary'"
+      :ripple="!resetPassword"
+      @click.stop="dialog = true; !resetPassword ? phone = newUserPhone : false"
+    >
+      {{ resetPassword ? 'Recuperar senha' : 'CRIAR' }}
+    </v-btn>
+
     <v-dialog
       persistent
       v-model="dialog"
       width="310"
     >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          style="margin-left: -3px;"
-          v-bind="attrs"
-          v-on="on"
-          text
-          small
-          rounded
-          :ripple="false"
-        >
-          Recuperar senha
-        </v-btn>
-      </template>
-
       <v-card
         elevation="0"
         v-if="dialog"
       >
-        <v-card-title>
-          {{ title }}
+        <v-card-title style="word-break: normal;">
+          {{ resetPassword ? 'Recuperação de senha' : 'Confirmação de número' }}
         </v-card-title>
 
         <v-stepper 
@@ -35,7 +34,7 @@
           height="400"
         >
           <v-stepper-header
-            style="box-shadow: unset;"
+            style="box-shadow: unset; display: none;"
           >
             <v-stepper-step
               color="accent"
@@ -62,15 +61,15 @@
               step="3"
               color="accent"
             >
-              Redefinição de senha
+              {{ resetPassword ? 'Redefinição de senha' : 'Confirmação de número' }}
             </v-stepper-step>
           </v-stepper-header>
 
           <v-stepper-items>
             <v-stepper-content step="1">
-              <div style="display: flex; flex-direction: column">
+              <div style="display: flex; flex-direction: column; height: 280px;">
                 <span>
-                  Digite seu número telefonico abaixo. 
+                  Confira se número abaixo está correto.  
                   Vamos te enviar um código por SMS.
                 </span>
 
@@ -84,23 +83,23 @@
                 >
                   <v-text-field
                     filled
+                    v-model="phone"
                     autocomple="off"
                     color="secondary"
-                    v-model="phone"
                     :rules="[rules.required, rules.phoneLength, rules.exists]"
                     label="Número do celular *"
                     type="tel"
                     placeholder="(00) 91234-5678"
                     v-mask="'(##) #####-####'"
+                    :loading="validatingPhone"
                     hint="DDD e número"
                     persistent-hint
                     @keyup="rules.exists = true"
-                    :loading="validatingPhone"
                   />
                 </v-form>
               </div>
 
-              <div style="display: flex;">
+              <div style="display: flex; margin-top: 50px;">
                 <v-btn 
                   text
                   small
@@ -120,44 +119,114 @@
                   :disabled="!formValid"
                   @click="validatePhoneDuplication()"
                 >
-                  Próximo
+                  ENVIAR
                 </v-btn>
               </div>
             </v-stepper-content>
 
             <v-stepper-content step="2">
-              <div>
+              <div style="display: flex; flex-direction: column; height: 280px;">
+                <span>
+                  Informe o código de seis dígitos abaixo, antes que o tempo acabe
+                </span>
+
+                <br>
+
+                <span>
+                  tempo restante: <strong> {{ timer }} </strong>
+                </span>
+
+                <br>
+
+                <v-form 
+                  v-model="formValid2"
+                  @submit="$event.preventDefault()"
+                  autocomplete="off" 
+                  style="padding-bottom: 30px; max-height: 116px;"
+                >
+                  <v-text-field
+                    filled
+                    autocomple="off"
+                    color="secondary"
+                    v-model="validationCode"
+                    :rules="[rulesValidationCode.required, rulesValidationCode.codeLength]"
+                    label="Código *"
+                    type="tel"
+                    placeholder="123456"
+                    v-mask="'######'"
+                    :loading="validatingCode"
+                  />
+
+                  <div>
+                    <br>
+                    <span>
+                      Não recebeu o código ou o tempo expirou?
+                    </span>
+
+                    <v-btn 
+                      outlined 
+                      rounded 
+                      x-small 
+                      :ripple="false" 
+                      text 
+                      color="secondary"
+                      @click="currentStep = 1; clearTimer()"
+                    >
+                      REENVIAR
+                    </v-btn>
+                  </div>
+                </v-form>
+
+                <br>
               </div>
 
-              <div style="display: flex;">
-                <v-btn 
-                  text
-                  small
-                  rounded
-                  @click="currentStep = 1"
-                >
-                  Voltar
-                </v-btn>
-
+              <div style="display: flex; margin-top: 50px;">
                 <v-spacer/>
 
                 <v-btn
                   outlined
                   rounded
                   color="secondary"
-                  @click="currentStep = 3"
+                  @click="validateCode() ;currentStep = 3"
                   small
                 >
-                  Próximo
+                  AVANÇAR
                 </v-btn>
               </div>
             </v-stepper-content>
 
             <v-stepper-content step="3">
-              <div>
+              <div
+                style="display: flex; flex-direction: column; height: 280px;"
+              >
+                <template 
+                  v-if="resetPassword"
+                >
+                  <span>
+                    Crie sua nova senha
+                  </span>
+
+                  <br>
+
+                </template>
+
+                <template v-else>
+                  <span>
+                    Número verificado com sucesso
+                  </span>
+
+                  <br>
+
+                  <v-icon
+                    size="145"
+                    color="green"
+                  >
+                    mdi-check-circle
+                  </v-icon>
+                </template>
               </div>
 
-              <div style="display: flex;">
+              <div style="display: flex; margin-top: 50px;">
                 <v-btn text small rounded @click="currentStep = 2">
                   Voltar
                 </v-btn>
@@ -188,19 +257,31 @@ import { mapActions } from 'vuex';
 
 export default {
   directives: { mask },
+  props: [
+    "resetPassword",
+    "newUserPhone"
+  ],
   data () {
     return {
       formValid: false,
+      formValid2: false,
       currentStep: 1,
-      title: "Recuperação de senha",
       dialog: false,
       rules: {
         required: value => !!value || 'O número do celular deve ser preenchido',
         phoneLength: value => value && value.length < 15 ? 'O número está incorreto' : true,
         exists: true
       },
+      rulesValidationCode: {
+        required: value => !!value || 'Preencha os 6 dígitos',
+        codeLength: value => value && value.length < 6 ? 'O código está incompleto' : true,
+      },
       validatingPhone: false,
-      phone: undefined
+      validatingCode: false,
+      phone: undefined,
+      validationCode: undefined,
+      timer: 80,
+      interval: undefined
     }
   },
   methods: {
@@ -215,15 +296,23 @@ export default {
 
       let phone = this.phone.replace(/\D/g, '')
 
-      this.verifyDuplicatedPhone(phone)
+      return this.verifyDuplicatedPhone(phone)
         .then((response) => {
-          const notExists = response.data.is_unique
+          const isUnique = response.data.is_unique
 
-          if (notExists) {
+          // if reset password, phone must exists
+          if (isUnique && this.resetPassword) {
             this.rules.exists = "Não encontramos esse número na base de dados"
-          } else {
-            this.currentStep = 2
+            return;
+          } 
+          // if creating new account, phone should not exists
+          else if (!isUnique && !this.resetPassword) {
+            this.rules.exists = "Esse número já existe no Lookmix, é impossível criar outra conta com este número"
+            return;
           }
+          this.currentStep = 2
+
+          this.setTimer()
         })
         .catch((error)=> {
           console.log(error)
@@ -235,7 +324,28 @@ export default {
     closeDialog () {
       this.phone = ""
       this.dialog = false
+      this.clearTimer(this.interval)
     },
+    clearTimer (timer) {
+      if (!timer) {
+        this.timer = 80
+      }
+      clearInterval(this.interval)
+    },
+    setTimer () {
+      const self = this
+
+      this.interval = setInterval(function () {
+        self.timer = self.timer - 1
+
+        if (self.timer < 1) {
+          self.clearTimer(true)
+        }
+      }, 1000)
+    },
+    validateCode () {
+      
+    }
   }
 }
 </script>
