@@ -54,9 +54,10 @@
           VOLTAR
         </v-btn>
         <v-spacer></v-spacer>
-        <v-btn rounded outlined color="secondary" disabled>
+        <!-- <v-btn rounded outlined color="secondary" disabled>
           CRIAR
-        </v-btn>
+        </v-btn> -->
+        <DialogConfirmPhone :newUserPhone="phone" :resetPassword="false"/>
       </v-card-actions>
     </v-card>
   </div>
@@ -66,8 +67,12 @@
 import { mask } from 'vue-the-mask'
 import { mapActions } from 'vuex';
 import * as utils from './../utils.js'
+import DialogConfirmPhone from './../components/auth/DialogConfirmPhone.vue'
 
 export default {
+  components: {
+    DialogConfirmPhone
+  },
   directives: { mask },
   mounted() {
     const darkTheme = this.$vuetify.theme.dark;
