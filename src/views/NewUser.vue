@@ -16,7 +16,7 @@
 
         <h3 class="newAccount-title">Crie sua conta gratuita</h3>
 
-        <form autocomplete="off">
+        <v-form autocomplete="off" v-model="isFormValid">
           <v-text-field
             filled
             :append-icon="isPhoneUnique ? 'mdi-emoticon-cool-outline' : isPhoneUnique === undefined ? 'mdi-emoticon-neutral-outline' : 'mdi-emoticon-sad-outline'"
@@ -40,24 +40,27 @@
             color="secondary"
             v-model="password"
             required
-            :rules="[rules.requiredPassword]"
+            :rules="[rules.requiredPassword, rules.passwordLength]"
             :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
             :type="showPassword ? 'text' : 'password'"
             label="Senha *"
             @click:append="showPassword = !showPassword"
           />
-        </form>
+        </v-form>
       </v-card-text>
 
       <v-card-actions>
         <v-btn text rounded @click="redirectToLogin">
           VOLTAR
         </v-btn>
+
         <v-spacer></v-spacer>
-        <!-- <v-btn rounded outlined color="secondary" disabled>
-          CRIAR
-        </v-btn> -->
-        <DialogConfirmPhone :newUserPhone="phone" :resetPassword="false"/>
+
+        <DialogConfirmPhone 
+          :disabled="!isFormValid || validatingPhone"
+          :newUserPhone="phone" 
+          :resetPassword="false"
+        />
       </v-card-actions>
     </v-card>
   </div>
@@ -88,11 +91,13 @@ export default {
         required: value => !!value || 'O número do celular deve ser preenchido',
         requiredPassword: value => !!value || 'A senha deve ser preenchida',
         phoneLength: value => value && value.length < 15 ? 'O número está incorreto' : true,
+        passwordLength: value => value && value.length < 8 ? 'A senha deve ter pelo menos 8 dígitos' : true,
         unique: true
       },
       ongoingRequest: null,
       isPhoneUnique: undefined,
-      validatingPhone: false
+      validatingPhone: false,
+      isFormValid: false
     }
   },
   computed: {
