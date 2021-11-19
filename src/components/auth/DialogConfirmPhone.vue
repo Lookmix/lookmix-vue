@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-btn
+      :disabled="disabled"
       :style="{'margin-left': resetPassword ? '-3px' : 'unset' }"
       :text="resetPassword"
       small
@@ -144,7 +145,17 @@
                   autocomplete="off" 
                   style="padding-bottom: 30px; max-height: 116px;"
                 >
-                  <v-text-field
+                  <v-otp-input
+                    v-model="validationCode"
+                    required
+                    length="6"
+                    plain
+                    color="secondary"
+                    type="number"
+                    :rules="[rulesValidationCode.required, rulesValidationCode.codeLength]"
+                  />
+
+                  <!-- <v-text-field
                     filled
                     autocomple="off"
                     color="secondary"
@@ -155,12 +166,12 @@
                     placeholder="123456"
                     v-mask="'######'"
                     :loading="validatingCode"
-                  />
+                  /> -->
 
                   <div>
                     <br>
                     <span>
-                      Não recebeu o código ou o tempo expirou?
+                      Não recebeu o código ou o tempo acabou?
                     </span>
 
                     <v-btn 
@@ -187,8 +198,9 @@
                   outlined
                   rounded
                   color="secondary"
-                  @click="validateCode() ;currentStep = 3"
+                  @click="validateCode(); currentStep = 3;"
                   small
+                  :disabled="!formValid2 || timer === 0"
                 >
                   AVANÇAR
                 </v-btn>
@@ -259,7 +271,8 @@ export default {
   directives: { mask },
   props: [
     "resetPassword",
-    "newUserPhone"
+    "newUserPhone",
+    "disabled"
   ],
   data () {
     return {
