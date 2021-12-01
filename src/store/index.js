@@ -15,7 +15,11 @@ export default new Vuex.Store({
     user: {
       authenticated: false
     },
-    ongoingRequest: null
+    ongoingRequest: null,
+    newUser: {
+      phone: undefined,
+      password: undefined
+    }
   },
   mutations: {
   },
@@ -29,7 +33,7 @@ export default new Vuex.Store({
         }
       })
     },
-    sendVerifyCode ({ state }, data) {
+    getVerifyToken ({ state }, data) {
       const url = `${DOMAIN}/auth/send_verify_code`
 
       return axios.get(`${url}`, {
@@ -38,9 +42,17 @@ export default new Vuex.Store({
         }
       })      
     },
-    createAccount ({ state }, data) {
+    sendVerifyCode ({ state }, data) {
+      const url = `${DOMAIN}/auth/verify_code`
 
-    },
+      let payload = {
+        user: state.newUser,
+        token: data.verify_token,
+        id: data.id,
+        code: data.code
+      }
+      return axios.post(`${url}`, payload)
+    }
   },
   modules: {
   }
