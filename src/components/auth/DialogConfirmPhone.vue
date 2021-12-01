@@ -118,7 +118,8 @@
                   color="secondary"
                   small
                   :disabled="!formValid"
-                  @click="validatePhoneDuplication()"
+                  :loading="validatingPhone"
+                  @click="getVerifyTokenOTP()"
                 >
                   ENVIAR
                 </v-btn>
@@ -134,7 +135,7 @@
                 <br>
 
                 <span>
-                  tempo restante: <strong> {{ timer }} </strong>
+                  tempo restante: <strong> {{ timer }} </strong> segundos
                 </span>
 
                 <br>
@@ -146,29 +147,33 @@
                   style="padding-bottom: 30px; max-height: 116px;"
                 >
                   <v-otp-input
+                    ref="otpInput"
                     v-model="validationCode"
                     required
                     length="6"
                     plain
                     color="secondary"
                     type="number"
-                    :rules="[rulesValidationCode.required, rulesValidationCode.codeLength]"
+                    :rules="[
+                      rulesValidationCode.required, 
+                      rulesValidationCode.codeLength,
+                      rulesValidationCode.codeError
+                    ]"
                   />
 
-                  <!-- <v-text-field
-                    filled
-                    autocomple="off"
-                    color="secondary"
-                    v-model="validationCode"
-                    :rules="[rulesValidationCode.required, rulesValidationCode.codeLength]"
-                    label="Código *"
-                    type="tel"
-                    placeholder="123456"
-                    v-mask="'######'"
-                    :loading="validatingCode"
-                  /> -->
+                  <div 
+                    class="red--text"
+                    :style="{
+                      'font-size': '12px',
+                      'padding': $refs.otpInput && $refs.otpInput.messagesToDisplay[0] ? '0px' : '9px',
+                      'color': $refs.otpInput ? 'unset' : 'transparent'
+                    }"
+                  >
+                    {{ $refs.otpInput ? $refs.otpInput.messagesToDisplay[0] : '' }}
+                  </div>
 
                   <div>
+                    <br>
                     <br>
                     <span>
                       Não recebeu o código ou o tempo acabou?
@@ -181,7 +186,7 @@
                       :ripple="false" 
                       text 
                       color="secondary"
-                      @click="currentStep = 1; clearTimer()"
+                      @click="currentStep = 1; clearTimer(); clearOTPInput();"
                     >
                       REENVIAR
                     </v-btn>
@@ -198,9 +203,10 @@
                   outlined
                   rounded
                   color="secondary"
-                  @click="validateCode(); currentStep = 3;"
                   small
+                  :loading="sendingOTP"
                   :disabled="!formValid2 || timer === 0"
+                  @click="sendOTP();"
                 >
                   AVANÇAR
                 </v-btn>
@@ -260,6 +266,23 @@
         </v-stepper>
       </v-card>
     </v-dialog>
+
+    <v-snackbar
+      v-model="errorSnackbar"
+      color="error"
+    >
+      {{ errorMessage }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          text
+          v-bind="attrs"
+          @click="errorSnackbar = false"
+        >
+          OK
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -288,20 +311,27 @@ export default {
       rulesValidationCode: {
         required: value => !!value || 'Preencha os 6 dígitos',
         codeLength: value => value && value.length < 6 ? 'O código está incompleto' : true,
+        codeError: true
       },
       validatingPhone: false,
       validatingCode: false,
       phone: undefined,
       validationCode: undefined,
       timer: 80,
-      interval: undefined
+      interval: undefined,
+      verifyTokenData: undefined,
+      errorMessage: undefined,
+      errorSnackbar: false,
+      sendingOTP: false
     }
   },
   methods: {
     ...mapActions([
-      "verifyDuplicatedPhone"
+      "verifyDuplicatedPhone",
+      "getVerifyToken",
+      "sendVerifyCode"
     ]),
-    validatePhoneDuplication () {
+    validatePhoneDuplication (getVerifyTokenOTP=false) {
       this.validatingPhone = true
       this.rules.unique = true
 
@@ -320,14 +350,28 @@ export default {
           } 
           // if creating new account, phone should not exists
           else if (!isUnique && !this.resetPassword) {
-            this.rules.exists = "Esse número já existe no Lookmix, é impossível criar outra conta com este número"
+            this.rules.exists = "Esse número já existe no Lookmix, não é possível criar outra conta com este número"
             return;
           }
-          this.currentStep = 2
+          if (getVerifyTokenOTP) {
+            return this.getVerifyToken(phone)
+              .then((response) => {
+                const data = response.data
 
-          this.setTimer()
+                this.verifyTokenData = data
+
+                this.goToStep2()
+              })
+              .catch((exception) => {
+                const error = exception.response.data.error
+                this.errorSnackbar = true
+                this.errorMessage = error
+                console.log(error)
+              })
+          }
+          this.goToStep2()
         })
-        .catch((error)=> {
+        .catch((error) => {
           console.log(error)
         })
         .finally(() => {
@@ -356,8 +400,75 @@ export default {
         }
       }, 1000)
     },
-    validateCode () {
-      
+    getVerifyTokenOTP () {
+      this.validatePhoneDuplication(true)
+    },
+    sendOTP () {
+      this.sendingOTP = true
+
+      let data = {
+        id: this.verifyTokenData.id,
+        verify_token: this.verifyTokenData.verify_token,
+        code: this.validationCode
+      }
+      return this.sendVerifyCode(data)
+        .then((response) => {
+          const data = response.data
+
+          if (data.valid) {
+            this.currentStep = 3
+            return;
+          }
+        })
+        .catch((exception) => {
+          const error = exception.response.data.error
+
+          this.handleOTPErrors(error)
+
+          console.log(exception)
+        })
+        .finally(() => {
+          this.sendingOTP = false
+        })
+    },
+    goToStep2 () {
+      this.currentStep = 2
+
+      this.setTimer()
+    },
+    handleOTPErrors (error) {
+      const errors = {
+        validationError (self) {
+          self.errorSnackbar = true
+          self.errorMessage = "Erro no formato da requisição"
+          self.clearOTPInput()
+          return;
+        },
+        attempsExceed (self) { 
+          self.rulesValidationCode.codeError = "Suas tentativas esgoratam. Toque em reenviar para receber um novo código."
+          self.clearOTPInput()
+          return;
+        },
+        invalidOTP (self) {
+          self.rulesValidationCode.codeError = "Código inválido, tente novamente."
+          self.clearOTPInput()
+          return;       
+        },
+        expired (self) {
+          self.rulesValidationCode.codeError = "Código expirado. Toque em reenviar para receber um novo código."
+          self.clearOTPInput()
+          return;
+        }
+      }
+      const errorHandlerFunction = errors[error]
+      const self = this
+
+      errorHandlerFunction(self)
+    },
+    clearOTPInput () {
+      this.$refs.otpInput.otp = []
+      this.$refs.otpInput.errorBucket = []
+      this.formValid2 = false
     }
   }
 }
