@@ -57,6 +57,7 @@
         <v-spacer></v-spacer>
 
         <DialogConfirmPhone 
+          @opened="setNewUserState()"
           :disabled="!isFormValid || validatingPhone"
           :newUserPhone="phone" 
           :resetPassword="false"
@@ -110,7 +111,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      "verifyDuplicatedPhone"
+      "verifyDuplicatedPhone",
+      "setNewUser"
     ]),
     redirectToLogin () {
       this.$router.push('/login')
@@ -140,6 +142,17 @@ export default {
             this.validatingPhone = false
           })
       }, 3000);
+    },
+    setNewUserState () {
+      if (this.isFormValid && !this.validatingPhone) {
+        const phone = this.phone.replace(/\D/g, '')
+
+        const user = {
+          phone: phone,
+          password: this.password
+        }
+        this.setNewUser(user)
+      }
     }
   }
 };
