@@ -15,7 +15,7 @@ const router = new VueRouter({
   ].concat(publicPrivateRoutes)
 })
 router.beforeEach((to, from, next) => {
-  const authenticated = store.state.user.authenticated
+  const authenticated = false
   const onlyLoggedOutRoute = to.matched.some(record => record.meta.onlyLoggedOutRoute)
   const isPublicRoute = to.matched.some(record => record.meta.public)
 
