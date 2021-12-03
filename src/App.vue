@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <template v-if="user.authenticaded">
+    <template v-if="false">
       <AppToolbar/>
     </template>
 
