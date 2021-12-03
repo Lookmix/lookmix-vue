@@ -12,9 +12,6 @@ const DOMAIN = `${HTTP_PROTOCOL}//${VUE_APP_HOST_API}:${VUE_APP_PORT_API}`
 
 export default new Vuex.Store({
   state: {
-    user: {
-      authenticated: false
-    },
     ongoingRequest: null,
     newUser: {
       phone: undefined,
@@ -42,16 +39,15 @@ export default new Vuex.Store({
         }
       })      
     },
+    setNewUser({ state }, data) {
+      state.newUser = data
+    },
     sendVerifyCode ({ state }, data) {
       const url = `${DOMAIN}/auth/verify_code`
 
-      let payload = {
-        user: state.newUser,
-        token: data.verify_token,
-        id: data.id,
-        code: data.code
-      }
-      return axios.post(`${url}`, payload)
+      data['user'] = state.newUser
+
+      return axios.post(`${url}`, data)
     }
   },
   modules: {
