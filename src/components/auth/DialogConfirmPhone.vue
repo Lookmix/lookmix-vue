@@ -9,7 +9,7 @@
       :outlined="!resetPassword"
       :color="resetPassword ? '' : 'secondary'"
       :ripple="!resetPassword"
-      @click.stop="dialog = true; !resetPassword ? phone = newUserPhone : false"
+      @click.stop="dialog = true; !resetPassword ? phone = newUserPhone : false; !resetPassword ? onOpenDialog() : false"
     >
       {{ resetPassword ? 'Recuperar senha' : 'CRIAR' }}
     </v-btn>
@@ -154,6 +154,8 @@
                     plain
                     color="secondary"
                     type="number"
+                    :disabled="disableOTPInput"
+                    @input="rulesValidationCode.codeError = true"
                     :rules="[
                       rulesValidationCode.required, 
                       rulesValidationCode.codeLength,
@@ -164,8 +166,9 @@
                   <div 
                     class="red--text"
                     :style="{
+                      'min-height': '36px',
                       'font-size': '12px',
-                      'padding': $refs.otpInput && $refs.otpInput.messagesToDisplay[0] ? '0px' : '9px',
+                      'padding': $refs.otpInput && $refs.otpInput.messagesToDisplay[0] ? '0px' : '18px',
                       'color': $refs.otpInput ? 'unset' : 'transparent'
                     }"
                   >
@@ -174,9 +177,9 @@
 
                   <div>
                     <br>
-                    <br>
+
                     <span>
-                      Não recebeu o código ou o tempo acabou?
+                      Não recebeu o código ou o tempo / tentativas acabaram? 
                     </span>
 
                     <v-btn 
@@ -185,7 +188,7 @@
                       x-small 
                       :ripple="false" 
                       text 
-                      color="secondary"
+                      color="#651FFF"
                       @click="currentStep = 1; clearTimer(); clearOTPInput();"
                     >
                       REENVIAR
@@ -229,36 +232,38 @@
                 </template>
 
                 <template v-else>
-                  <span>
-                    Número verificado com sucesso
-                  </span>
-
-                  <br>
-
                   <v-icon
                     size="145"
                     color="green"
                   >
                     mdi-check-circle
                   </v-icon>
+
+                  <br>
+
+                  <span>
+                    Concluímos a verificação do seu número.
+                  </span>
+
+                  <br>
+
+                  <span>
+                    Você já pode entrar na sua conta :)
+                  </span>
                 </template>
               </div>
 
               <div style="display: flex; margin-top: 50px;">
-                <v-btn text small rounded @click="currentStep = 2">
-                  Voltar
-                </v-btn>
-
                 <v-spacer/>
 
                 <v-btn
                   small
                   color="secondary"
-                  @click="currentStep = 1"
+                  @click="redirectToLogin()"
                   rounded
                   outlined
                 >
-                  Concluir
+                  Entrar
                 </v-btn>
               </div>
             </v-stepper-content>
@@ -322,7 +327,8 @@ export default {
       verifyTokenData: undefined,
       errorMessage: undefined,
       errorSnackbar: false,
-      sendingOTP: false
+      sendingOTP: false,
+      disableOTPInput: false
     }
   },
   methods: {
@@ -333,7 +339,7 @@ export default {
     ]),
     validatePhoneDuplication (getVerifyTokenOTP=false) {
       this.validatingPhone = true
-      this.rules.unique = true
+      this.rules.exists = true
 
       clearTimeout(this.ongoingRequest);
 
@@ -408,7 +414,7 @@ export default {
 
       let data = {
         id: this.verifyTokenData.id,
-        verify_token: this.verifyTokenData.verify_token,
+        token: this.verifyTokenData.verify_token,
         code: this.validationCode
       }
       return this.sendVerifyCode(data)
@@ -432,6 +438,8 @@ export default {
         })
     },
     goToStep2 () {
+      this.disableOTPInput = false
+
       this.currentStep = 2
 
       this.setTimer()
@@ -447,6 +455,7 @@ export default {
         attempsExceed (self) { 
           self.rulesValidationCode.codeError = "Suas tentativas esgoratam. Toque em reenviar para receber um novo código."
           self.clearOTPInput()
+          self.disableOTPInput = true
           return;
         },
         invalidOTP (self) {
@@ -457,6 +466,7 @@ export default {
         expired (self) {
           self.rulesValidationCode.codeError = "Código expirado. Toque em reenviar para receber um novo código."
           self.clearOTPInput()
+          self.disableOTPInput = true
           return;
         }
       }
@@ -469,7 +479,13 @@ export default {
       this.$refs.otpInput.otp = []
       this.$refs.otpInput.errorBucket = []
       this.formValid2 = false
-    }
+    },
+    onOpenDialog () {
+      this.$emit("opened", true)
+    },
+    redirectToLogin () {
+      this.$router.push('/login')
+    },
   }
 }
 </script>
