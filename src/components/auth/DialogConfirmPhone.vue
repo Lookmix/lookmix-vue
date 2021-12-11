@@ -154,7 +154,7 @@
                     plain
                     color="secondary"
                     type="number"
-                    :disabled="disableOTPInput"
+                    :disabled="disableOTPInput || sendingOTP"
                     @input="rulesValidationCode.codeError = true"
                     :rules="[
                       rulesValidationCode.required, 
@@ -189,7 +189,8 @@
                       :ripple="false" 
                       text 
                       color="#651FFF"
-                      @click="currentStep = 1; clearTimer(); clearOTPInput();"
+                      :disabled="sendingOTP || timer > 0"
+                      @click="currentStep = 1; clearTimer(); clearOTPInput(); attempsExceed = false;"
                     >
                       REENVIAR
                     </v-btn>
@@ -208,7 +209,7 @@
                   color="secondary"
                   small
                   :loading="sendingOTP"
-                  :disabled="!formValid2 || timer === 0"
+                  :disabled="!formValid2 || timer === 0 || attempsExceed"
                   @click="sendOTP();"
                 >
                   AVANÇAR
@@ -328,7 +329,8 @@ export default {
       errorMessage: undefined,
       errorSnackbar: false,
       sendingOTP: false,
-      disableOTPInput: false
+      disableOTPInput: false,
+      attempsExceed: false
     }
   },
   methods: {
@@ -369,10 +371,14 @@ export default {
                 this.goToStep2()
               })
               .catch((exception) => {
-                const error = exception.response.data.error
-                this.errorSnackbar = true
-                this.errorMessage = error
-                console.log(error)
+                const response = exception.response
+
+                if (response) {
+                  const error = response.data.error
+                  this.errorSnackbar = true
+                  this.errorMessage = error
+                  console.log(error)
+                }
               })
           }
           this.goToStep2()
@@ -427,11 +433,15 @@ export default {
           }
         })
         .catch((exception) => {
-          const error = exception.response.data.error
+          const response = exception.response
 
-          this.handleOTPErrors(error)
-
-          console.log(exception)
+          if (response) {
+            const error = response.data.error
+  
+            this.handleOTPErrors(error)
+  
+            console.log(exception)
+          }
         })
         .finally(() => {
           this.sendingOTP = false
@@ -456,6 +466,7 @@ export default {
           self.rulesValidationCode.codeError = "Suas tentativas esgoratam. Toque em reenviar para receber um novo código."
           self.clearOTPInput()
           self.disableOTPInput = true
+          self.attempsExceed = true
           return;
         },
         invalidOTP (self) {
