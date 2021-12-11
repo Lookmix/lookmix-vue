@@ -9,7 +9,12 @@
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
-    "axios": "^0.21.1",
+    "axios": "^0.23.0",
+    "is-retry-allowed": "3.0.0",
+    "regenerator-runtime": "0.13.9",
+    "axios-retry": "^3.2.4",
+    "jsrsasign": "^10.5.1",
+    "jsrsasign-util": "^1.0.5",
     "core-js": "^3.6.5",
     "register-service-worker": "^1.7.1",
     "roboto-fontface": "*",
