@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import axios from 'axios'
+import axiosInstance from '@/http.js'
+var axios = axiosInstance
 
 Vue.use(Vuex)
 
@@ -16,7 +17,8 @@ export default new Vuex.Store({
     newUser: {
       phone: undefined,
       password: undefined
-    }
+    },
+    connectionOffline: undefined
   },
   mutations: {
   },
@@ -48,6 +50,9 @@ export default new Vuex.Store({
       data['user'] = state.newUser
 
       return axios.post(`${url}`, data)
+    },
+    setSnackbarError({ state }, data) {
+      state.connectionOffline = data
     }
   },
   modules: {
