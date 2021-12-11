@@ -16,6 +16,8 @@
       >
         <router-view/>
       </div>
+
+      <SnackbarOfflineError/>
     </v-main>
   </v-app>
 </template>
@@ -23,10 +25,12 @@
 <script>
 import { mapState } from "vuex"
 import AppToolbar from "./components/layouts/AppToolbar.vue"
+import SnackbarOfflineError from './components/SnackbarOfflineError.vue'
 
 export default {
   components: {
-    AppToolbar
+    AppToolbar,
+    SnackbarOfflineError
   },
   computed: {
     ...mapState([
