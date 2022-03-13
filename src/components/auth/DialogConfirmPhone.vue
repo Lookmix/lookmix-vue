@@ -9,7 +9,7 @@
       :outlined="!resetPassword"
       :color="resetPassword ? '' : 'secondary'"
       :ripple="!resetPassword"
-      @click.stop="dialog = true; !resetPassword ? phone = newUserPhone : false; !resetPassword ? onOpenDialog() : false"
+      @click.stop="dialog = true; phone = userPhoneComponentParam; !resetPassword ? onOpenDialog() : false"
     >
       {{ resetPassword ? 'Recuperar senha' : 'CRIAR' }}
     </v-btn>
@@ -62,7 +62,17 @@
               step="3"
               color="accent"
             >
-              {{ resetPassword ? 'Redefinição de senha' : 'Confirmação de número' }}
+              Redefinição de senha
+            </v-stepper-step>
+
+            <v-divider></v-divider>
+
+            <v-stepper-step
+              :complete="currentStep > 4"
+              step="3"
+              color="accent"
+            >
+              Confirmação de número
             </v-stepper-step>
           </v-stepper-header>
 
@@ -70,8 +80,19 @@
             <v-stepper-content step="1">
               <div style="display: flex; flex-direction: column; height: 280px;">
                 <span>
-                  Confira se número abaixo está correto.  
-                  Vamos te enviar um código por SMS.
+                  <template v-if="!resetPassword">
+                    Confira se o número abaixo está correto e corrija se necessário.  
+                    Vamos te enviar um código por SMS.
+                  </template>
+
+                  <template v-if="resetPassword && userPhoneComponentParam">
+                    Confira se o número abaixo está correto e corrija se necessário.  
+                    Vamos te enviar um código por SMS.
+                  </template>
+
+                  <template v-if="resetPassword && !userPhoneComponentParam">
+                    Informe seu número abaixo. Vamos te enviar um código por SMS.
+                  </template>
                 </span>
 
                 <br>
@@ -119,7 +140,7 @@
                   small
                   :disabled="!formValid"
                   :loading="validatingPhone"
-                  @click="getVerifyTokenOTP()"
+                  @click="getOTP()"
                 >
                   ENVIAR
                 </v-btn>
@@ -210,7 +231,7 @@
                   small
                   :loading="sendingOTP"
                   :disabled="!formValid2 || timer === 0 || attempsExceed"
-                  @click="sendOTP();"
+                  @click="sendOTPCode();"
                 >
                   AVANÇAR
                 </v-btn>
@@ -221,37 +242,72 @@
               <div
                 style="display: flex; flex-direction: column; height: 280px;"
               >
-                <template 
-                  v-if="resetPassword"
+                <span>
+                  Crie sua nova senha
+                </span>
+
+                <br>
+
+                <v-form
+                  v-model="formValid3"
+                  @submit="$event.preventDefault()"
+                  autocomplete="off" 
+                  style="padding-bottom: 30px; max-height: 116px;"
                 >
-                  <span>
-                    Crie sua nova senha
-                  </span>
+                  <v-text-field
+                    style="margin-top: 10px"
+                    filled
+                    color="secondary"
+                    v-model="newPassword"
+                    required
+                    :rules="[rules.requiredPassword, rules.passwordLength]"
+                    :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+                    :type="showPassword ? 'text' : 'password'"
+                    label="Nova senha *"
+                    :disabled="sendingNewPassword"
+                    @click:append="showPassword = !showPassword"
+                  />
+                </v-form>
+              </div>
 
-                  <br>
+              <div style="display: flex; margin-top: 50px;">
+                <v-spacer/>
 
-                </template>
+                <v-btn
+                  outlined
+                  rounded
+                  color="secondary"
+                  small
+                  :loading="sendingNewPassword"
+                  @click="saveNewPassword()"
+                >
+                  AVANÇAR
+                </v-btn>
+              </div>
+            </v-stepper-content>
 
-                <template v-else>
-                  <v-icon
-                    size="145"
-                    color="green"
-                  >
-                    mdi-check-circle
-                  </v-icon>
+            <v-stepper-content step="4">
+              <div
+                style="display: flex; flex-direction: column; height: 280px;"
+              >
+                <v-icon
+                  size="145"
+                  color="green"
+                >
+                  mdi-check-circle
+                </v-icon>
 
-                  <br>
+                <br>
 
-                  <span>
-                    Concluímos a verificação do seu número.
-                  </span>
+                <span>
+                  Concluímos a verificação do seu número.
+                </span>
 
-                  <br>
+                <br>
 
-                  <span>
-                    Você já pode entrar na sua conta :)
-                  </span>
-                </template>
+                <span>
+                  Você já pode entrar na sua conta :)
+                </span>
               </div>
 
               <div style="display: flex; margin-top: 50px;">
@@ -300,19 +356,22 @@ export default {
   directives: { mask },
   props: [
     "resetPassword",
-    "newUserPhone",
+    "userPhoneComponentParam",
     "disabled"
   ],
   data () {
     return {
       formValid: false,
       formValid2: false,
+      formValid3: false,
       currentStep: 1,
       dialog: false,
       rules: {
         required: value => !!value || 'O número do celular deve ser preenchido',
         phoneLength: value => value && value.length < 15 ? 'O número está incorreto' : true,
-        exists: true
+        exists: true,
+        requiredPassword: value => !!value || 'A senha deve ser preenchida',
+        passwordLength: value => value && value.length < 8 ? 'A senha deve ter pelo menos 8 dígitos' : true,
       },
       rulesValidationCode: {
         required: value => !!value || 'Preencha os 6 dígitos',
@@ -325,21 +384,27 @@ export default {
       validationCode: undefined,
       timer: 80,
       interval: undefined,
-      verifyTokenData: undefined,
+      OTPData: undefined,
       errorMessage: undefined,
       errorSnackbar: false,
       sendingOTP: false,
       disableOTPInput: false,
-      attempsExceed: false
+      attempsExceed: false,
+      newPassword: undefined,
+      showPassword: false,
+      sendingNewPassword: false,
+      duplicatedPhoneMsg: "Esse número já existe no Lookmix, não é possível criar outra conta com este número"
     }
   },
   methods: {
     ...mapActions([
       "verifyDuplicatedPhone",
-      "getVerifyToken",
-      "sendVerifyCode"
+      "getOTPData",
+      "sendOTP",
+      "updatePassword",
+      "saveUser"
     ]),
-    validatePhoneDuplication (getVerifyTokenOTP=false) {
+    validatePhoneDuplication (getOTP=false) {
       this.validatingPhone = true
       this.rules.exists = true
 
@@ -358,15 +423,15 @@ export default {
           } 
           // if creating new account, phone should not exists
           else if (!isUnique && !this.resetPassword) {
-            this.rules.exists = "Esse número já existe no Lookmix, não é possível criar outra conta com este número"
+            this.rules.exists = this.duplicatedPhoneMsg
             return;
           }
-          if (getVerifyTokenOTP) {
-            return this.getVerifyToken(phone)
+          if (getOTP) {
+            return this.getOTPData(phone)
               .then((response) => {
                 const data = response.data
 
-                this.verifyTokenData = data
+                this.OTPData = data
 
                 this.goToStep2()
               })
@@ -391,9 +456,9 @@ export default {
         })
     },
     closeDialog () {
+      this.clearTimer()
       this.phone = ""
       this.dialog = false
-      this.clearTimer(this.interval)
     },
     clearTimer (timer) {
       if (!timer) {
@@ -412,24 +477,42 @@ export default {
         }
       }, 1000)
     },
-    getVerifyTokenOTP () {
+    getOTP () {
       this.validatePhoneDuplication(true)
+      this.clearOTPInput()
     },
-    sendOTP () {
+    sendOTPCode () {
       this.sendingOTP = true
 
       let data = {
-        id: this.verifyTokenData.id,
-        token: this.verifyTokenData.verify_token,
+        id: this.OTPData.id,
+        token: this.OTPData.token,
         code: this.validationCode
       }
-      return this.sendVerifyCode(data)
+      return this.sendOTP(data)
         .then((response) => {
           const data = response.data
 
           if (data.valid) {
-            this.currentStep = 3
-            return;
+            if (this.resetPassword) {
+              this.currentStep = 3
+              return;
+            }
+            return this.saveUser()
+              .then((response) => {
+                this.currentStep = 4
+              })
+              .catch((exception) => {
+                const response = exception.response
+
+                if (response) {
+                  const error = response.data.error
+        
+                  this.handleOTPErrors(error)
+        
+                  console.log(exception)
+                }
+              })
           }
         })
         .catch((exception) => {
@@ -445,6 +528,7 @@ export default {
         })
         .finally(() => {
           this.sendingOTP = false
+          this.clearOTPInput()
         })
     },
     goToStep2 () {
@@ -486,6 +570,29 @@ export default {
 
       errorHandlerFunction(self)
     },
+    handleSaveUserErrors (error) {
+      const errors = {
+        validationError (self) {
+          self.errorSnackbar = true
+          self.errorMessage = "Erro no formato da requisição"
+          return;
+        },
+        duplicatedPhone (self) { 
+          self.errorSnackbar = true
+          self.errorMessage = self.duplicatedPhoneMsg
+          return;
+        },
+        unknow (self) {
+          self.errorSnackbar = true
+          self.errorMessage = "Falha ao tentar criar conta"
+          return;       
+        },
+      }
+      const errorHandlerFunction = errors[error]
+      const self = this
+
+      errorHandlerFunction(self)
+    },
     clearOTPInput () {
       this.$refs.otpInput.otp = []
       this.$refs.otpInput.errorBucket = []
@@ -495,8 +602,32 @@ export default {
       this.$emit("opened", true)
     },
     redirectToLogin () {
-      this.$router.push('/login')
+      this.closeDialog()
+
+      if (!this.resetPassword) {
+        this.$router.push('/login')
+      }
+      this.currentStep = 1
     },
+    saveNewPassword () {
+      this.sendingNewPassword = true
+
+      const payload = {
+        phone: this.phone,
+        password: this.newPassword
+      }
+      this.updatePassword(payload)
+        .then((response) => {
+
+          this.currentStep = 4
+        })
+        .catch((error) => {
+
+        }) 
+        .finally(() => {
+          this.newPassword = undefined
+        })
+    }
   }
 }
 </script>
