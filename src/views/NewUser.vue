@@ -59,7 +59,7 @@
         <DialogConfirmPhone 
           @opened="setNewUserState()"
           :disabled="!isFormValid || validatingPhone"
-          :newUserPhone="phone" 
+          :userPhoneComponentParam="phone" 
           :resetPassword="false"
         />
       </v-card-actions>
