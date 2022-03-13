@@ -6,10 +6,12 @@ var axios = axiosInstance
 
 Vue.use(Vuex)
 
-const HTTP_PROTOCOL = window.location.protocol
-const VUE_APP_HOST_API = process.env.NODE_ENV === 'production' ? 'api.lookmix.app' : 'localhost'
-const VUE_APP_PORT_API = process.env.NODE_ENV === 'production' ? '80' : '5000'
-const DOMAIN = `${HTTP_PROTOCOL}//${VUE_APP_HOST_API}:${VUE_APP_PORT_API}`
+const HTTP_PROTOCOL = process.env.VUE_APP_HTTP_PROTOCOL
+const HOST_API = process.env.VUE_APP_HOST_API
+const PORT_API = process.env.VUE_APP_PORT_API
+const PORT_API_OTP = process.env.VUE_APP_PORT_API_OTP
+const DOMAIN = `${HTTP_PROTOCOL}//${HOST_API}:${PORT_API}`
+const DOMAIN_OTP = `${HTTP_PROTOCOL}//${HOST_API}:${PORT_API_OTP}`
 
 export default new Vuex.Store({
   state: {
@@ -32,8 +34,8 @@ export default new Vuex.Store({
         }
       })
     },
-    getVerifyToken ({ state }, data) {
-      const url = `${DOMAIN}/auth/send_verify_code`
+    getOTPData ({ state }, data) {
+      const url = `${DOMAIN_OTP}/auth/get_otp`
 
       return axios.get(`${url}`, {
         params: {
@@ -44,15 +46,25 @@ export default new Vuex.Store({
     setNewUser({ state }, data) {
       state.newUser = data
     },
-    sendVerifyCode ({ state }, data) {
-      const url = `${DOMAIN}/auth/verify_code`
-
-      data['user'] = state.newUser
+    sendOTP ({ state }, data) {
+      const url = `${DOMAIN}/auth/verify_otp`
 
       return axios.post(`${url}`, data)
     },
     setSnackbarError({ state }, data) {
       state.connectionOffline = data
+    },
+    updatePassword({ state }, data) {
+      const url = `${DOMAIN}/users/update_password`
+
+      return axios.put(url, data)
+    },
+    saveUser({ state }, data) {
+      const url = `${DOMAIN}/users/save`
+
+      const user = state.newUser
+
+      return axios.post(url, user)
     }
   },
   modules: {
