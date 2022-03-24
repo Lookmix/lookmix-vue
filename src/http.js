@@ -28,6 +28,11 @@ axiosInstance.interceptors.request.use(function (config) {
   // Do something before request is sent
   store.state.connectionOffline = false
   console.log("request intercept")
+
+  if (config.withCredentials) {
+    config.xsrfCookieName = "csrf_access_token"
+    config.xsrfHeaderName = "X-CSRF-TOKEN"
+  }
   return config;
 }, function (error) {
   // Do something with request error
