@@ -31,3 +31,6 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### RUN IN LOCAL
+chromium-browser --disable-web-security --user-data-dir=/home/vinicius/chromium
