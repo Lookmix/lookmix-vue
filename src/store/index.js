@@ -25,7 +25,7 @@ export default new Vuex.Store({
   mutations: {
   },
   actions: {
-    verifyDuplicatedPhone ({ state }, data) {
+    verifyDuplicatedPhone ({ state }, data) { // withCredentials: false
       const url = `${DOMAIN}/users/is_phone_unique`
 
       return axios.get(`${url}`, {
@@ -34,7 +34,7 @@ export default new Vuex.Store({
         }
       })
     },
-    getOTPData ({ state }, data) {
+    getOTPData ({ state }, data) { // withCredentials: false
       const url = `${DOMAIN_OTP}/auth/get_otp`
 
       return axios.get(`${url}`, {
@@ -46,7 +46,7 @@ export default new Vuex.Store({
     setNewUser({ state }, data) {
       state.newUser = data
     },
-    sendOTP ({ state }, data) {
+    sendOTP ({ state }, data) { // withCredentials: false
       const url = `${DOMAIN}/auth/verify_otp`
 
       return axios.post(`${url}`, data)
@@ -57,14 +57,18 @@ export default new Vuex.Store({
     updatePassword({ state }, data) {
       const url = `${DOMAIN}/users/update_password`
 
-      return axios.put(url, data)
+      return axios.put(url, data, {
+        withCredentials: true
+      })
     },
     saveUser({ state }, data) {
       const url = `${DOMAIN}/users/save`
 
       const user = state.newUser
 
-      return axios.post(url, user)
+      return axios.post(url, user, {
+        withCredentials: true
+      })
     }
   },
   modules: {
