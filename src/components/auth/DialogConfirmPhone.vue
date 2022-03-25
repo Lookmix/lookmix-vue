@@ -210,7 +210,7 @@
                       :ripple="false" 
                       text 
                       color="#651FFF"
-                      :disabled="sendingOTP || timer > 0"
+                      :disabled="sendingOTP || (timer > 0 && !attempsExceed)"
                       @click="currentStep = 1; clearTimer(); clearOTPInput(); attempsExceed = false;"
                     >
                       REENVIAR
@@ -528,7 +528,7 @@ export default {
         })
         .finally(() => {
           this.sendingOTP = false
-          this.clearOTPInput()
+          // this.clearOTPInput()
         })
     },
     goToStep2 () {
@@ -541,26 +541,28 @@ export default {
     handleOTPErrors (error) {
       const errors = {
         validationError (self) {
+          self.clearOTPInput()
           self.errorSnackbar = true
           self.errorMessage = "Erro no formato da requisição"
-          self.clearOTPInput()
           return;
         },
         attempsExceed (self) { 
-          self.rulesValidationCode.codeError = "Suas tentativas esgoratam. Toque em reenviar para receber um novo código."
           self.clearOTPInput()
+          self.OTPData.id = null
+          self.OTPData.token = null
+          self.rulesValidationCode.codeError = "Suas tentativas esgoratam. Toque em reenviar para receber um novo código."
           self.disableOTPInput = true
           self.attempsExceed = true
           return;
         },
         invalidOTP (self) {
-          self.rulesValidationCode.codeError = "Código inválido, tente novamente."
           self.clearOTPInput()
+          self.rulesValidationCode.codeError = "Código inválido, tente novamente."
           return;       
         },
         expired (self) {
-          self.rulesValidationCode.codeError = "Código expirado. Toque em reenviar para receber um novo código."
           self.clearOTPInput()
+          self.rulesValidationCode.codeError = "Código expirado. Toque em reenviar para receber um novo código."
           self.disableOTPInput = true
           return;
         }
