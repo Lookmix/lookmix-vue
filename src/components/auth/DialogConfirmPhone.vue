@@ -108,7 +108,11 @@
                     v-model="phone"
                     autocomple="off"
                     color="secondary"
-                    :rules="[rules.required, rules.phoneLength, rules.exists]"
+                    :rules="[
+                      rules.required, 
+                      rules.phoneLength, 
+                      rules.exists
+                    ]"
                     label="Número do celular *"
                     type="tel"
                     placeholder="(00) 91234-5678"
@@ -176,11 +180,11 @@
                     color="secondary"
                     type="number"
                     :disabled="disableOTPInput || sendingOTP"
-                    @input="rulesValidationCode.codeError = true"
+                    @input="rulesOTPValidation.codeError = true"
                     :rules="[
-                      rulesValidationCode.required, 
-                      rulesValidationCode.codeLength,
-                      rulesValidationCode.codeError
+                      rulesOTPValidation.required, 
+                      rulesOTPValidation.codeLength,
+                      rulesOTPValidation.codeError
                     ]"
                   />
 
@@ -260,11 +264,16 @@
                     color="secondary"
                     v-model="newPassword"
                     required
-                    :rules="[rules.requiredPassword, rules.passwordLength]"
+                    :rules="[
+                      rules.requiredPassword, 
+                      rules.passwordLength,
+                      rules.exists
+                    ]"
                     :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
                     :type="showPassword ? 'text' : 'password'"
                     label="Nova senha *"
                     :disabled="sendingNewPassword"
+                    @keyup="rules.exists = true"
                     @click:append="showPassword = !showPassword"
                   />
                 </v-form>
@@ -373,7 +382,7 @@ export default {
         requiredPassword: value => !!value || 'A senha deve ser preenchida',
         passwordLength: value => value && value.length < 8 ? 'A senha deve ter pelo menos 8 dígitos' : true,
       },
-      rulesValidationCode: {
+      rulesOTPValidation: {
         required: value => !!value || 'Preencha os 6 dígitos',
         codeLength: value => value && value.length < 6 ? 'O código está incompleto' : true,
         codeError: true
@@ -393,7 +402,8 @@ export default {
       newPassword: undefined,
       showPassword: false,
       sendingNewPassword: false,
-      duplicatedPhoneMsg: "Esse número já existe no Lookmix, não é possível criar outra conta com este número"
+      duplicatedPhoneMsg: "Esse número já existe no Lookmix, não é possível criar outra conta com este número",
+      phoneNotFoundMsg: "Não encontramos seu número na base de dados"
     }
   },
   methods: {
@@ -418,7 +428,7 @@ export default {
 
           // if reset password, phone must exists
           if (isUnique && this.resetPassword) {
-            this.rules.exists = "Não encontramos esse número na base de dados"
+            this.rules.exists = this.phoneNotFoundMsg
             return;
           } 
           // if creating new account, phone should not exists
@@ -550,19 +560,19 @@ export default {
           self.clearOTPInput()
           self.OTPData.id = null
           self.OTPData.token = null
-          self.rulesValidationCode.codeError = "Suas tentativas esgoratam. Toque em reenviar para receber um novo código."
+          self.rulesOTPValidation.codeError = "Suas tentativas esgoratam. Toque em reenviar para receber um novo código."
           self.disableOTPInput = true
           self.attempsExceed = true
           return;
         },
         invalidOTP (self) {
           self.clearOTPInput()
-          self.rulesValidationCode.codeError = "Código inválido, tente novamente."
+          self.rulesOTPValidation.codeError = "Código inválido, tente novamente."
           return;       
         },
         expired (self) {
           self.clearOTPInput()
-          self.rulesValidationCode.codeError = "Código expirado. Toque em reenviar para receber um novo código."
+          self.rulesOTPValidation.codeError = "Código expirado. Toque em reenviar para receber um novo código."
           self.disableOTPInput = true
           return;
         }
@@ -595,6 +605,23 @@ export default {
 
       errorHandlerFunction(self)
     },
+    handleResetPasswordErrors (error) {
+      const errors = {
+        phoneNotFound (self) {
+          self.rules.exists = this.phoneNotFoundMsg
+          return;
+        },
+        unknow (self) {
+          self.errorSnackbar = true
+          self.errorMessage = "Falha ao tentar atualizar senha"
+          return;       
+        },
+      }
+      const errorHandlerFunction = errors[error]
+      const self = this
+
+      errorHandlerFunction(self)
+    },
     clearOTPInput () {
       this.$refs.otpInput.otp = []
       this.$refs.otpInput.errorBucket = []
@@ -614,8 +641,10 @@ export default {
     saveNewPassword () {
       this.sendingNewPassword = true
 
+      const phone = this.phone.replace(/\D/g, '')
+
       const payload = {
-        phone: this.phone,
+        phone: phone,
         password: this.newPassword
       }
       this.updatePassword(payload)
