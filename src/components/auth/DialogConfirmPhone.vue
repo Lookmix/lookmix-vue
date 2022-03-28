@@ -309,7 +309,10 @@
                 <br>
 
                 <span>
-                  Concluímos a verificação do seu número.
+                  {{ resetPassword ?  
+                    "Senha atualizada com sucesso!" :
+                    "Concluímos a verificação do seu número!"
+                  }}
                 </span>
 
                 <br>
