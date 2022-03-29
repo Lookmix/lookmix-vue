@@ -521,7 +521,7 @@ export default {
                 if (response) {
                   const error = response.data.error
         
-                  this.handleOTPErrors(error)
+                  this.handleSaveUserErrors(error)
         
                   console.log(exception)
                 }
@@ -652,11 +652,18 @@ export default {
       }
       this.updatePassword(payload)
         .then((response) => {
-
           this.currentStep = 4
         })
-        .catch((error) => {
+        .catch((exception) => {
+          const response = exception.response
 
+          if (response) {
+            const error = response.data.error
+  
+            this.handleResetPasswordErrors(error)
+  
+            console.log(exception)
+          }
         }) 
         .finally(() => {
           this.newPassword = undefined
