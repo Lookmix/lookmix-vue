@@ -69,7 +69,7 @@
 
 <script>
 import { mask } from 'vue-the-mask'
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 import * as utils from './../utils.js'
 import DialogConfirmPhone from './../components/auth/DialogConfirmPhone.vue'
 
@@ -112,6 +112,8 @@ export default {
   methods: {
     ...mapActions([
       "verifyDuplicatedPhone",
+    ]),
+    ...mapMutations([
       "setNewUser"
     ]),
     redirectToLogin () {
