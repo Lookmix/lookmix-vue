@@ -26,7 +26,7 @@ axiosRetry(axiosInstance, {
 // Add a request interceptor
 axiosInstance.interceptors.request.use(function (config) {
   // Do something before request is sent
-  store.state.connectionOffline = false
+  store.commit("setConnectionOffline", false)
   console.log("request intercept")
 
   if (config.withCredentials) {
@@ -44,6 +44,13 @@ axiosInstance.interceptors.response.use(function (response) {
   // Any status code that lie within the range of 2xx cause this function to trigger
   // Do something with response data
   console.log("response intercept")
+
+  const withCredentials = response.request.withCredentials
+  const authenticated = store.state.authenticated
+
+  if (withCredentials && authenticated !== true) {
+    store.commit("setAuthenticated", true)
+  }
   return response;
 }, function (error) {
   console.log(error.response)
@@ -51,7 +58,7 @@ axiosInstance.interceptors.response.use(function (response) {
 
   if (response === undefined || response === null) {
     console.log("CONECTION OFFLINE ------------------------------------------")
-    store.state.connectionOffline = true
+    store.commit("setConnectionOffline", true)
   }
   // Any status codes that falls outside the range of 2xx cause this function to trigger
   // Do something with response error
