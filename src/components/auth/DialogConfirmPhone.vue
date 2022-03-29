@@ -328,7 +328,7 @@
                 <v-btn
                   small
                   color="secondary"
-                  @click="redirectToLogin()"
+                  @click="resetPassword ? redirectToLogin() : redirectToHome()"
                   rounded
                   outlined
                 >
@@ -494,7 +494,7 @@ export default {
       this.validatePhoneDuplication(true)
       this.clearOTPInput()
     },
-    sendOTPCode () {
+    sendOTPCode () { // saveUser too
       this.sendingOTP = true
 
       let data = {
@@ -514,6 +514,7 @@ export default {
             return this.saveUser()
               .then((response) => {
                 this.currentStep = 4
+                return;
               })
               .catch((exception) => {
                 const response = exception.response
@@ -635,10 +636,12 @@ export default {
     },
     redirectToLogin () {
       this.closeDialog()
-
-      if (!this.resetPassword) {
-        this.$router.push('/login')
-      }
+      this.$router.push('/login')
+      this.currentStep = 1
+    },
+    redirectToHome () {
+      this.closeDialog()
+      this.$router.push('/home')
       this.currentStep = 1
     },
     saveNewPassword () {
