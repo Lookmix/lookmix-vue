@@ -20,9 +20,19 @@ export default new Vuex.Store({
       phone: undefined,
       password: undefined
     },
-    connectionOffline: undefined
+    connectionOffline: undefined,
+    authenticated: undefined
   },
   mutations: {
+    setNewUser(state, data) {
+      state.newUser = data
+    },
+    setAuthenticated(state, data) {
+      state.authenticated = data
+    },
+    setConnectionOffline (state, data) {
+      state.connectionOffline = data
+    }
   },
   actions: {
     verifyDuplicatedPhone ({ state }, data) { // withCredentials: false
@@ -43,16 +53,10 @@ export default new Vuex.Store({
         }
       })      
     },
-    setNewUser({ state }, data) {
-      state.newUser = data
-    },
     sendOTP ({ state }, data) { // withCredentials: false
       const url = `${DOMAIN}/auth/verify_otp`
 
       return axios.post(`${url}`, data)
-    },
-    setSnackbarError({ state }, data) {
-      state.connectionOffline = data
     },
     updatePassword({ state }, data) {
       const url = `${DOMAIN}/users/update_password`
