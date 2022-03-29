@@ -7,15 +7,15 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
   routes: [
-    {
-      path: '/',
-      name: 'Looks semanais',
-      redirect: '/weekly-looks'
-    }
+    // {
+    //   path: '/',
+    //   name: 'Looks semanais',
+    //   redirect: '/weekly-looks'
+    // }
   ].concat(publicPrivateRoutes)
 })
 router.beforeEach((to, from, next) => {
-  const authenticated = false
+  const authenticated = store.state.authenticated
   const onlyLoggedOutRoute = to.matched.some(record => record.meta.onlyLoggedOutRoute)
   const isPublicRoute = to.matched.some(record => record.meta.public)
 
@@ -25,7 +25,7 @@ router.beforeEach((to, from, next) => {
     })
   }
   if (authenticated && onlyLoggedOutRoute) {
-    return next('/')
+    return next('/home')
   }
   next()
 })
