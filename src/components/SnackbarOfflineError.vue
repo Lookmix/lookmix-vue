@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex"
+import { mapState, mapMutations } from "vuex"
 
 export default {
   computed: {
@@ -29,11 +29,11 @@ export default {
     ]),
   },
   methods: {
-    ...mapActions([
-      "setSnackbarError"
+    ...mapMutations([
+      "setConnectionOffline"
     ]),
     closeSnackbar () {
-      this.setSnackbarError(false)
+      this.setConnectionOffline(false)
     }
   }
 }
