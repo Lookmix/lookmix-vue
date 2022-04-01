@@ -40,7 +40,6 @@ export default {
       return this.$route.name === 'newUser'
     },
     login () {
-      console.log(this.$route.name)
       return this.$route.name === 'login'
     }
   }
