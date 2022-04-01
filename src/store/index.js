@@ -73,6 +73,16 @@ export default new Vuex.Store({
       return axios.post(url, user, {
         withCredentials: true
       })
+    },
+    signin ({ state }, data) { // withCredentials: false
+      const url = `${DOMAIN}/auth/login`
+
+      return axios.post(`${url}`, data)
+    },
+    checkTokenValidity ({ state }, data) {
+      const url = `${DOMAIN}/auth/verify_access`
+
+      return axios.get(`${url}`, { withCredentials: true })
     }
   },
   modules: {
