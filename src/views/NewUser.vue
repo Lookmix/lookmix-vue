@@ -127,7 +127,7 @@ export default {
       clearTimeout(this.ongoingRequest);
 
       this.ongoingRequest = setTimeout(() => {
-        let phone = this.phone.replace(/\D/g, '')
+        let phone = utils.formatPhoneToOnlyDigits(this.phone)
 
         this.verifyDuplicatedPhone(phone)
           .then((response) => {
@@ -147,7 +147,7 @@ export default {
     },
     setNewUserState () {
       if (this.isFormValid && !this.validatingPhone) {
-        const phone = this.phone.replace(/\D/g, '')
+        const phone = utils.formatPhoneToOnlyDigits(this.phone)
 
         const user = {
           phone: phone,
