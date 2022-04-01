@@ -328,7 +328,7 @@
                 <v-btn
                   small
                   color="secondary"
-                  @click="resetPassword ? redirectToLogin() : redirectToHome()"
+                  @click="resetPassword ? closeDialog() : redirectToHome()"
                   rounded
                   outlined
                 >
@@ -363,6 +363,7 @@
 <script>
 import { mask } from 'vue-the-mask'
 import { mapActions } from 'vuex';
+import * as utils from './../../utils.js'
 
 export default {
   directives: { mask },
@@ -423,7 +424,7 @@ export default {
 
       clearTimeout(this.ongoingRequest);
 
-      let phone = this.phone.replace(/\D/g, '')
+      let phone = utils.formatPhoneToOnlyDigits(this.phone)
 
       return this.verifyDuplicatedPhone(phone)
         .then((response) => {
@@ -647,7 +648,7 @@ export default {
     saveNewPassword () {
       this.sendingNewPassword = true
 
-      const phone = this.phone.replace(/\D/g, '')
+      const phone = utils.formatPhoneToOnlyDigits(this.phone)
 
       const payload = {
         phone: phone,
