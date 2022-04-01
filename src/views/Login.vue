@@ -48,6 +48,7 @@
               elevation="2"
               rounded
               x-large
+              @click="login()"
             >
               ENTRAR
             </v-btn>
@@ -80,6 +81,23 @@
         </form>
       </v-card-text>
     </v-card>
+
+    <v-snackbar
+      v-model="errorSnackbar"
+      color="error"
+    >
+      {{ errorMessage }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          text
+          v-bind="attrs"
+          @click="errorSnackbar = false"
+        >
+          OK
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -87,6 +105,7 @@
 import { mask } from 'vue-the-mask'
 import * as utils from './../utils.js'
 import DialogConfirmPhone from './../components/auth/DialogConfirmPhone.vue'
+import { mapActions } from "vuex"
 
 export default {
   components: {
@@ -108,6 +127,8 @@ export default {
         requiredPassword: value => !!value || 'A senha deve ser preenchida',
         phoneLength: value => value && value.length < 15 ? 'O número está incorreto' : true,
       },
+      errorSnackbar: false,
+      errorMessage: undefined
     }
   },
   computed: {
@@ -119,9 +140,55 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      "signin"
+    ]),
     redirectToNewAccount () {
       this.$router.push('/new-user')
     },
+    redirectToHome () {
+      this.$router.push("/home")
+    },
+    login () {
+      const phone = utils.formatPhoneToOnlyDigits(this.phone)
+      const payload = {
+        "phone": phone,
+        "password": this.password
+      }
+      this.signin(payload)
+        .then((response) => {
+          this.redirectToHome()
+        })
+        .catch((exception) => {
+          const response = exception.response
+
+          if (response) {
+            const error = response.data.error
+  
+            this.handleLoginErrors(error)
+  
+            console.log(exception)
+          }
+        })
+    },
+    handleLoginErrors (error) {
+      const errors = {
+        badCredencials (self) {
+          self.errorSnackbar = true
+          self.errorMessage = "Número telefônico ou senha inválidos"
+          return;
+        },
+        validationError (self) {
+          self.errorSnackbar = true
+          self.errorMessage = "Erro no formato da requisição"
+          return;       
+        },
+      }
+      const errorHandlerFunction = errors[error]
+      const self = this
+
+      errorHandlerFunction(self)
+    }
   }
 }
 </script>
