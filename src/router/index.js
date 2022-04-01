@@ -6,28 +6,49 @@ import store from '@/store/index.js'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-  routes: [
-    // {
-    //   path: '/',
-    //   name: 'Looks semanais',
-    //   redirect: '/weekly-looks'
-    // }
-  ].concat(publicPrivateRoutes)
+  routes: [].concat(publicPrivateRoutes)
 })
-router.beforeEach((to, from, next) => {
+
+function handleRedirect (to, next, isPublicRoute) {
   const authenticated = store.state.authenticated
   const onlyLoggedOutRoute = to.matched.some(record => record.meta.onlyLoggedOutRoute)
-  const isPublicRoute = to.matched.some(record => record.meta.public)
 
+  // no-logged try to access private route
   if (!isPublicRoute && !authenticated) {
     return next({
       path: '/login',
     })
   }
+  // logged try to access public route
   if (authenticated && onlyLoggedOutRoute) {
     return next('/home')
   }
-  next()
+  return next()
+}
+router.beforeEach((to, from, next) => {
+  const authenticated = store.state.authenticated
+  const isPublicRoute = to.matched.some(record => record.meta.public)
+
+  // validation to user refresh page cenario
+  if (authenticated === undefined && !isPublicRoute) {
+    return store.dispatch("checkTokenValidity")
+      .then((response) => {
+        return handleRedirect(to, next, isPublicRoute)
+      })
+      .catch((exception) => {
+        const response = exception.response
+        const statusCode = response.status
+
+        if (statusCode === 401) {
+          store.commit("setAuthenticated", false)
+
+          return next({
+            path: '/login',
+          })
+        }
+      })
+  }
+  return handleRedirect(to, next, isPublicRoute)
 })
 
 export default router
