@@ -5,3 +5,8 @@ export function updateMetaTagTheme (isDarkTheme, color) {
     themeMetaTag.setAttribute('content', color);
   }
 }
+
+export function formatPhoneToOnlyDigits (phone) {
+  const result = phone.replace(/\D/g, '')
+  return result
+}
