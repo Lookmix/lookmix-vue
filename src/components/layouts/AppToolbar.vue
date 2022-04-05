@@ -6,14 +6,29 @@
     elevate-on-scroll
     scroll-target="#sheet-main"
   >
+    <v-app-bar-nav-icon @click="setShowNavDrawer(true)"></v-app-bar-nav-icon>
+
+    <v-toolbar-title> Lookmix </v-toolbar-title>
+
     <!-- color="primary" -->
-    Lookmix
   </v-app-bar>
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
+
 export default {
-  name: "AppToolbar"
+  name: "AppToolbar",
+  computed: {
+    ...mapState([
+      "showNavDrawer"
+    ])
+  },
+  methods: {
+    ...mapMutations([
+      "setShowNavDrawer"
+    ])
+  }
 }
 </script>
 
