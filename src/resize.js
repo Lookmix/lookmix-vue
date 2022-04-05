@@ -2,25 +2,25 @@ import store from '@/store/index.js'
 
 // https://vuetifyjs.com/en/components/grids/#usage
 
-function isMdOrHigher () {
+export function isMdOrHigher () {
   const width = window.innerWidth
   return width > 960 // && width <= 1264
 }
 
-function isSm () {
+export function isSm () {
   const width = window.innerWidth
   return width > 600 && width <= 960
 }
 
-function isXs () {
+export function isXs () {
   const width = window.innerWidth
   return width <= 600
 }
 
 
 export function onResize () {
-  const appBarMobileHeight = store.getters.appBarMobileHeight
-  const appBarDesktopHeight = store.getters.appBarDesktopHeight
+  const appBarMobileHeight = store.state.appBarMobileHeight
+  const appBarDesktopHeight = store.state.appBarDesktopHeight
   const innerHeight = window.innerHeight
 
   let appBarHeight = appBarMobileHeight
@@ -32,6 +32,7 @@ export function onResize () {
 
   if (!store.getters.isNewUserRoute && !store.getters.isLoginRoute) {
     store.commit("setMaxHeight", innerHeight - appBarHeight)
+    store.commit("setCurrentAppBarHeight", appBarHeight)
   }
 }
 
