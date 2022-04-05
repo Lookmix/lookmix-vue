@@ -1,48 +1,50 @@
 <template>
   <v-app>
-    <template v-if="false">
+    <template v-if="authenticated">
       <AppToolbar/>
     </template>
 
-    <v-main :dark="false">
-      <div
+    <v-main :dark="false" class="overflow-hidden">
+      <v-sheet
+        :max-height="maxHeight"
+        id="sheet-main"
+        class="overflow-y-auto"
+        :color="isLoginRoute ? '#ffb6c1ad' : isNewUserRoute ? '#8341a1d4' : 'initial'"
         :class="{
-          'login-new-user-display': true, 
-          'background-login': login, 
-          'background-new-user': newUser,
-          'default-background': !login && !newUser,
-          'transition': login || newUser
+          'login-new-user-display': isLoginRoute || isNewUserRoute,
+          'transition': isLoginRoute || isNewUserRoute
         }"
       >
-        <router-view/>
-      </div>
-
-      <SnackbarOfflineError/>
+        <router-view />
+      </v-sheet>
     </v-main>
+    <SnackbarOfflineError />
   </v-app>
 </template>
 
 <script>
-import { mapState } from "vuex"
-import AppToolbar from "./components/layouts/AppToolbar.vue"
-import SnackbarOfflineError from './components/SnackbarOfflineError.vue'
+import { mapState, mapGetters } from "vuex";
+import AppToolbar from "./components/layouts/AppToolbar.vue";
+import SnackbarOfflineError from "./components/SnackbarOfflineError.vue";
+import * as resize from "./resize.js"
 
 export default {
   components: {
     AppToolbar,
     SnackbarOfflineError
   },
+  mounted () {
+    resize.onResize()
+  },
   computed: {
-    ...mapState([
-      "user"
+    ...mapGetters([
+      "authenticated", 
+      "isNewUserRoute", 
+      "isLoginRoute", 
+      "maxHeight"
     ]),
-    newUser () {
-      return this.$route.name === 'newUser'
-    },
-    login () {
-      return this.$route.name === 'login'
-    }
-  }
+    ...mapState(["user", "connectionOffline"]),
+  },
 }
 </script>
 
@@ -54,16 +56,8 @@ export default {
   justify-content: center;
   height: 100%;
 }
-.background-login {
-  background: #ffb6c1ad;
-}
-.background-new-user {
-  background: #8341a1d4;
-}
 .transition {
-  transition: background 0.75s
-}
-.default-background {
-  background: initial
+  transition: background 0.75s;
+  /* transition: background 0.75s ease 0s; */
 }
 </style>
