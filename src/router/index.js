@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import publicPrivateRoutes from '@/router/routes/publicPrivateRoutes.js'
 import store from '@/store/index.js'
+import * as resize from "./../resize.js"
 
 Vue.use(VueRouter)
 
@@ -10,6 +11,9 @@ const router = new VueRouter({
 })
 
 function handleRedirect (to, next, isPublicRoute) {
+  store.commit("setIsNewUserRoute", to.name === "newUser")
+  store.commit("setIsLoginRoute", to.name === "login")
+
   const authenticated = store.state.authenticated
   const onlyLoggedOutRoute = to.matched.some(record => record.meta.onlyLoggedOutRoute)
 
@@ -49,6 +53,10 @@ router.beforeEach((to, from, next) => {
       })
   }
   return handleRedirect(to, next, isPublicRoute)
+})
+
+router.afterEach((to, from) => {
+  resize.onResize()
 })
 
 export default router
