@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import axiosInstance from '@/http.js'
-var axios = axiosInstance
+const axios = axiosInstance
 
 Vue.use(Vuex)
 
@@ -21,7 +21,20 @@ export default new Vuex.Store({
       password: undefined
     },
     connectionOffline: undefined,
-    authenticated: undefined
+    authenticated: undefined,
+    maxHeight: window.innerHeight,
+    isNewUserRoute: false,
+    isLoginRoute: false,
+    appBarMobileHeight: 56,
+    appBarDesktopHeight: 64
+  },
+  getters: {
+    authenticated: state => state.authenticated,
+    isNewUserRoute: state => state.isNewUserRoute, // router.currentRoute.name === "newUser"
+    isLoginRoute: state => state.isLoginRoute, // router.currentRoute.name === "login",
+    maxHeight: state => state.maxHeight,
+    appBarMobileHeight: state => state.appBarMobileHeight,
+    appBarDesktopHeight: state => state.appBarDesktopHeight
   },
   mutations: {
     setNewUser(state, data) {
@@ -32,6 +45,15 @@ export default new Vuex.Store({
     },
     setConnectionOffline (state, data) {
       state.connectionOffline = data
+    },
+    setMaxHeight (state, data) {
+      state.maxHeight = data
+    },
+    setIsNewUserRoute (state, data) {
+      state.isNewUserRoute = data
+    },
+    setIsLoginRoute (state, data) {
+      state.isLoginRoute = data
     }
   },
   actions: {
