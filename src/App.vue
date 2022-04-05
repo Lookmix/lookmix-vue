@@ -2,6 +2,7 @@
   <v-app>
     <template v-if="authenticated">
       <AppToolbar/>
+      <NavigationDrawer/>
     </template>
 
     <v-main :dark="false" class="overflow-hidden">
@@ -25,12 +26,14 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import AppToolbar from "./components/layouts/AppToolbar.vue";
+import NavigationDrawer from "./components/layouts/NavigationDrawer.vue";
 import SnackbarOfflineError from "./components/SnackbarOfflineError.vue";
 import * as resize from "./resize.js"
 
 export default {
   components: {
     AppToolbar,
+    NavigationDrawer,
     SnackbarOfflineError
   },
   mounted () {
