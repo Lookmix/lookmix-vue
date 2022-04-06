@@ -33,10 +33,12 @@ router.beforeEach((to, from, next) => {
   const authenticated = store.state.authenticated
   const isPublicRoute = to.matched.some(record => record.meta.public)
 
-  // validation to user refresh page cenario
+  // validation for user refresh page (F5) cenario
   if (authenticated === undefined && !isPublicRoute) {
     return store.dispatch("checkTokenValidity")
       .then((response) => {
+        store.commit("setAuthenticated", true)
+
         return handleRedirect(to, next, isPublicRoute)
       })
       .catch((exception) => {
