@@ -46,13 +46,6 @@ axiosInstance.interceptors.response.use(
   // Trigged if status code is 2xx 
   // Do something with response data
   function (response) {
-    const withCredentials = response.request.withCredentials
-    const authenticated = store.state.authenticated
-    const isLogin = response.config.url.includes("/login")
-
-    if ((withCredentials && authenticated !== true) || isLogin) {
-      store.commit("setAuthenticated", true)
-    }
     return response;
   }, 
   // Trigged if status codes is not 2xx 
