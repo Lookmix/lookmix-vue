@@ -105,7 +105,7 @@
 import { mask } from 'vue-the-mask'
 import * as utils from './../utils.js'
 import DialogConfirmPhone from './../components/auth/DialogConfirmPhone.vue'
-import { mapActions } from "vuex"
+import { mapActions, mapMutations } from "vuex"
 
 export default {
   components: {
@@ -128,7 +128,8 @@ export default {
         phoneLength: value => value && value.length < 15 ? 'O número está incorreto' : true,
       },
       errorSnackbar: false,
-      errorMessage: undefined
+      errorMessage: undefined,
+      badCredentialsError: "badCredentials"
     }
   },
   computed: {
@@ -141,7 +142,11 @@ export default {
   },
   methods: {
     ...mapActions([
-      "signin"
+      "signin",
+      "checkTokenValidity"
+    ]),
+    ...mapMutations([
+      "setAuthenticated"
     ]),
     redirectToNewAccount () {
       this.$router.push('/new-user')
@@ -157,23 +162,39 @@ export default {
       }
       this.signin(payload)
         .then((response) => {
-          this.redirectToHome()
+          this.checkTokenValidity()
+            .then((response) => {
+              this.setAuthenticated(true)
+
+              this.redirectToHome()
+            })
+            .catch((exception) => {
+              const response = exception.response
+
+              if (response.status === 401) {
+                const error = this.badCredentialsError
+
+                this.handleLoginErrors(error)
+
+                console.log(exception)
+              }
+            })
         })
         .catch((exception) => {
           const response = exception.response
 
-          if (response) {
-            const error = response.data.error
-  
+          if (response.status === 401) {
+            const error = this.badCredentialsError
+
             this.handleLoginErrors(error)
-  
+
             console.log(exception)
           }
         })
     },
     handleLoginErrors (error) {
       const errors = {
-        badCredencials (self) {
+        badCredentials (self) {
           self.errorSnackbar = true
           self.errorMessage = "Número telefônico ou senha inválidos"
           return;
