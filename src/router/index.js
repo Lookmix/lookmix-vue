@@ -19,12 +19,16 @@ function handleRedirect (to, next, isPublicRoute) {
 
   // no-logged try to access private route
   if (!isPublicRoute && !authenticated) {
+    store.commit("setIsLoginRoute", true)
+
     return next({
       path: '/login',
     })
   }
   // logged try to access public route
   if (authenticated && onlyLoggedOutRoute) {
+    store.commit("setIsNewUserRoute", false)
+    store.commit("setIsLoginRoute", false)
     return next('/home')
   }
   return next()
