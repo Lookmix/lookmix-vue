@@ -113,6 +113,11 @@ export default new Vuex.Store({
       const url = `${DOMAIN}/auth/verify_access`
 
       return axios.get(`${url}`, { withCredentials: true })
+    },
+    logout ({ state }, data) {
+      const url = `${DOMAIN}/auth/logout`
+
+      return axios.delete(`${url}`, { withCredentials: true })
     }
   },
   modules: {
