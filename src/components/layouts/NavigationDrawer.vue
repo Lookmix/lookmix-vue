@@ -38,7 +38,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link>
+        <v-list-item link @click="doLogout()">
           <v-list-item-icon>
             <v-icon>mdi-logout</v-icon>
           </v-list-item-icon>
@@ -50,11 +50,28 @@
 
       </v-list>
     </v-navigation-drawer>
-  </div>  
+
+    <v-snackbar
+      v-model="errorSnackbar"
+      color="error"
+    >
+      {{ errorMessage }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          text
+          v-bind="attrs"
+          @click="errorSnackbar = false"
+        >
+          OK
+        </v-btn>
+      </template>
+    </v-snackbar>
+  </div>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
   data () {
@@ -63,6 +80,9 @@ export default {
       items: [
         { title: 'PERFIL', icon: 'mdi-account' },
       ],
+      logoutFailError: "logoutFail",
+      errorSnackbar: false,
+      errorMessage: undefined,
     }
   },
   computed: {
@@ -70,12 +90,43 @@ export default {
   },
   methods: {
     ...mapMutations([
-      "setShowNavDrawer"
+      "setShowNavDrawer",
+      "setAuthenticated"
+    ]),
+    ...mapActions([
+      "logout"
     ]),
     updateDrawerState(event) {
-      if(!event) {
+      if (!event) {
         this.setShowNavDrawer(false)
       }
+    },
+    doLogout() {
+      this.logout()
+        .then((response) => {
+          this.setAuthenticated(false)
+          this.redirectToLogin()
+        })
+        .catch((exception) => {
+          this.handleLogoutErrors(this.logoutFailError)
+          console.log(exception)
+        })
+    },
+    redirectToLogin () {
+      this.$router.push("/login")
+    },
+    handleLogoutErrors (error) {
+      const errors = {
+        logoutFail (self) {
+          self.errorSnackbar = true
+          self.errorMessage = "Falha ao fazer logout"
+          return;
+        }
+      }
+      const errorHandlerFunction = errors[error]
+      const self = this
+
+      errorHandlerFunction(self)
     }
   }
 }
