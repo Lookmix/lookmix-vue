@@ -1,6 +1,7 @@
 import axios from 'axios'
 import axiosRetry from 'axios-retry';
 import store from '@/store/index.js'
+import router from "@/router/index.js"
 
 const axiosInstance = axios.create()
 
@@ -29,8 +30,13 @@ axiosInstance.interceptors.request.use(
     // Do something before request is sent
     store.commit("setConnectionOffline", false)
   
+    let xsrfCookieName = "csrf_access_token"
+
+    if (config.url.includes("/refresh")) {
+      xsrfCookieName = "csrf_refresh_token"
+    }
     if (config.withCredentials) {
-      config.xsrfCookieName = "csrf_access_token"
+      config.xsrfCookieName = xsrfCookieName
       config.xsrfHeaderName = "X-CSRF-TOKEN"
     }
     return config;
@@ -52,9 +58,25 @@ axiosInstance.interceptors.response.use(
   // Do something with response error
   function (error) {
     const response = error.response
+    const isLogin = response.config.url.includes("/login")
+    const isRefresh = response.config.url.includes("/refresh")
+    const status = response.status
 
+    if (status === 401) {
+      if (!isLogin && !isRefresh) {
+        return store.dispatch("refreshToken")
+          .then(() => {
+            return axiosInstance.request(error.config)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      }
+      store.commit("setAuthenticated", false)
+      router.push("/login")
+    }
     if (response === undefined || response === null) {
-      console.log(" - CONECTION OFFLINE - ")
+      console.log(" - CONNECTION OFFLINE - ")
       store.commit("setConnectionOffline", true)
     }
     return Promise.reject(error);
