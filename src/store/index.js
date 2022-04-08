@@ -100,9 +100,7 @@ export default new Vuex.Store({
 
       const user = state.newUser
 
-      return axios.post(url, user, {
-        withCredentials: true
-      })
+      return axios.post(url, user, { withCredentials: true })
     },
     signin ({ state }, data) { // withCredentials: false
       const url = `${DOMAIN}/auth/login`
@@ -118,6 +116,11 @@ export default new Vuex.Store({
       const url = `${DOMAIN}/auth/logout`
 
       return axios.delete(`${url}`, { withCredentials: true })
+    },
+    refreshToken ({ state }, data) {
+      const url = `${DOMAIN}/auth/refresh`
+
+      return axios.post(`${url}`, null, { withCredentials: true })
     }
   },
   modules: {
