@@ -1,8 +1,8 @@
 <template>
   <div>
-    <template v-for="n in 10">
+    <div v-for="n in 10" :key="n">
       {{ n }}
-      <div :key="n">
+      <div>
         <br />
         <br />
         <br />
@@ -12,7 +12,7 @@
         <br />
         Home works!
       </div>
-    </template>
+    </div>
   </div>
 </template>
 
