@@ -68,9 +68,6 @@ axiosInstance.interceptors.response.use(
           .then(() => {
             return axiosInstance.request(error.config)
           })
-          .catch((error) => {
-            console.log(error)
-          })
       }
       store.commit("setAuthenticated", false)
       router.push("/login")
