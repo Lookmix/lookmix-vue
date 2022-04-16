@@ -14,7 +14,7 @@ function handleRedirect (to, next, isPublicRoute) {
   store.commit("setIsNewUserRoute", to.name === "newUser")
   store.commit("setIsLoginRoute", to.name === "login")
 
-  const authenticated = store.state.authenticated
+  const authenticated = store.getters.authenticated
   const onlyLoggedOutRoute = to.matched.some(record => record.meta.onlyLoggedOutRoute)
 
   // no-logged try to access private route
@@ -34,16 +34,17 @@ function handleRedirect (to, next, isPublicRoute) {
   return next()
 }
 router.beforeEach((to, from, next) => {
-  const authenticated = store.state.authenticated
+  const authenticated = store.getters.authenticated
   const isPublicRoute = to.matched.some(record => record.meta.public)
 
   // validation for user refresh page (F5) cenario
   if (authenticated === undefined && !isPublicRoute) {
     return store.dispatch("checkTokenValidity")
       .then((response) => {
-        store.commit("setAuthenticated", true)
-
-        return handleRedirect(to, next, isPublicRoute)
+        if (response) {
+          store.commit("setAuthenticated", true)
+          return handleRedirect(to, next, isPublicRoute)
+        }
       })
       .catch((exception) => {
         const response = exception.response
