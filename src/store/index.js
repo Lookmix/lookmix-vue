@@ -29,15 +29,17 @@ export default new Vuex.Store({
     appBarDesktopHeight: 64,
     currentAppBarHeight: undefined,
     showNavDrawer: false,
-    bottomNavigatorHeight: 56
+    bottomNavigatorHeight: 56,
+    currentRouteName: undefined
   },
   getters: {
     authenticated: state => state.authenticated,
-    isNewUserRoute: state => state.isNewUserRoute, // router.currentRoute.name === "newUser"
-    isLoginRoute: state => state.isLoginRoute, // router.currentRoute.name === "login",
+    isNewUserRoute: state => state.isNewUserRoute,
+    isLoginRoute: state => state.isLoginRoute,
     maxHeight: state => state.maxHeight - state.bottomNavigatorHeight,
     showNavDrawer: state => state.showNavDrawer,
-    currentAppBarHeight: state => state.currentAppBarHeight
+    currentAppBarHeight: state => state.currentAppBarHeight,
+    currentRouteName: state => state.currentRouteName
   },
   mutations: {
     setNewUser(state, data) {
@@ -63,6 +65,9 @@ export default new Vuex.Store({
     },
     setCurrentAppBarHeight (state, data) {
       state.currentAppBarHeight = data
+    },
+    setCurrentRouteName (state, data) {
+      state.currentRouteName = data
     }
   },
   actions: {
