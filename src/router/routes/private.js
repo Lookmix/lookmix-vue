@@ -2,6 +2,9 @@
 // import Dashboard from '@/views/Dashboard/Index.vue'
 // import Settings from '@/views/Settings/Index.vue'
 import Home from '@/views/Home.vue'
+import ShuffleLook from '@/views/ShuffleLook.vue'
+import DailyLook from '@/views/DailyLook.vue'
+import Closet from '@/views/Closet.vue'
 
 const routes = [
   // {
@@ -14,7 +17,22 @@ const routes = [
     path: '/home',
     name: 'home',
     component: Home,
-  }
+  },
+  {
+    path: '/shuffle-look',
+    name: 'shuffleLook',
+    component: ShuffleLook,
+  },
+  {
+    path: '/daily-look',
+    name: 'dailyLook',
+    component: DailyLook,
+  },
+  {
+    path: '/closet',
+    name: 'closet',
+    component: Closet,
+  },
 ]
 
 export default routes
