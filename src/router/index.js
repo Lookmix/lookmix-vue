@@ -63,6 +63,7 @@ router.beforeEach((to, from, next) => {
 })
 
 router.afterEach((to, from) => {
+  store.commit("setCurrentRouteName", to.name)
   resize.onResize()
 })
 
