@@ -19,6 +19,10 @@
         <router-view />
       </v-sheet>
     </v-main>
+
+    <template v-if="authenticated">
+      <BottomNavigator />
+    </template>
     <SnackbarOfflineError />
   </v-app>
 </template>
@@ -27,6 +31,7 @@
 import { mapState, mapGetters } from "vuex";
 import AppToolbar from "./components/layouts/AppToolbar.vue";
 import NavigationDrawer from "./components/layouts/NavigationDrawer.vue";
+import BottomNavigator from "./components/layouts/BottomNavigator.vue"
 import SnackbarOfflineError from "./components/SnackbarOfflineError.vue";
 import * as resize from "./resize.js"
 
@@ -34,7 +39,8 @@ export default {
   components: {
     AppToolbar,
     NavigationDrawer,
-    SnackbarOfflineError
+    BottomNavigator,
+    SnackbarOfflineError,
   },
   mounted () {
     resize.onResize()
