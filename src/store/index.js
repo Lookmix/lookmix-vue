@@ -28,13 +28,14 @@ export default new Vuex.Store({
     appBarMobileHeight: 56,
     appBarDesktopHeight: 64,
     currentAppBarHeight: undefined,
-    showNavDrawer: false
+    showNavDrawer: false,
+    bottomNavigatorHeight: 56
   },
   getters: {
     authenticated: state => state.authenticated,
     isNewUserRoute: state => state.isNewUserRoute, // router.currentRoute.name === "newUser"
     isLoginRoute: state => state.isLoginRoute, // router.currentRoute.name === "login",
-    maxHeight: state => state.maxHeight,
+    maxHeight: state => state.maxHeight - state.bottomNavigatorHeight,
     showNavDrawer: state => state.showNavDrawer,
     currentAppBarHeight: state => state.currentAppBarHeight
   },
