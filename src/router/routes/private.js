@@ -1,10 +1,10 @@
 // import Accounts from '@/views/Accounts/Index.vue'
 // import Dashboard from '@/views/Dashboard/Index.vue'
 // import Settings from '@/views/Settings/Index.vue'
-import Home from '@/views/Home.vue'
-import ShuffleLook from '@/views/ShuffleLook.vue'
-import DailyLook from '@/views/DailyLook.vue'
-import Closet from '@/views/Closet.vue'
+import HomeView from '@/views/HomeView.vue'
+import ShuffleLookView from '@/views/ShuffleLookView.vue'
+import DailyLookView from '@/views/DailyLookView.vue'
+import ClosetView from '@/views/ClosetView.vue'
 
 const routes = [
   // {
@@ -16,22 +16,22 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    component: Home,
+    component: HomeView,
   },
   {
     path: '/shuffle-look',
     name: 'shuffleLook',
-    component: ShuffleLook,
+    component: ShuffleLookView,
   },
   {
     path: '/daily-look',
     name: 'dailyLook',
-    component: DailyLook,
+    component: DailyLookView,
   },
   {
     path: '/closet',
     name: 'closet',
-    component: Closet,
+    component: ClosetView,
   },
 ]
 
