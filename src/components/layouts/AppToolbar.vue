@@ -10,19 +10,29 @@
 
     <v-toolbar-title> Lookmix </v-toolbar-title>
 
-    <!-- color="primary" -->
+    <v-spacer></v-spacer>
+
+    <v-btn v-if="isClosetRoute" icon color="accent">
+      <v-icon>mdi-plus</v-icon>
+    </v-btn>
   </v-app-bar>
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "AppToolbar",
   computed: {
     ...mapState([
       "showNavDrawer"
-    ])
+    ]),
+    ...mapGetters([
+      "currentRouteName"
+    ]),
+    isClosetRoute () {
+      return this.currentRouteName === "closet"
+    }
   },
   methods: {
     ...mapMutations([
