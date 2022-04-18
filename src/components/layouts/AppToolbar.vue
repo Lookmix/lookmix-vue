@@ -6,13 +6,27 @@
     elevate-on-scroll
     scroll-target="#sheet-main"
   >
-    <v-app-bar-nav-icon @click="setShowNavDrawer(true)"></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon 
+      @click="leftArrowFunction ? redirectToPrevious() : setShowNavDrawer(true)"
+      v-slot:default
+    >
+      <v-icon> 
+        {{ leftArrowFunction ? "mdi-arrow-left" : "mdi-menu" }} 
+      </v-icon>
+    </v-app-bar-nav-icon>
 
-    <v-toolbar-title> Lookmix </v-toolbar-title>
+    <v-toolbar-title> 
+      {{ toolbarTitle }} 
+    </v-toolbar-title>
 
     <v-spacer></v-spacer>
 
-    <v-btn v-if="isClosetRoute" icon color="accent">
+    <v-btn 
+      v-if="isClosetRoute" 
+      icon 
+      color="accent"
+      @click="redirectToForm()"
+    >
       <v-icon>mdi-plus</v-icon>
     </v-btn>
   </v-app-bar>
@@ -25,19 +39,35 @@ export default {
   name: "AppToolbar",
   computed: {
     ...mapState([
-      "showNavDrawer"
+      "showNavDrawer",
+      "previousPage"
     ]),
     ...mapGetters([
-      "currentRouteName"
+      "currentRouteName",
+      "toolbarTitle"
     ]),
     isClosetRoute () {
       return this.currentRouteName === "closet"
+    },
+    leftArrowFunction () {
+      const routesLeftArrowIcon = [ "clothesForm" ]
+      
+      if (routesLeftArrowIcon.includes(this.currentRouteName)) {
+        return true
+      }
+      return false
     }
   },
   methods: {
     ...mapMutations([
       "setShowNavDrawer"
-    ])
+    ]),
+    redirectToPrevious () {
+      this.$router.push(this.previousPage)
+    },
+    redirectToForm () {
+      this.$router.push("clothes-form")
+    }
   }
 }
 </script>
