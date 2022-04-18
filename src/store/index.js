@@ -30,16 +30,25 @@ export default new Vuex.Store({
     currentAppBarHeight: undefined,
     showNavDrawer: false,
     bottomNavigatorHeight: 56,
-    currentRouteName: undefined
+    currentRouteName: undefined,
+    toolbarTitle: "Lookmix",
+    previousPage: undefined
   },
   getters: {
     authenticated: state => state.authenticated,
     isNewUserRoute: state => state.isNewUserRoute,
     isLoginRoute: state => state.isLoginRoute,
-    maxHeight: state => state.maxHeight - state.bottomNavigatorHeight,
+    maxHeight (state) {
+      if (state.isLoginRoute || state.isNewUserRoute) {
+        return state.maxHeight
+      }
+      return state.maxHeight - state.bottomNavigatorHeight
+    },
     showNavDrawer: state => state.showNavDrawer,
     currentAppBarHeight: state => state.currentAppBarHeight,
-    currentRouteName: state => state.currentRouteName
+    currentRouteName: state => state.currentRouteName,
+    toolbarTitle: state => state.toolbarTitle,
+    previousPage: state => state.previousPage
   },
   mutations: {
     setNewUser(state, data) {
@@ -68,6 +77,12 @@ export default new Vuex.Store({
     },
     setCurrentRouteName (state, data) {
       state.currentRouteName = data
+    },
+    setToolbarTitle (state, data) {
+      state.toolbarTitle = data
+    },
+    setPreviousPage (state, data) {
+      state.previousPage = data
     }
   },
   actions: {
