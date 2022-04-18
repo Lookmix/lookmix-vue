@@ -20,9 +20,10 @@
       </v-sheet>
     </v-main>
 
-    <template v-if="authenticated">
+    <template v-if="showBottomNavigator">
       <BottomNavigator />
     </template>
+
     <SnackbarOfflineError />
   </v-app>
 </template>
@@ -50,9 +51,16 @@ export default {
       "authenticated", 
       "isNewUserRoute", 
       "isLoginRoute", 
-      "maxHeight"
+      "maxHeight",
+      "currentRouteName"
     ]),
-    ...mapState(["user", "connectionOffline"]),
+    ...mapState([
+      "user",
+      "connectionOffline"
+    ]),
+    showBottomNavigator () {
+      return this.authenticated && this.currentRouteName !== "clothesForm"
+    }
   },
 }
 </script>
