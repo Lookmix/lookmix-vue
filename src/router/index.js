@@ -64,6 +64,8 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to, from) => {
   store.commit("setCurrentRouteName", to.name)
+  store.commit("setToolbarTitle", to.meta.pageTitle)
+  store.commit("setPreviousPage", from.path)
   resize.onResize()
 })
 
