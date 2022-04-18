@@ -25,7 +25,7 @@
   export default {
     data () { 
       return {
-        value: 0,
+        value: undefined,
         options: [
           { text: "Feed", icon: "mdi-home", to: "/home" },
           { text: "Look diário", icon: "mdi-calendar", to: "/daily-look" },
