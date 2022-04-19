@@ -32,14 +32,15 @@ export default new Vuex.Store({
     bottomNavigatorHeight: 56,
     currentRouteName: undefined,
     toolbarTitle: "Lookmix",
-    previousPage: undefined
+    previousPage: undefined,
+    maxHeightCurrentRoute: undefined
   },
   getters: {
     authenticated: state => state.authenticated,
     isNewUserRoute: state => state.isNewUserRoute,
     isLoginRoute: state => state.isLoginRoute,
     maxHeight (state) {
-      if (state.isLoginRoute || state.isNewUserRoute) {
+      if (state.maxHeightCurrentRoute) {
         return state.maxHeight
       }
       return state.maxHeight - state.bottomNavigatorHeight
@@ -83,6 +84,9 @@ export default new Vuex.Store({
     },
     setPreviousPage (state, data) {
       state.previousPage = data
+    },
+    setMaxHeightCurrentRoute (state, data) {
+      state.maxHeightCurrentRoute = data
     }
   },
   actions: {
