@@ -66,6 +66,7 @@ router.afterEach((to, from) => {
   store.commit("setCurrentRouteName", to.name)
   store.commit("setToolbarTitle", to.meta.pageTitle)
   store.commit("setPreviousPage", from.path)
+  store.commit("setMaxHeightCurrentRoute", to.meta.maxHeight)
   resize.onResize()
 })
 
