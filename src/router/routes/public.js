@@ -16,7 +16,8 @@ const routes = [
 export default routes.map(route => {
   const meta = {
     public: true,
-    onlyLoggedOutRoute: true
+    onlyLoggedOutRoute: true,
+    maxHeight: true
   }
   return { ...route, meta }
 })

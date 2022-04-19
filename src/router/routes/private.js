@@ -42,7 +42,7 @@ const routes = [
     path: '/clothes-form',
     name: 'clothesForm',
     component: ClothesFormView,
-    meta: { pageTitle: "Adicionar peças" }
+    meta: { pageTitle: "Adicionar peças", maxHeight: true }
   },
 ]
 
