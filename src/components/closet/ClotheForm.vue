@@ -54,7 +54,7 @@
         </v-list>
       </v-card-text>
 
-      <v-card-title>Guarda-roupa</v-card-title>
+      <v-card-title>Ocasião</v-card-title>
 
       <v-card-text>
         <v-btn-toggle
@@ -74,9 +74,9 @@
         </v-btn-toggle>            
       </v-card-text>
 
-      <v-card-title>Ocasião</v-card-title>
+      <v-card-title>Guarda-roupa</v-card-title>
 
-      <v-card-subtitle> Marque uma ou mais </v-card-subtitle>
+      <v-card-subtitle> Marque um ou mais </v-card-subtitle>
 
       <v-card-text>
         <v-sheet elevation="0" rounded style="padding: 10px;" outlined>
@@ -101,30 +101,26 @@
       <v-card-subtitle> Quais estações ideais para usar essa peça? </v-card-subtitle>
 
       <v-card-text>
-        <v-list 
-          dense
-          outlined
-        >
-          <!-- v-model="selectedItem" -->
-          <v-list-item-group
+        <v-sheet elevation="0" rounded style="padding: 10px;" outlined>
+          <v-chip-group
+            color="accent"
             mandatory
             multiple
-            color="accent"
+            column
           >
-            <v-list-item
+            <v-chip 
               v-for="(season, index) in seasons"
               :key="index"
             >
-              <v-list-item-content>
-                <v-list-item-title>
-                  {{ season }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
+              <v-icon left>
+                {{ 'mdi-'+ season.icon}}
+              </v-icon>
+
+              {{ season.name }}
+            </v-chip>
+          </v-chip-group>
+        </v-sheet>
       </v-card-text>
-      <!-- </div> -->
     </v-card>
   </div>
 </template>
@@ -186,10 +182,10 @@ export default {
         'Parques e praças'
       ],
       seasons: [
-        "Primavera",
-        "Verão",
-        "Outono",
-        "Inverno"
+        { name: "Primavera", icon: "image-filter-vintage"},
+        { name: "Verão", icon: "white-balance-sunny"},
+        { name: "Outono", icon: "leaf-maple"},
+        { name: "Inverno", icon: "snowflake"}
       ],
     }
   },
