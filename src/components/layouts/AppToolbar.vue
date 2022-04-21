@@ -29,6 +29,17 @@
     >
       <v-icon>mdi-plus</v-icon>
     </v-btn>
+
+    <v-btn 
+      v-if="isClothesFormRoute" 
+      rounded
+      elevation="0"
+      small
+      color="secondary"
+      @click="saveClothesForm()"
+    >
+      SALVAR
+    </v-btn>
   </v-app-bar>
 </template>
 
@@ -49,6 +60,9 @@ export default {
     isClosetRoute () {
       return this.currentRouteName === "closet"
     },
+    isClothesFormRoute () {
+      return this.currentRouteName === "clothesForm"
+    },
     leftArrowFunction () {
       const routesLeftArrowIcon = [ "clothesForm" ]
       
@@ -67,6 +81,9 @@ export default {
     },
     redirectToForm () {
       this.$router.push("clothes-form")
+    },
+    saveClothesForm () {
+      
     }
   }
 }
