@@ -10,7 +10,7 @@
         :max-height="maxHeight"
         id="sheet-main"
         class="overflow-y-auto"
-        :color="isLoginRoute ? '#ffb6c1ad' : isNewUserRoute ? '#8341a1d4' : 'initial'"
+        :color="isLoginRoute ? '#ffb6c1ad' : isNewUserRoute ? '#8341a1d4' : isClothesFormRoute ? '#ebebeb78' : 'initial'"
         :class="{
           'login-new-user-display': isLoginRoute || isNewUserRoute,
           'transition': isLoginRoute || isNewUserRoute
@@ -60,7 +60,10 @@ export default {
     ]),
     showBottomNavigator () {
       return this.authenticated && this.currentRouteName !== "clothesForm"
-    }
+    },
+    isClothesFormRoute () {
+      return this.currentRouteName === "clothesForm"
+    },
   },
 }
 </script>
