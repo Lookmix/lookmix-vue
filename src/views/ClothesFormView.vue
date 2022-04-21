@@ -9,7 +9,11 @@
         </v-card-text>
       </v-card>
 
-      <v-sheet elevation="0" style="margin: 5px; display: flex; justify-content: center;">
+      <v-sheet 
+        elevation="0" 
+        style="margin: 5px; display: flex; justify-content: center;"
+        :color="'#ebebeb78'"
+      >
         <v-btn 
           color="accent"
           :elevation="existsClothes ? 0 : 2"
