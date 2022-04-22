@@ -11,7 +11,7 @@
 
       <v-sheet 
         elevation="0" 
-        style="margin: 5px; display: flex; justify-content: center;"
+        style="padding: 5px; display: flex; justify-content: center;"
         :color="'#ebebeb78'"
       >
         <v-btn 
