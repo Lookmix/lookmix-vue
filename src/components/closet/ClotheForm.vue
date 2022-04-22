@@ -15,8 +15,15 @@
         height="250"
         src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
       >
-        <v-btn fab x-small style="margin: 10px; float: right;">
-          <v-icon>mdi-close</v-icon>
+        <v-btn 
+          fab 
+          x-small 
+          style="margin: 10px; float: right;"
+          @click="remove()"
+        >
+          <v-icon>
+            mdi-close
+          </v-icon>
         </v-btn>
       </v-img>
 
@@ -193,7 +200,7 @@ export default {
         { name: "Dia", id: uuidv4() },
         { name: "Noite", id: uuidv4() },
         { name: "Trabalho", id: uuidv4() },
-        { name: "Faculdade", id: uuidv4() },
+        { name: "Curso/Faculdade", id: uuidv4() },
         { name: "Festa/evento", id: uuidv4() },
         { name: "Restaurante", id: uuidv4() },
         { name: "Shopping", id: uuidv4() },
@@ -244,6 +251,9 @@ export default {
         seasons: seasons
       }
       this.$emit("payload", payload)
+    },
+    remove () {
+      this.$emit("remove", undefined)
     }
   }
 }
