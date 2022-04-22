@@ -8,7 +8,6 @@
   >
     <v-app-bar-nav-icon 
       @click="leftArrowFunction ? redirectToPrevious() : setShowNavDrawer(true)"
-      v-slot:default
     >
       <v-icon> 
         {{ leftArrowFunction ? "mdi-arrow-left" : "mdi-menu" }} 
@@ -21,32 +20,16 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn 
-      v-if="isClosetRoute" 
-      icon 
-      color="accent"
-      @click="redirectToForm()"
-    >
-      <v-icon>mdi-plus</v-icon>
-    </v-btn>
-
-    <v-btn 
-      v-if="isClothesFormRoute" 
-      rounded
-      elevation="0"
-      small
-      color="secondary"
-      @click="saveClothesForm()"
-    >
-      SALVAR
-    </v-btn>
+    <toolbar-buttons/>
   </v-app-bar>
 </template>
 
 <script>
 import { mapState, mapMutations, mapGetters } from "vuex";
+import ToolbarButtons from '../ToolbarButtons.vue';
 
 export default {
+  components: { ToolbarButtons },
   name: "AppToolbar",
   computed: {
     ...mapState([
@@ -57,12 +40,6 @@ export default {
       "currentRouteName",
       "toolbarTitle"
     ]),
-    isClosetRoute () {
-      return this.currentRouteName === "closet"
-    },
-    isClothesFormRoute () {
-      return this.currentRouteName === "clothesForm"
-    },
     leftArrowFunction () {
       const routesLeftArrowIcon = [ "clothesForm" ]
       
@@ -79,12 +56,6 @@ export default {
     redirectToPrevious () {
       this.$router.push(this.previousPage)
     },
-    redirectToForm () {
-      this.$router.push("clothes-form")
-    },
-    saveClothesForm () {
-      
-    }
   }
 }
 </script>
