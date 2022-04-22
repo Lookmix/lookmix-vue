@@ -34,7 +34,8 @@ export default new Vuex.Store({
     toolbarTitle: "Lookmix",
     previousPage: undefined,
     maxHeightCurrentRoute: undefined,
-    backgroundColor: "initial"
+    backgroundColor: "initial",
+    disableSaveClothesButton: true
   },
   getters: {
     authenticated: state => state.authenticated,
@@ -51,7 +52,8 @@ export default new Vuex.Store({
     currentRouteName: state => state.currentRouteName,
     toolbarTitle: state => state.toolbarTitle,
     previousPage: state => state.previousPage,
-    backgroundColor: state => state.backgroundColor
+    backgroundColor: state => state.backgroundColor,
+    disableSaveClothesButton: state => state.disableSaveClothesButton
   },
   mutations: {
     setNewUser(state, data) {
@@ -92,6 +94,9 @@ export default new Vuex.Store({
     },
     setBackgroundColor (state, data) {
       state.backgroundColor = data
+    },
+    setDisableSaveClothesButton (state, data) {
+      state.disableSaveClothesButton = data
     }
   },
   actions: {
