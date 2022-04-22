@@ -18,31 +18,47 @@ const routes = [
     path: '/home',
     name: 'home',
     component: HomeView,
-    meta: { pageTitle: "Lookmix" }
+    meta: { 
+      pageTitle: "Lookmix",
+      backgroundColor: "initial"
+    }
   },
   {
     path: '/shuffle-look',
     name: 'shuffleLook',
     component: ShuffleLookView,
-    meta: { pageTitle: "Lookmix" }
+    meta: { 
+      pageTitle: "Lookmix",
+      backgroundColor: "initial"
+    }
   },
   {
     path: '/daily-look',
     name: 'dailyLook',
     component: DailyLookView,
-    meta: { pageTitle: "Lookmix" }
+    meta: { 
+      pageTitle: "Lookmix",
+      backgroundColor: "initial"
+    }
   },
   {
     path: '/closet',
     name: 'closet',
     component: ClosetView,
-    meta: { pageTitle: "Lookmix" }
+    meta: { 
+      pageTitle: "Lookmix",
+      backgroundColor: "initial"
+    }
   },
   {
     path: '/clothes-form',
     name: 'clothesForm',
     component: ClothesFormView,
-    meta: { pageTitle: "Adicionar peças", maxHeight: true }
+    meta: { 
+      pageTitle: "Adicionar peças", 
+      maxHeight: true,
+      backgroundColor: "#ebebeb78"
+    }
   },
 ]
 

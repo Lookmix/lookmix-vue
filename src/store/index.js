@@ -33,7 +33,8 @@ export default new Vuex.Store({
     currentRouteName: undefined,
     toolbarTitle: "Lookmix",
     previousPage: undefined,
-    maxHeightCurrentRoute: undefined
+    maxHeightCurrentRoute: undefined,
+    backgroundColor: "initial"
   },
   getters: {
     authenticated: state => state.authenticated,
@@ -49,7 +50,8 @@ export default new Vuex.Store({
     currentAppBarHeight: state => state.currentAppBarHeight,
     currentRouteName: state => state.currentRouteName,
     toolbarTitle: state => state.toolbarTitle,
-    previousPage: state => state.previousPage
+    previousPage: state => state.previousPage,
+    backgroundColor: state => state.backgroundColor
   },
   mutations: {
     setNewUser(state, data) {
@@ -87,6 +89,9 @@ export default new Vuex.Store({
     },
     setMaxHeightCurrentRoute (state, data) {
       state.maxHeightCurrentRoute = data
+    },
+    setBackgroundColor (state, data) {
+      state.backgroundColor = data
     }
   },
   actions: {

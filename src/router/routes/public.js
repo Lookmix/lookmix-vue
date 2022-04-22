@@ -5,19 +5,23 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: LoginView
+    component: LoginView,
+    meta: {
+      backgroundColor: "#ffb6c1ad"
+    }
   },
   {
     path: '/new-user',
     name: 'newUser',
-    component: NewUserView
+    component: NewUserView,
+    meta: {
+      backgroundColor: "#8341a1d4"
+    }
   }
 ]
 export default routes.map(route => {
-  const meta = {
-    public: true,
-    onlyLoggedOutRoute: true,
-    maxHeight: true
-  }
-  return { ...route, meta }
+  route.meta["public"] = true
+  route.meta["onlyLoggedOutRoute"] = true
+  route.meta["maxHeight"] = true
+  return { ...route }
 })
