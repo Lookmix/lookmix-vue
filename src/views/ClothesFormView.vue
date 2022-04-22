@@ -33,7 +33,7 @@
 
     <div style="display: flex; overflow-x: auto;">
       <template v-for="(clothe, index) in clothes">
-        <ClotheForm :key="index"/>
+        <ClotheForm :key="index" @payload="setClothe($event, index)"/>
 
         <v-divider vertical :key="'divider'+index"> </v-divider>
       </template>
@@ -70,7 +70,10 @@ export default {
       "setPreviousPage"
     ]),
     addClothe () {
-      this.clothes.splice(0, 0, {})
+      this.clothes.push({})
+    },
+    setClothe (event, index) {
+      this.clothes[index] = event
     }
   }
 }
