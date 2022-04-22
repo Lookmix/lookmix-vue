@@ -30,8 +30,9 @@
           outlined
           three-line
         >
-          <!-- v-model="selectedItem" -->
           <v-list-item-group
+            v-model="selectedCategory"
+            @change="emitPayload()"
             mandatory
             color="accent"
           >
@@ -54,10 +55,12 @@
         </v-list>
       </v-card-text>
 
-      <v-card-title>Ocasião</v-card-title>
+      <v-card-title>Guarda-roupa</v-card-title>
 
       <v-card-text>
         <v-btn-toggle
+          v-model="closet"
+          @change="emitPayload()"
           tile
           mandatory
           color="accent"
@@ -74,9 +77,9 @@
         </v-btn-toggle>            
       </v-card-text>
 
-      <v-card-title>Guarda-roupa</v-card-title>
+      <v-card-title>Ocasião</v-card-title>
 
-      <v-card-subtitle> Marque um ou mais </v-card-subtitle>
+      <v-card-subtitle> Marque uma ou mais </v-card-subtitle>
 
       <v-card-text>
         <v-sheet elevation="0" rounded style="padding: 10px;" outlined>
@@ -85,12 +88,14 @@
             mandatory
             multiple
             column
+            v-model="selectedOcasions"
+            @change="emitPayload()"
           >
             <v-chip 
-              v-for="(item, index) in closet" 
+              v-for="(item, index) in occasions" 
               :key="index"
             >
-              {{ item }}
+              {{ item.name }}
             </v-chip>
           </v-chip-group>
         </v-sheet>
@@ -107,6 +112,8 @@
             mandatory
             multiple
             column
+            v-model="selectedSeasons"
+            @change="emitPayload()"
           >
             <v-chip 
               v-for="(season, index) in seasons"
@@ -127,66 +134,82 @@
 
 <script>
 import { mapGetters } from "vuex"
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
   data () {
     return {
       categories: [
         {
+          id: uuidv4(),
           name: 'Acessórios cabeça',
           description: 'Bonés, chapéus, óculos, brincos ou laços'
         },
-        {
+        { 
+          id: uuidv4(),
           name: 'Acessórios pescoço',
           description: 'Colares, correntes, gravatas ou cachecóis',
         },
         {
+          id: uuidv4(),
           name: 'Roupas de cima',
           description: 'Camisas, camisetas, polos, blusas ou regatas',
         },
         {
+          id: uuidv4(),
           name: 'Peças sobrepostas',
           description: 'Casacos, jaquetas, moletons ou sobretudos',
         },
-        {
+        { 
+          id: uuidv4(),
           name: 'Peças únicas',
           description: 'Vestidos ou macacões'
         },
         {
+          id: uuidv4(),
           name: 'Acessórios braços e mãos',
           description: 'Bolsas, pulseiras, relógios, anéis ou luvas'
         },
         {
+          id: uuidv4(),
           name: 'Pernas',
           description: 'Calças, shorts, saias ou bermudas'
         },
         {
+          id: uuidv4(),
           name: 'Cintura',
-          description: 'Cintos'
+          description: 'Cintos ou laços'
         },
         {
+          id: uuidv4(),
           name: 'Pés',
           description: 'Calçados ou meias'
         }
       ],
-      dressCode: undefined,
-      closet: [
-        'Básico', 
-        'Trabalho', 
-        'Faculdade', 
-        'Festa', 
-        'Viagem', 
-        'Shopping',
-        'Atividades físicas',
-        'Praia',
-        'Parques e praças'
+      selectedCategory: undefined,
+      closet: undefined,
+      occasions: [
+        { name: "Básico/comum", id: uuidv4() },
+        { name: "Dia", id: uuidv4() },
+        { name: "Noite", id: uuidv4() },
+        { name: "Trabalho", id: uuidv4() },
+        { name: "Faculdade", id: uuidv4() },
+        { name: "Festa/evento", id: uuidv4() },
+        { name: "Restaurante", id: uuidv4() },
+        { name: "Shopping", id: uuidv4() },
+        { name: "Viagem", id: uuidv4() },
+        { name: "Praia", id: uuidv4() },
+        { name: "Atividade física", id: uuidv4() },
+        { name: "Natureza", id: uuidv4() }
       ],
+      selectedOcasions: [],
       seasons: [
-        { name: "Primavera", icon: "image-filter-vintage"},
-        { name: "Verão", icon: "white-balance-sunny"},
-        { name: "Outono", icon: "leaf-maple"},
-        { name: "Inverno", icon: "snowflake"}
+        { name: "Primavera", icon: "image-filter-vintage", id: uuidv4() },
+        { name: "Verão", icon: "white-balance-sunny", id: uuidv4() },
+        { name: "Outono", icon: "leaf-maple", id: uuidv4() },
+        { name: "Inverno", icon: "snowflake", id: uuidv4() }
       ],
+      selectedSeasons: []
     }
   },
   computed: {
@@ -197,6 +220,31 @@ export default {
       // return this.maxHeight - 105 - 250 // 95 + margin10 = 105
       return this.maxHeight - 67
     },
+  },
+  methods: {
+    emitPayload () {
+      const category = this.categories[this.selectedCategory].id
+      const occasions = []
+      const seasons = []
+
+      if (this.selectedOcasions.length > 0) {
+        for (let ocasion of this.selectedOcasions) {//console.log(this.occasions)
+          occasions.push(this.occasions[ocasion].id)
+        }
+      }
+      if (this.selectedSeasons.length > 0) {
+        for (let season of this.selectedSeasons) {//console.log(this.seasons)
+          seasons.push(this.seasons[season].id)
+        }
+      }
+      const payload = {
+        category: category,
+        closet: this.closet,
+        occasions: occasions,
+        seasons: seasons
+      }
+      this.$emit("payload", payload)
+    }
   }
 }
 </script>
