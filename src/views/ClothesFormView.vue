@@ -9,10 +9,10 @@
         </v-card-text>
       </v-card>
 
+        <!-- :color="existsClothes ? backgroundColor : 'initial'" -->
       <v-sheet 
         elevation="0" 
-        style="padding: 5px; display: flex; justify-content: center;"
-        :color="existsClothes ? backgroundColor : 'initial'"
+        style="padding: 10px 5px; display: flex; justify-content: center;"
       >
         <v-btn 
           color="accent"
@@ -38,7 +38,7 @@
         ></v-file-input>
       </v-sheet>
 
-      <v-divider style="margin: 0px 0 10px 0px;" v-if="existsClothes"></v-divider>
+      <v-divider v-if="existsClothes"></v-divider>
     </div>
 
     <div style="display: flex; overflow-x: auto;">
@@ -50,7 +50,7 @@
           @remove="removeClothe($event, index)"
         />
 
-        <v-divider vertical :key="'divider'+index"> </v-divider>
+        <v-divider vertical style="margin-top:10px;" :key="'divider'+index"> </v-divider>
       </template>
     </div>
   </div>
