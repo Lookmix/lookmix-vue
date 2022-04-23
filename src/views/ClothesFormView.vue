@@ -76,12 +76,14 @@ export default {
   },
   methods: {
     ...mapMutations([
-      "setPreviousPage"
+      "setPreviousPage",
+      "setDisableSaveClothesButton"
     ]),
     addClothe () {
       this.clothes.unshift({
         id: uuidv4()
       })
+      this.updateSaveButtonState()
     },
     setClothe (clothe, id) {
       const index = this.clothes.findIndex(item => item.id === id)
@@ -92,6 +94,15 @@ export default {
     },
     removeClothe (event, index) {
       this.clothes.splice(index, 1)
+      this.updateSaveButtonState()
+    },
+    updateSaveButtonState () {
+      let disable = false
+
+      if (this.clothes.length < 1) {
+        disable = true
+      }
+      this.setDisableSaveClothesButton(disable)
     }
   }
 }
