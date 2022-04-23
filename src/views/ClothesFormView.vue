@@ -26,6 +26,16 @@
 
           ADICIONAR
         </v-btn>
+
+        <v-file-input
+          style="display: none;"
+          id="fileInput"
+          accept="image/*"
+          hide-input
+          multiple
+          v-model="images"
+          @change="readImages()"
+        ></v-file-input>
       </v-sheet>
 
       <v-divider style="margin: 0px 0 10px 0px;" v-if="existsClothes"></v-divider>
@@ -35,7 +45,7 @@
       <template v-for="(clothe, index) in clothes">
         <ClotheForm 
           :key="clothe.id"
-          :id="clothe.id"
+          :image="clothe.image"
           @payload="setClothe($event, clothe.id)"
           @remove="removeClothe($event, index)"
         />
@@ -63,7 +73,8 @@ export default {
   },
   data () {
     return {
-      clothes: []
+      clothes: [],
+      images: []
     }
   },
   computed: {
@@ -80,9 +91,20 @@ export default {
       "setDisableSaveClothesButton"
     ]),
     addClothe () {
-      this.clothes.unshift({
-        id: uuidv4()
-      })
+      const fileUpload = document.getElementById("fileInput")
+
+      if (fileUpload !== null) {
+        fileUpload.click()
+      }
+    },
+    readImages () {
+      for (let image of this.images) {
+        this.clothes.unshift({
+          id: uuidv4(),
+          image: image
+        })
+      }
+      this.images = []
       this.updateSaveButtonState()
     },
     setClothe (clothe, id) {
