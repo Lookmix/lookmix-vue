@@ -6,11 +6,11 @@
     </template>
 
     <v-main :dark="false" class="overflow-hidden">
+      <!-- :color="backgroundColor" -->
       <v-sheet
         :max-height="maxHeight"
         id="sheet-main"
         class="overflow-y-auto"
-        :color="backgroundColor"
         :class="{
           'login-new-user-display': isLoginRoute || isNewUserRoute,
           'transition': isLoginRoute || isNewUserRoute
