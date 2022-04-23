@@ -14,6 +14,7 @@
       <v-img
         height="250"
         :src="imageReadable"
+        style="margin-top: 10px;"
       >
         <v-btn 
           fab 
