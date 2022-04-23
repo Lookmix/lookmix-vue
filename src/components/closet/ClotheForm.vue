@@ -13,7 +13,7 @@
     >
       <v-img
         height="250"
-        src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+        :src="imageReadable"
       >
         <v-btn 
           fab 
@@ -144,6 +144,9 @@ import { mapGetters } from "vuex"
 import { v4 as uuidv4 } from 'uuid';
 
 export default {
+  props: {
+    image: File
+  },
   data () {
     return {
       categories: [
@@ -227,6 +230,11 @@ export default {
       // return this.maxHeight - 105 - 250 // 95 + margin10 = 105
       return this.maxHeight - 67
     },
+    imageReadable () {
+      if (this.image) {
+        return URL.createObjectURL(this.image)
+      } return ""
+    }
   },
   methods: {
     emitPayload () {
@@ -248,7 +256,8 @@ export default {
         category: category,
         closet: this.closet,
         occasions: occasions,
-        seasons: seasons
+        seasons: seasons,
+        image: this.image
       }
       this.$emit("payload", payload)
     },
