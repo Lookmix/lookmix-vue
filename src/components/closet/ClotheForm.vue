@@ -9,6 +9,7 @@
   >
     <v-card
       elevation="0"
+      min-width="318.75"
       :height="heightCard+10+'px'"
       :max-width="500"
       :style="{'overflow-y': 'auto'}"
