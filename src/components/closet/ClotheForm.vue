@@ -9,7 +9,9 @@
   >
     <v-card
       elevation="0"
-      :style="{'height': heightCard+10+'px', 'overflow-y': 'auto'}"
+      :height="heightCard+10+'px'"
+      :max-width="500"
+      :style="{'overflow-y': 'auto'}"
     >
       <v-img
         height="250"
