@@ -13,6 +13,7 @@
       :height="heightCard+10+'px'"
       :max-width="500"
       :style="{'overflow-y': 'auto'}"
+      :ref="'card-' + id"
     >
       <v-img
         height="250"
@@ -31,7 +32,35 @@
         </v-btn>
       </v-img>
 
-      <v-card-title>Categoria</v-card-title>
+      <v-card-title>Guarda-roupa</v-card-title>
+
+      <v-card-text>
+        <v-btn-toggle
+          v-model="closet"
+          @change="emitPayload()"
+          tile
+          mandatory
+          color="accent"
+          group
+          style="margin-left: -4px;"
+        >
+          <v-btn 
+            @click="goTo('#category' + id)"
+            value="casual" 
+          >
+            CASUAL
+          </v-btn>
+
+          <v-btn 
+            @click="goTo('#category' + id)"
+            value="social" 
+          >
+            SOCIAL
+          </v-btn>
+        </v-btn-toggle>            
+      </v-card-text>
+
+      <v-card-title :id="'category' + id">Categoria</v-card-title>
 
       <v-card-subtitle> Selecione uma categoria </v-card-subtitle>
 
@@ -48,6 +77,7 @@
             color="accent"
           >
             <v-list-item
+              @click="goTo('#occasion' + id)"
               style="min-height: unset !important;"
               v-for="(category, index) in categories"
               :key="index"
@@ -66,29 +96,7 @@
         </v-list>
       </v-card-text>
 
-      <v-card-title>Guarda-roupa</v-card-title>
-
-      <v-card-text>
-        <v-btn-toggle
-          v-model="closet"
-          @change="emitPayload()"
-          tile
-          mandatory
-          color="accent"
-          group
-          style="margin-left: -4px;"
-        >
-          <v-btn value="casual">
-            CASUAL
-          </v-btn>
-
-          <v-btn value="social">
-            SOCIAL
-          </v-btn>
-        </v-btn-toggle>            
-      </v-card-text>
-
-      <v-card-title>Ocasião</v-card-title>
+      <v-card-title :id="'occasion' + id">Ocasião</v-card-title>
 
       <v-card-subtitle> Marque uma ou mais </v-card-subtitle>
 
@@ -112,7 +120,7 @@
         </v-sheet>
       </v-card-text>
 
-      <v-card-title>Estação do ano</v-card-title>
+      <v-card-title :id="'season' + id">Estação do ano</v-card-title>
 
       <v-card-subtitle> Quais estações ideais para usar essa peça? </v-card-subtitle>
 
@@ -200,7 +208,7 @@ export default {
           description: 'Calçados ou meias'
         }
       ],
-      selectedCategory: undefined,
+      selectedCategory: 0,
       closet: undefined,
       occasions: [
         { name: "Básico/comum", id: uuidv4() },
@@ -223,7 +231,8 @@ export default {
         { name: "Outono", icon: "leaf-maple", id: uuidv4() },
         { name: "Inverno", icon: "snowflake", id: uuidv4() }
       ],
-      selectedSeasons: []
+      selectedSeasons: [],
+      id: uuidv4()
     }
   },
   computed: {
@@ -267,6 +276,15 @@ export default {
     },
     remove () {
       this.$emit("remove", undefined)
+    },
+    goTo (element) {
+      const ref = 'card-' + this.id
+      this.$vuetify.goTo(element, {
+        duration: 1000,
+        offset: -60,
+        easing: 'easeInOutCubic',
+        container: this.$refs[ref]
+      })
     }
   }
 }
