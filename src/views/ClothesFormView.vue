@@ -20,7 +20,7 @@
           rounded
           :text="existsClothes"
           :large="!existsClothes"
-          @click="addClothe()"
+          @click="addClothe(); loadingDialog = true;"
         >
           <v-icon>mdi-plus</v-icon>
 
@@ -53,6 +53,47 @@
         <v-divider vertical style="margin-top:10px;" :key="'divider'+index"> </v-divider>
       </template>
     </div>
+
+    <v-dialog
+      v-model="loadingDialog"
+      width="250"
+    >
+      <v-card
+        width="250"
+        height="250"
+        style="display: flex; justify-content: center; flex-direction: column;"
+      >
+        <v-card-title
+          style="margin: auto;margin: auto;"
+        >
+          Carregando...
+        </v-card-title>
+        <v-progress-circular
+          :size="100"
+          :width="10"
+          color="secondary"
+          indeterminate
+          style="margin: auto; margin-bottom: 50px;"
+        />
+      </v-card>
+    </v-dialog>
+
+    <v-snackbar
+      v-model="snackbarError"
+      color="error"
+    >
+      {{ snackbarErrorMsg }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          text
+          v-bind="attrs"
+          @click="snackbarError = false"
+        >
+          OK
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -74,7 +115,10 @@ export default {
   data () {
     return {
       clothes: [],
-      images: []
+      images: [],
+      snackbarError: false,
+      snackbarErrorMsg: undefined,
+      loadingDialog: false
     }
   },
   computed: {
@@ -99,13 +143,20 @@ export default {
     },
     readImages () {
       for (let image of this.images) {
-        this.clothes.unshift({
-          id: uuidv4(),
-          image: image
-        })
+        if (!image.type.includes("image")) {
+          this.snackbarErrorMsg = 'Tipo de arquivo inválido, apenas imagens são aceitas.'
+          this.snackbarError = true
+        }
+        if (!this.snackbarError) {
+          this.clothes.unshift({
+            id: uuidv4(),
+            image: image
+          })
+        }
       }
       this.images = []
       this.updateSaveButtonState()
+      this.loadingDialog = false
     },
     setClothe (clothe, id) {
       const index = this.clothes.findIndex(item => item.id === id)
