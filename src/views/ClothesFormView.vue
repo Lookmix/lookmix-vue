@@ -20,7 +20,7 @@
           rounded
           :text="existsClothes"
           :large="!existsClothes"
-          @click="addClothe(); loadingDialog = true;"
+          @click="addClothe(); setLoadingDialog(true);"
         >
           <v-icon>mdi-plus</v-icon>
 
@@ -117,13 +117,13 @@ export default {
       clothes: [],
       images: [],
       snackbarError: false,
-      snackbarErrorMsg: undefined,
-      loadingDialog: false
+      snackbarErrorMsg: undefined
     }
   },
   computed: {
     ...mapGetters([
-      "backgroundColor"
+      "backgroundColor",
+      "loadingDialog"
     ]),
     existsClothes () {
       return this.clothes.length > 0
@@ -132,7 +132,8 @@ export default {
   methods: {
     ...mapMutations([
       "setPreviousPage",
-      "setDisableSaveClothesButton"
+      "setDisableSaveClothesButton",
+      "setLoadingDialog"
     ]),
     addClothe () {
       const fileUpload = document.getElementById("fileInput")
@@ -156,7 +157,7 @@ export default {
       }
       this.images = []
       this.updateSaveButtonState()
-      this.loadingDialog = false
+      this.setLoadingDialog(false)
     },
     setClothe (clothe, id) {
       const index = this.clothes.findIndex(item => item.id === id)
