@@ -35,7 +35,8 @@ export default new Vuex.Store({
     previousPage: undefined,
     maxHeightCurrentRoute: undefined,
     backgroundColor: "initial",
-    disableSaveClothesButton: true
+    disableSaveClothesButton: true,
+    loadingDialog: false
   },
   getters: {
     authenticated: state => state.authenticated,
@@ -53,7 +54,8 @@ export default new Vuex.Store({
     toolbarTitle: state => state.toolbarTitle,
     previousPage: state => state.previousPage,
     backgroundColor: state => state.backgroundColor,
-    disableSaveClothesButton: state => state.disableSaveClothesButton
+    disableSaveClothesButton: state => state.disableSaveClothesButton,
+    loadingDialog: state => state.loadingDialog
   },
   mutations: {
     setNewUser(state, data) {
@@ -97,6 +99,9 @@ export default new Vuex.Store({
     },
     setDisableSaveClothesButton (state, data) {
       state.disableSaveClothesButton = data
+    },
+    setLoadingDialog (state, data) {
+      state.loadingDialog = data
     }
   },
   actions: {
