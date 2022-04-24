@@ -7,6 +7,7 @@ import * as resize from "./../resize.js"
 Vue.use(VueRouter)
 
 const router = new VueRouter({
+  mode: "history",
   routes: [].concat(publicPrivateRoutes)
 })
 
