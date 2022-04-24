@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   props: [
@@ -43,7 +43,11 @@ export default {
     },
   },
   methods: {
+    ...mapMutations([
+      "setLoadingDialog"
+    ]),
     redirectToForm () {
+      this.setLoadingDialog(true)
       this.$router.push("clothes-form")
     },
     saveClothesForm () {
