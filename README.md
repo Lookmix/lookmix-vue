@@ -23,6 +23,7 @@ git add .
 git commit -m "Updating dist"
 
 git push origin `git subtree split --prefix dist gh-pages`:gh-pages --force```
+```
 
 ### Lints and fixes files
 ```
@@ -32,5 +33,8 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-### RUN IN LOCAL
+### Run in local environment to get a browser without security
+Ideal for test scenarios
+```
 chromium-browser --disable-web-security --user-data-dir=/home/vinicius/chromium
+```
