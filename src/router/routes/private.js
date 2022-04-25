@@ -8,12 +8,10 @@ import ClosetView from '@/views/ClosetView.vue'
 import ClothesFormView from "@/views/ClothesFormView.vue"
 
 const routes = [
-  // {
-  //   path: '/accounts',
-  //   name: 'accounts',
-  //   component: Accounts
-  //   meta: { public: false }
-  // }
+  {
+    path: '/',
+    redirect: '/home',
+  },
   {
     path: '/home',
     name: 'home',
