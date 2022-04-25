@@ -6,8 +6,8 @@
     </template>
 
     <v-main :dark="false" class="overflow-hidden">
-      <!-- :color="backgroundColor" -->
       <v-sheet
+        :color="backgroundColor"
         :max-height="maxHeight"
         id="sheet-main"
         class="overflow-y-auto"
