@@ -10,7 +10,7 @@
     <v-card
       elevation="0"
       min-width="318.75"
-      :height="heightCard+10+'px'"
+      :height="heightCard"
       :max-width="500"
       :style="{'overflow-y': 'auto'}"
       :ref="'card-' + id"
@@ -62,7 +62,7 @@
 
       <v-card-title :id="'category' + id">Categoria</v-card-title>
 
-      <v-card-subtitle> Selecione uma categoria </v-card-subtitle>
+      <!-- <v-card-subtitle> Selecione uma categoria </v-card-subtitle> -->
 
       <v-card-text>
         <v-list 
@@ -96,9 +96,9 @@
         </v-list>
       </v-card-text>
 
-      <v-card-title :id="'occasion' + id">Ocasião</v-card-title>
+      <v-card-title :id="'occasion' + id">Ocasiões</v-card-title>
 
-      <v-card-subtitle> Marque uma ou mais </v-card-subtitle>
+      <!-- <v-card-subtitle> Marque uma ou mais </v-card-subtitle> -->
 
       <v-card-text>
         <v-sheet elevation="0" rounded style="padding: 10px;" outlined>
@@ -120,9 +120,9 @@
         </v-sheet>
       </v-card-text>
 
-      <v-card-title :id="'season' + id">Estação do ano</v-card-title>
+      <v-card-title :id="'season' + id">Estações do ano</v-card-title>
 
-      <v-card-subtitle> Quais estações ideais para usar essa peça? </v-card-subtitle>
+      <!-- <v-card-subtitle> Quais estações ideais para usar essa peça? </v-card-subtitle> -->
 
       <v-card-text>
         <v-sheet elevation="0" rounded style="padding: 10px;" outlined>
@@ -241,7 +241,8 @@ export default {
     ]),
     heightCard () {
       // return this.maxHeight - 105 - 250 // 95 + margin10 = 105
-      return this.maxHeight - 67
+      const height = this.maxHeight - 67 - 48 + 10
+      return `${height}px`
     },
     imageReadable () {
       if (this.image) {
