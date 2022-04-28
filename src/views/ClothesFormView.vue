@@ -41,10 +41,21 @@
       <v-divider v-if="existsClothes"></v-divider>
     </div>
 
-    <div style="display: flex; overflow-x: auto;">
+    <div style="display: flex; overflow-x: hidden;"
+      v-touch="{
+        left: () => next(),
+        right: () => prev(),
+      }"
+    >
       <template v-for="(clothe, index) in clothes">
         <ClotheForm 
           :key="clothe.id"
+          :id="clothe.id"
+          :style="{
+            'transform': cssTranslate,
+            'transition-delay': '0s',
+            'transition-duration': '0.6s'
+          }"
           :image="clothe.image"
           @payload="setClothe($event, clothe.id)"
           @remove="removeClothe($event, index)"
@@ -54,9 +65,31 @@
       </template>
     </div>
 
+    <v-toolbar
+      v-if="existsClothes"
+      dense
+      bottom
+      flat
+      color="accent"
+      elevation="0"
+    >
+      <v-btn icon>
+        <v-icon color="white">
+          mdi-chevron-left
+        </v-icon>
+      </v-btn>
+      <v-spacer/>
+      <v-btn icon>
+        <v-icon color="white">
+          mdi-chevron-right
+        </v-icon>
+      </v-btn>
+    </v-toolbar>
+
     <v-dialog
       v-model="loadingDialog"
       width="250"
+      persistent
     >
       <v-card
         width="250"
@@ -100,7 +133,7 @@
 <script>
 import { mapMutations, mapGetters } from "vuex"
 import ClotheForm from "./../components/closet/ClotheForm.vue"
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid"
 
 export default {
   components: {
@@ -117,7 +150,8 @@ export default {
       clothes: [],
       images: [],
       snackbarError: false,
-      snackbarErrorMsg: undefined
+      snackbarErrorMsg: undefined,
+      translatePixels: 0
     }
   },
   computed: {
@@ -127,6 +161,9 @@ export default {
     ]),
     existsClothes () {
       return this.clothes.length > 0
+    },
+    cssTranslate () {
+      return `translate(${this.translatePixels}px, 0%)`
     }
   },
   methods: {
@@ -177,6 +214,12 @@ export default {
         disable = true
       }
       this.setDisableSaveClothesButton(disable)
+    },
+    next () {
+      this.translatePixels+=-338.75
+    },
+    prev () {
+      this.translatePixels+=338.75
     }
   }
 }
