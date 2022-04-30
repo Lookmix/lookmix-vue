@@ -11,14 +11,32 @@
 
     <v-btn 
       v-if="isClothesFormRoute" 
-      rounded
-      elevation="0"
-      small
+      icon
       color="secondary"
       :disabled="disableSaveClothesButton"
       @click="saveClothesForm()"
     >
-      SALVAR
+      <!-- rounded
+      small
+      elevation="0" -->
+      <v-icon>
+        mdi-check
+      </v-icon>
+      <!-- SALVAR -->
+    </v-btn>
+
+    <v-btn 
+      v-if="isClothesFormRoute && showAddClotheButton" 
+      icon
+      color="accent"
+    >
+      <!-- rounded
+      small
+      elevation="0" -->
+      <v-icon>
+        mdi-plus
+      </v-icon>
+      <!-- SALVAR -->
     </v-btn>
   </div>
 </template>
@@ -33,7 +51,8 @@ export default {
   computed: {
     ...mapGetters([
       "currentRouteName",
-      "disableSaveClothesButton"
+      "disableSaveClothesButton",
+      "showAddClotheButton"
     ]),
     isClosetRoute () {
       return this.currentRouteName === "closet"
