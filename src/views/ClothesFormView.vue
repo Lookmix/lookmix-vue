@@ -178,7 +178,9 @@ export default {
       "loadingDialog"
     ]),
     existsClothes () {
-      return this.clothes.length > 0
+      const existsClothes = this.clothes.length > 0
+      this.setShowAddClotheButton(existsClothes)
+      return existsClothes
     },
     cssTranslate () {
       return `translate(${this.translatePixels}px, 0%)`
@@ -191,7 +193,8 @@ export default {
     ...mapMutations([
       "setPreviousPage",
       "setDisableSaveClothesButton",
-      "setLoadingDialog"
+      "setLoadingDialog",
+      "setShowAddClotheButton"
     ]),
     addClothe () {
       const fileUpload = document.getElementById("fileInput")
