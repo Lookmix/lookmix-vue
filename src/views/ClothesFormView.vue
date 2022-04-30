@@ -7,10 +7,21 @@
           <span> Adicione novas peças no seu guarda-roupa </span>
           <br/>
         </v-card-text>
+
+        <v-file-input
+          style="display: none;"
+          id="fileInput"
+          accept="image/*"
+          hide-input
+          multiple
+          v-model="images"
+          @change="readImages()"
+        ></v-file-input>
       </v-card>
 
         <!-- :color="existsClothes ? backgroundColor : 'initial'" -->
       <v-sheet 
+        v-if="!existsClothes"
         elevation="0" 
         style="padding: 10px 5px; display: flex; justify-content: center;"
       >
@@ -26,19 +37,9 @@
 
           ADICIONAR
         </v-btn>
-
-        <v-file-input
-          style="display: none;"
-          id="fileInput"
-          accept="image/*"
-          hide-input
-          multiple
-          v-model="images"
-          @change="readImages()"
-        ></v-file-input>
       </v-sheet>
 
-      <v-divider v-if="existsClothes"></v-divider>
+      <!-- <v-divider v-if="existsClothes"></v-divider> -->
     </div>
 
     <div style="display: flex; overflow-x: hidden;"
@@ -61,7 +62,17 @@
           @remove="removeClothe($event, index)"
         />
 
-        <v-divider vertical style="margin-top:10px;" :key="'divider'+index"> </v-divider>
+        <v-divider 
+          :style="{
+            'transform': cssTranslate,
+            'transition-delay': '0s',
+            'transition-duration': '0.6s',
+            'margin-top': '10px'
+          }"
+          vertical 
+          :key="'divider'+index"> 
+        </v-divider>
+          <!-- style="margin-top:10px;"  -->
       </template>
     </div>
 
@@ -73,13 +84,17 @@
       color="accent"
       elevation="0"
     >
-      <v-btn icon>
+      <v-btn icon @click="prev()" :disabled="pageCount === 1">
         <v-icon color="white">
           mdi-chevron-left
         </v-icon>
       </v-btn>
       <v-spacer/>
-      <v-btn icon>
+      <span style="font-size: 18px; color: white; font-weight: bold;"> 
+        {{ pageCount }} de {{ clothes.length }}
+      </span>
+      <v-spacer/>
+      <v-btn icon @click="next()" :disabled="pageCount === clothes.length">
         <v-icon color="white">
           mdi-chevron-right
         </v-icon>
@@ -151,7 +166,10 @@ export default {
       images: [],
       snackbarError: false,
       snackbarErrorMsg: undefined,
-      translatePixels: 0
+      translatePixels: 0,
+      index: 0,
+      lastItemDiscount: 0,
+      dividerDiscount: 0
     }
   },
   computed: {
@@ -164,6 +182,9 @@ export default {
     },
     cssTranslate () {
       return `translate(${this.translatePixels}px, 0%)`
+    },
+    pageCount () {
+      return this.index + 1
     }
   },
   methods: {
@@ -216,10 +237,40 @@ export default {
       this.setDisableSaveClothesButton(disable)
     },
     next () {
-      this.translatePixels+=-338.75
+      // if (this.index+1 === 1) {
+      //   this.index++
+      //   this.dividerDiscount = 1
+      //   this.translatePixels += -320 + this.dividerDiscount
+      //   return;     
+      // }
+      if (this.index+1 === this.clothes.length - 1) { // last but one item
+        this.index++
+        this.lastItemDiscount = 30
+        this.dividerDiscount = 1
+        this.translatePixels += (-339 + this.lastItemDiscount) + this.dividerDiscount
+        return;
+      }
+      if (this.index+1 === this.clothes.length) { // last item
+        return;
+      }
+      this.index++
+      this.dividerDiscount = 1
+      this.translatePixels += -339 + this.dividerDiscount
     },
     prev () {
-      this.translatePixels+=338.75
+      if (this.lastItemDiscount) {
+        this.index--
+        this.dividerDiscount = -1
+        this.translatePixels += (339 - this.lastItemDiscount) - this.dividerDiscount
+        this.lastItemDiscount = 0
+        return;
+      }
+      if (this.index+1 === 1) {
+        return;
+      }
+      this.index--
+      this.dividerDiscount = -1
+      this.translatePixels += 339 + this.dividerDiscount
     }
   }
 }
