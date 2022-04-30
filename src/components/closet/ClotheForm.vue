@@ -1,7 +1,7 @@
 <template>
   <div 
     :style="{
-      'width': '85%',
+      'width': widthCard, // 85%
       'margin': '0 10px',
       'display': 'flex',
       'flex-direction': 'column',
@@ -251,7 +251,17 @@ export default {
       if (this.image) {
         return URL.createObjectURL(this.image)
       } return ""
-    }
+    },
+    widthCard () {
+      switch (this.$vuetify.breakpoint.name) {
+        case "xs": return "319px"
+        case "sm": return "319px"
+        case "md": return "500px"
+        case "lg": return "500px"
+        case "xl": return "500px"
+      }
+      return "319px"
+    },
   },
   methods: {
     emitPayload () {
