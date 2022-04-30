@@ -281,7 +281,7 @@ export default {
     goTo (element) {
       const ref = 'card-' + this.id
       this.$vuetify.goTo(element, {
-        duration: 1000,
+        duration: 700,
         offset: -60,
         easing: 'easeInOutCubic',
         container: this.$refs[ref]
