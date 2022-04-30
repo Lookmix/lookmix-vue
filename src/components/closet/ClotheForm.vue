@@ -241,7 +241,10 @@ export default {
     ]),
     heightCard () {
       // return this.maxHeight - 105 - 250 // 95 + margin10 = 105
-      const height = this.maxHeight - 67 - 48 + 10
+      // +10 = margin
+      // -57 = add clothe bar
+      // -48 = bottom paginator
+      const height = this.maxHeight - 48
       return `${height}px`
     },
     imageReadable () {
