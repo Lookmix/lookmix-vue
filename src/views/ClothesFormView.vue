@@ -264,7 +264,7 @@ export default {
       if (this.lastItemDiscount) {
         this.index--
         this.dividerDiscount = -1
-        this.translatePixels += (339 - this.lastItemDiscount) - this.dividerDiscount
+        this.translatePixels += (339 - this.lastItemDiscount) + this.dividerDiscount
         this.lastItemDiscount = 0
         return;
       }
