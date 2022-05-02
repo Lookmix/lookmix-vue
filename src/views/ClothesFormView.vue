@@ -42,39 +42,26 @@
       <!-- <v-divider v-if="existsClothes"></v-divider> -->
     </div>
 
-    <div style="display: flex; overflow-x: hidden;"
-      v-touch="{
-        left: () => next(),
-        right: () => prev(),
-      }"
+    <swiper
+      style="height: 563px;"
+      ref="mySwiper" 
+      :options="swiperOptions"
     >
-      <template v-for="(clothe, index) in clothes">
+      <swiper-slide style="width: 85%;" v-for="(clothe, index) in clothes" :key="index">
         <ClotheForm 
-          :key="clothe.id"
           :id="clothe.id"
-          :style="{
-            'transform': cssTranslate,
-            'transition-delay': '0s',
-            'transition-duration': '0.6s'
-          }"
           :image="clothe.image"
           @payload="setClothe($event, clothe.id)"
           @remove="removeClothe($event, index)"
         />
 
         <v-divider 
-          :style="{
-            'transform': cssTranslate,
-            'transition-delay': '0s',
-            'transition-duration': '0.6s',
-            'margin-top': '10px'
-          }"
-          vertical 
-          :key="'divider'+index"> 
+          :style="{'margin-top': '10px'}"
+          vertical
+        > 
         </v-divider>
-          <!-- style="margin-top:10px;"  -->
-      </template>
-    </div>
+      </swiper-slide>
+    </swiper>
 
     <v-toolbar
       v-if="existsClothes"
@@ -149,10 +136,14 @@
 import { mapMutations, mapGetters } from "vuex"
 import ClotheForm from "./../components/closet/ClotheForm.vue"
 import { v4 as uuidv4 } from "uuid"
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import 'swiper/swiper-bundle.css'
 
 export default {
   components: {
-    ClotheForm
+    ClotheForm,
+    Swiper,
+    SwiperSlide
   },
   mounted () {
     if (this.clothes.length < 1) {
@@ -169,7 +160,12 @@ export default {
       translatePixels: 0,
       index: 0,
       lastItemDiscount: 0,
-      dividerDiscount: 0
+      dividerDiscount: 0,
+      swiperOptions: {
+        centeredSlides: true,
+        slidesPerView: "auto",
+        spaceBetween: 10
+      }
     }
   },
   computed: {
@@ -187,6 +183,9 @@ export default {
     },
     pageCount () {
       return this.index + 1
+    },
+    swiper() {
+      return this.$refs.mySwiper.$swiper
     }
   },
   methods: {
@@ -240,40 +239,12 @@ export default {
       this.setDisableSaveClothesButton(disable)
     },
     next () {
-      // if (this.index+1 === 1) {
-      //   this.index++
-      //   this.dividerDiscount = 1
-      //   this.translatePixels += -320 + this.dividerDiscount
-      //   return;     
-      // }
-      if (this.index+1 === this.clothes.length - 1) { // last but one item
-        this.index++
-        this.lastItemDiscount = 30
-        this.dividerDiscount = 1
-        this.translatePixels += (-339 + this.lastItemDiscount) + this.dividerDiscount
-        return;
-      }
-      if (this.index+1 === this.clothes.length) { // last item
-        return;
-      }
       this.index++
-      this.dividerDiscount = 1
-      this.translatePixels += -339 + this.dividerDiscount
+      this.swiper.slideTo(this.index, 400, false)
     },
     prev () {
-      if (this.lastItemDiscount) {
-        this.index--
-        this.dividerDiscount = -1
-        this.translatePixels += (339 - this.lastItemDiscount) + this.dividerDiscount
-        this.lastItemDiscount = 0
-        return;
-      }
-      if (this.index+1 === 1) {
-        return;
-      }
       this.index--
-      this.dividerDiscount = -1
-      this.translatePixels += 339 + this.dividerDiscount
+      this.swiper.slideTo(this.index, 400, false)
     }
   }
 }
