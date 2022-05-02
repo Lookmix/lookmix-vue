@@ -2,16 +2,15 @@
   <div 
     :style="{
       'width': widthCard, // 85%
-      'margin': '0 10px',
       'display': 'flex',
       'flex-direction': 'column',
     }"
   >
     <v-card
       elevation="0"
-      min-width="319"
+      :min-width="widthCard"
       :height="heightCard"
-      :max-width="500"
+      :max-width="widthCard"
       :style="{'overflow-y': 'auto'}"
       :ref="'card-' + id"
     >
