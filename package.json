@@ -10,20 +10,21 @@
   "dependencies": {
     "@mdi/font": "5.9.55",
     "axios": "^0.23.0",
-    "is-retry-allowed": "3.0.0",
-    "regenerator-runtime": "0.13.9",
     "axios-retry": "^3.2.4",
+    "core-js": "^3.6.5",
+    "is-retry-allowed": "3.0.0",
     "jsrsasign": "^10.5.1",
     "jsrsasign-util": "^1.0.5",
-    "core-js": "^3.6.5",
+    "regenerator-runtime": "0.13.9",
     "register-service-worker": "^1.7.1",
     "roboto-fontface": "*",
+    "swiper": "^8.1.4",
+    "uuid": "^8.3.2",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vue-the-mask": "^0.11.1",
     "vuetify": "^2.6.4",
-    "vuex": "^3.4.0",
-    "uuid": "^8.3.2"
+    "vuex": "^3.4.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
