@@ -31,121 +31,168 @@
         </v-btn>
       </v-img>
 
-      <v-card-title>Guarda-roupa</v-card-title>
-
-      <v-card-text>
-        <v-btn-toggle
-          v-model="closet"
-          @change="emitPayload()"
-          tile
-          mandatory
-          color="accent"
-          group
-          style="margin-left: -4px;"
+      <v-sheet
+        :ref="'card-content' + id"
+        :style="{'overflow-y': 'auto'}"
+        :height="heightCard"
+      >
+        <v-card-subtitle 
+          class="text-uppercase font-weight-bold"
+          :style="{'width': widthContentCard}"
         >
-          <v-btn 
-            @click="goTo('#category' + id)"
-            value="casual" 
+          Guarda-roupa
+        </v-card-subtitle>
+
+        <v-card-text :style="{'width': widthContentCard}">
+          <v-btn-toggle
+            v-model="closet"
+            @change="emitPayload()"
+            tile
+            mandatory
+            color="accent"
+            group
+            style="margin-left: -4px;"
           >
-            CASUAL
-          </v-btn>
+            <v-btn 
+              small
+              @click="goTo('#category' + id)"
+              value="casual" 
+            >
+              CASUAL
+            </v-btn>
 
-          <v-btn 
-            @click="goTo('#category' + id)"
-            value="social" 
-          >
-            SOCIAL
-          </v-btn>
-        </v-btn-toggle>            
-      </v-card-text>
+            <v-btn 
+              small
+              @click="goTo('#category' + id)"
+              value="social" 
+            >
+              SOCIAL
+            </v-btn>
+          </v-btn-toggle>            
+        </v-card-text>
 
-      <v-card-title :id="'category' + id">Categoria</v-card-title>
-
-      <!-- <v-card-subtitle> Selecione uma categoria </v-card-subtitle> -->
-
-      <v-card-text>
-        <v-list 
-          dense
-          outlined
-          three-line
+        <v-card-subtitle 
+          class="text-uppercase font-weight-bold" 
+          :id="'category' + id" 
+          :style="{'width': widthContentCard}"
         >
-          <v-list-item-group
-            v-model="selectedCategory"
-            @change="emitPayload()"
-            mandatory
-            color="accent"
+          Categoria
+        </v-card-subtitle>
+
+        <!-- <v-card-subtitle> Selecione uma categoria </v-card-subtitle> -->
+
+        <v-card-text 
+          :style="{'width': widthContentCard}"
+        >
+          <v-list 
+            dense
+            outlined
+            three-line
           >
-            <v-list-item
-              @click="goTo('#occasion' + id)"
-              style="min-height: unset !important;"
-              v-for="(category, index) in categories"
-              :key="index"
+            <v-list-item-group
+              v-model="selectedCategory"
+              @change="emitPayload()"
+              mandatory
+              color="accent"
             >
-              <v-list-item-content>
-                <v-list-item-title>
-                  {{ category.name }}
-                </v-list-item-title>
+              <v-list-item
+                @click="goTo('#season' + id)"
+                style="min-height: unset !important;"
+                v-for="(category, index) in categories"
+                :key="index"
+              >
+                <v-list-item-content>
+                  <v-list-item-title>
+                    {{ category.name }}
+                  </v-list-item-title>
 
-                <v-list-item-subtitle>
-                  {{ category.description }}
-                </v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
-      </v-card-text>
+                  <v-list-item-subtitle>
+                    {{ category.description }}
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </v-card-text>
 
-      <v-card-title :id="'occasion' + id">Ocasiões</v-card-title>
+        <v-card-subtitle 
+          class="text-uppercase font-weight-bold" 
+          :id="'season' + id" 
+          :style="{'width': widthContentCard}"
+        >
+          Estações do ano
+        </v-card-subtitle>
 
-      <!-- <v-card-subtitle> Marque uma ou mais </v-card-subtitle> -->
+        <!-- <v-card-subtitle> Quais estações ideais para usar essa peça? </v-card-subtitle> -->
 
-      <v-card-text>
-        <v-sheet elevation="0" rounded style="padding: 10px;" outlined>
-          <v-chip-group
-            color="accent"
-            mandatory
-            multiple
-            column
-            v-model="selectedOcasions"
-            @change="emitPayload()"
+        <v-card-text 
+          :style="{'width': widthContentCard}"
+        >
+          <v-sheet 
+            elevation="0" 
+            rounded 
+            style="padding: 10px;" 
+            outlined
           >
-            <v-chip 
-              v-for="(item, index) in occasions" 
-              :key="index"
+            <v-chip-group
+              color="accent"
+              mandatory
+              multiple
+              column
+              v-model="selectedSeasons"
+              @change="emitPayload()"
             >
-              {{ item.name }}
-            </v-chip>
-          </v-chip-group>
-        </v-sheet>
-      </v-card-text>
+              <v-chip 
+                v-for="(season, index) in seasons"
+                :key="index"
+              >
+                <v-icon left>
+                  {{ 'mdi-'+ season.icon}}
+                </v-icon>
 
-      <v-card-title :id="'season' + id">Estações do ano</v-card-title>
+                {{ season.name }}
+              </v-chip>
+            </v-chip-group>
+          </v-sheet>
+        </v-card-text>
 
-      <!-- <v-card-subtitle> Quais estações ideais para usar essa peça? </v-card-subtitle> -->
+        <v-card-subtitle 
+          class="text-uppercase font-weight-bold" 
+          :id="'occasion' + id" 
+          :style="{'width': widthContentCard}"
+        >
+          Ocasiões
+        </v-card-subtitle>
 
-      <v-card-text>
-        <v-sheet elevation="0" rounded style="padding: 10px;" outlined>
-          <v-chip-group
-            color="accent"
-            mandatory
-            multiple
-            column
-            v-model="selectedSeasons"
-            @change="emitPayload()"
+        <!-- <v-card-subtitle> Marque uma ou mais </v-card-subtitle> -->
+
+        <v-card-text 
+          :style="{'width': widthContentCard}"
+        >
+          <v-sheet 
+            elevation="0" 
+            rounded 
+            style="padding: 10px;" 
+            outlined
           >
-            <v-chip 
-              v-for="(season, index) in seasons"
-              :key="index"
+            <v-chip-group
+              color="accent"
+              mandatory
+              multiple
+              column
+              v-model="selectedOcasions"
+              @change="emitPayload()"
             >
-              <v-icon left>
-                {{ 'mdi-'+ season.icon}}
-              </v-icon>
-
-              {{ season.name }}
-            </v-chip>
-          </v-chip-group>
-        </v-sheet>
-      </v-card-text>
+              <v-chip 
+                v-for="(item, index) in occasions" 
+                :key="index"
+              >
+                {{ item.name }}
+              </v-chip>
+            </v-chip-group>
+          </v-sheet>
+        </v-card-text>
+      </v-sheet>
     </v-card>
   </div>
 </template>
@@ -287,7 +334,7 @@ export default {
       this.$emit("remove", undefined)
     },
     goTo (element) {
-      const ref = 'card-' + this.id
+      const ref = 'card-content' + this.id
       this.$vuetify.goTo(element, {
         duration: 700,
         offset: -60,
