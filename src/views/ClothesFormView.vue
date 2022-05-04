@@ -175,10 +175,7 @@ export default {
       images: [],
       snackbarError: false,
       snackbarErrorMsg: undefined,
-      translatePixels: 0,
       index: 0,
-      lastItemDiscount: 0,
-      dividerDiscount: 0,
       swiperOptions: {
         centeredSlides: true,
         slidesPerView: "auto",
@@ -195,9 +192,6 @@ export default {
       const existsClothes = this.clothes.length > 0
       this.setShowAddClotheButton(existsClothes)
       return existsClothes
-    },
-    cssTranslate () {
-      return `translate(${this.translatePixels}px, 0%)`
     },
     pageCount () {
       return this.index + 1
