@@ -6,11 +6,10 @@
   >
     <v-card
       elevation="0"
-      :min-width="widthCard"
-      :height="heightCard"
-      :max-width="widthCard"
-      :style="{'overflow-y': 'auto'}"
+      :min-width="widthCard+'px'"
+      :max-width="widthCard+'px'"
       :ref="'card-' + id"
+      outlined
     >
       <v-img
         height="250"
