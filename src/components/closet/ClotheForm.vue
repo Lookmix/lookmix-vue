@@ -12,9 +12,12 @@
       outlined
     >
       <v-img
-        height="250"
+        :height="cardImageHeight"
         :src="imageReadable"
-        style="margin-top: 10px;"
+        :style="{ 'background-image': `url(${imageReadable})` }"
+        class="backdrop-image"
+        contain
+        eager
       >
         <v-btn 
           fab 
@@ -299,5 +302,9 @@ export default {
 <style scoped>
 ::v-deep div.v-image__image--contain {
   backdrop-filter: blur(7px) grayscale(65%);
+}
+.backdrop-image {
+  background-position: center;
+  background-size: cover;
 }
 </style>
