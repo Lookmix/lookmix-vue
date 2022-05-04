@@ -232,7 +232,8 @@ export default {
         { name: "Inverno", icon: "snowflake", id: uuidv4() }
       ],
       selectedSeasons: [],
-      id: uuidv4()
+      id: uuidv4(),
+      cardImageHeight: 160, //180,
     }
   },
   computed: {
@@ -242,9 +243,9 @@ export default {
     heightCard () {
       // return this.maxHeight - 105 - 250 // 95 + margin10 = 105
       // +10 = margin
-      // -57 = add clothe bar
-      // -48 = bottom paginator
-      const height = this.maxHeight - 48
+      const marginDiscount = 20
+      const bottomPaginator = 48
+      const height = this.maxHeight - bottomPaginator - this.cardImageHeight - marginDiscount
       return `${height}px`
     },
     imageReadable () {
