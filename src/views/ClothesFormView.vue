@@ -47,10 +47,15 @@
       ref="mySwiper" 
       :options="swiperOptions"
     >
-      <swiper-slide style="width: 85%;" v-for="(clothe, index) in clothes" :key="index">
+      <swiper-slide 
+        :style="{'width': widthCard+'px'}"
+        v-for="(clothe, index) in clothes" 
+        :key="index"
+      >
         <ClotheForm 
           :id="clothe.id"
           :image="clothe.image"
+          :widthCard="widthCard"
           @payload="setClothe($event, clothe.id)"
           @remove="removeClothe($event, index)"
         />
@@ -186,7 +191,16 @@ export default {
     },
     swiper() {
       return this.$refs.mySwiper.$swiper
-    }
+    widthCard () {
+      switch (this.$vuetify.breakpoint.name) {
+        case "xs": return 319
+        case "sm": return 319
+        case "md": return 500
+        case "lg": return 500
+        case "xl": return 500
+      }
+      return 319
+    },
   },
   methods: {
     ...mapMutations([
