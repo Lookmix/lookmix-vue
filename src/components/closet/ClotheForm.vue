@@ -302,3 +302,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+::v-deep div.v-image__image--contain {
+  backdrop-filter: blur(7px) grayscale(65%);
+}
+</style>
