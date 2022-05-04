@@ -43,7 +43,7 @@
     </div>
 
     <swiper
-      style="height: 563px;"
+      :style="{ 'height': swiperHeight, 'margin-top': '10px' }"
       ref="mySwiper" 
       :options="swiperOptions"
     >
@@ -191,6 +191,15 @@ export default {
     },
     swiper() {
       return this.$refs.mySwiper.$swiper
+    },
+    swiperHeight () {
+      const header = 56
+      const footer = 48
+      const marginTop = 10
+      let innerHeight = window.innerHeight
+      innerHeight = innerHeight - header - footer - marginTop
+      return `${innerHeight}px`
+    },
     widthCard () {
       switch (this.$vuetify.breakpoint.name) {
         case "xs": return 319
