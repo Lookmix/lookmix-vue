@@ -77,7 +77,13 @@
       color="accent"
       elevation="0"
     >
-      <v-btn icon @click="prev()" :disabled="pageCount === 1">
+      <v-btn 
+        small
+        style="margin: 0px 10px;"
+        icon 
+        @click="prev()" 
+        :disabled="pageCount === 1"
+      >
         <v-icon color="white">
           mdi-chevron-left
         </v-icon>
@@ -87,7 +93,13 @@
         {{ pageCount }} de {{ clothes.length }}
       </span>
       <v-spacer/>
-      <v-btn icon @click="next()" :disabled="pageCount === clothes.length">
+      <v-btn 
+        small
+        style="margin: 0px 10px;"
+        icon 
+        @click="next()" 
+        :disabled="pageCount === clothes.length"
+      >
         <v-icon color="white">
           mdi-chevron-right
         </v-icon>
