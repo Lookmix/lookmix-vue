@@ -156,7 +156,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default {
   props: {
-    image: File
+    image: File,
+    widthCard: Number
   },
   data () {
     return {
