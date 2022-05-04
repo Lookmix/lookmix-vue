@@ -43,6 +43,7 @@
     </div>
 
     <swiper
+      v-if="existsClothes"
       :style="{ 'height': swiperHeight, 'margin-top': '10px' }"
       ref="mySwiper" 
       :options="swiperOptions"
