@@ -1,9 +1,7 @@
 <template>
   <div 
     :style="{
-      'width': widthCard, // 85%
-      'display': 'flex',
-      'flex-direction': 'column',
+      'width': widthCard+'px', // 85%
     }"
   >
     <v-card
