@@ -73,6 +73,9 @@ export default {
     },
     saveClothesForm () {
       
+    },
+    addClothe () {
+      
     }
   }
 }
