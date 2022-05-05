@@ -16,13 +16,9 @@
       :disabled="disableSaveClothesButton"
       @click="saveClothesForm()"
     >
-      <!-- rounded
-      small
-      elevation="0" -->
       <v-icon>
         mdi-check
       </v-icon>
-      <!-- SALVAR -->
     </v-btn>
 
     <v-btn 
@@ -32,13 +28,9 @@
       style="margin-left: 5px;"
       @click="addClothe()"
     >
-      <!-- rounded
-      small
-      elevation="0" -->
       <v-icon>
         mdi-plus
       </v-icon>
-      <!-- SALVAR -->
     </v-btn>
   </div>
 </template>
