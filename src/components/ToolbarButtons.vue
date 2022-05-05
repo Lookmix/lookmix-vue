@@ -29,6 +29,8 @@
       v-if="isClothesFormRoute && showAddClotheButton" 
       icon
       color="accent"
+      style="margin-left: 5px;"
+      @click="addClothe()"
     >
       <!-- rounded
       small
