@@ -47,6 +47,7 @@
       :style="{ 'height': swiperHeight, 'margin-top': '10px' }"
       ref="mySwiper" 
       :options="swiperOptions"
+      @slideChangeTransitionEnd="onSlideChange($event)"
     >
       <swiper-slide 
         :style="{'width': widthCard+'px'}"
@@ -269,7 +270,10 @@ export default {
     prev () {
       this.index--
       this.swiper.slideTo(this.index, 400, false)
-    }
+    },
+    onSlideChange (event) {
+      this.index = event.activeIndex
+    },
   }
 }
 </script>
