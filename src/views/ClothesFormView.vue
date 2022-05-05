@@ -60,12 +60,6 @@
           @payload="setClothe($event, clothe.id)"
           @remove="removeClothe($event, index)"
         />
-
-        <v-divider 
-          :style="{'margin-top': '10px'}"
-          vertical
-        > 
-        </v-divider>
       </swiper-slide>
     </swiper>
 
