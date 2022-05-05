@@ -12,7 +12,7 @@
     <v-btn 
       v-if="isClothesFormRoute" 
       icon
-      color="secondary"
+      color="accent"
       :disabled="disableSaveClothesButton"
       @click="saveClothesForm()"
     >
