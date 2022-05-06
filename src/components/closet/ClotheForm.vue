@@ -5,11 +5,12 @@
     }"
   >
     <v-card
-      elevation="0"
+      elevation="2"
       :min-width="widthCard+'px'"
       :max-width="widthCard+'px'"
       :ref="'card-' + id"
       outlined
+      :rounded="'lg'"
     >
       <v-img
         :height="cardImageHeight"
