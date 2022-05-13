@@ -1,14 +1,5 @@
 <template>
-  <div>
-    <v-btn 
-      v-if="isClosetRoute" 
-      icon 
-      color="accent"
-      @click="redirectToForm()"
-    >
-      <v-icon>mdi-plus</v-icon>
-    </v-btn>
-
+  <div style="display: flex;">
     <v-btn 
       v-if="isClothesFormRoute" 
       icon
