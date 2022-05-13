@@ -50,7 +50,7 @@ export default {
     ...mapGetters([
       "currentRouteName",
       "disableSaveClothesButton",
-      "showAddClotheButton"
+      "clothes"
     ]),
     isClosetRoute () {
       return this.currentRouteName === "closet"
