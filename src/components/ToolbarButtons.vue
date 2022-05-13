@@ -37,8 +37,12 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
+import ButtonAddClothe from './closet/ButtonAddClothe.vue';
 
 export default {
+  components: { 
+    ButtonAddClothe 
+  },
   props: [
     "value"
   ],
