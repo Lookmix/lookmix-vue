@@ -47,10 +47,6 @@ export default {
     ...mapMutations([
       "setLoadingDialog"
     ]),
-    redirectToForm () {
-      this.setLoadingDialog(true)
-      this.$router.push("clothes-form")
-    },
     saveClothesForm () {
       
     },
