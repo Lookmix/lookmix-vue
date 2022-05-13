@@ -37,7 +37,8 @@ export default new Vuex.Store({
     backgroundColor: "initial",
     disableSaveClothesButton: true,
     loadingDialog: false,
-    showAddClotheButton: true
+    showAddClotheButton: true,
+    clothes: []
   },
   getters: {
     authenticated: state => state.authenticated,
@@ -57,7 +58,8 @@ export default new Vuex.Store({
     backgroundColor: state => state.backgroundColor,
     disableSaveClothesButton: state => state.disableSaveClothesButton,
     loadingDialog: state => state.loadingDialog,
-    showAddClotheButton: state => state.showAddClotheButton
+    showAddClotheButton: state => state.showAddClotheButton,
+    clothes: state => state.clothes
   },
   mutations: {
     setNewUser(state, data) {
@@ -107,6 +109,15 @@ export default new Vuex.Store({
     },
     setShowAddClotheButton (state, data) {
       state.showAddClotheButton = data
+    },
+    addClothe (state, data) {
+      state.clothes.unshift(data)
+    },
+    addClotheOnIndex (state, data) {
+      state.clothes[data.index] = data.value
+    },
+    removeClotheOnIndex (state, data) {
+      state.clothes.splice(data, 1)
     }
   },
   actions: {
