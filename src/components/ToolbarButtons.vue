@@ -21,17 +21,7 @@
       </v-icon>
     </v-btn>
 
-    <v-btn 
-      v-if="isClothesFormRoute && showAddClotheButton" 
-      icon
-      color="accent"
-      style="margin-left: 5px;"
-      @click="addClothe()"
-    >
-      <v-icon>
-        mdi-plus
-      </v-icon>
-    </v-btn>
+    <button-add-clothe v-if="showAddClotheButton" />
   </div>
 </template>
 
