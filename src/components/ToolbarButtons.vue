@@ -58,6 +58,9 @@ export default {
     isClothesFormRoute () {
       return this.currentRouteName === "clothesForm"
     },
+    showAddClotheButton () {
+      return this.isClosetRoute || (this.isClothesFormRoute && this.clothes.length > 0)
+    }
   },
   methods: {
     ...mapMutations([
