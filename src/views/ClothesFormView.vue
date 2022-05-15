@@ -63,7 +63,7 @@
       </v-btn>
       <v-spacer/>
       <span style="font-size: 18px; color: white; font-weight: bold;"> 
-        {{ pageCount }} de {{ clothes.length }}
+        {{ pageCount }} de {{ totalClothes }}
       </span>
       <v-spacer/>
       <v-btn 
@@ -141,6 +141,9 @@ export default {
       }
       return 319
     },
+    totalClothes () {
+      return this.clothes.length
+    }
   },
   methods: {
     ...mapMutations([
