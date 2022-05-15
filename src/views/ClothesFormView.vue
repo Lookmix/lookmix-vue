@@ -108,6 +108,16 @@ export default {
       }
     }
   },
+  watch: {
+    totalClothes: {
+      handler: function (val, oldVal) {
+        if (val > oldVal) {
+          this.slideToBegin()
+        }
+      },
+      deep: true
+    },
+  },
   computed: {
     ...mapGetters([
       "clothes"
