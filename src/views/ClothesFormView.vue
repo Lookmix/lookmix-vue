@@ -14,7 +14,6 @@
           </div>
         </v-card-text>
       </v-card>
-
     </div>
 
     <swiper
@@ -129,9 +128,6 @@ export default {
     },
     pageCount () {
       return this.index + 1
-    },
-    swiper() {
-      return this.$refs.mySwiper.$swiper
     },
     swiperHeight () {
       const header = 56
