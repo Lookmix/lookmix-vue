@@ -48,10 +48,9 @@
           <v-btn-toggle
             v-model="closet"
             @change="emitPayload()"
-            tile
             mandatory
+            borderless
             color="accent"
-            group
             style="margin-left: -4px;"
           >
             <v-btn 
