@@ -187,13 +187,26 @@ export default {
       }
       this.setDisableSaveClothesButton(disable)
     },
+    slideToBegin () {
+      const swiperRef = this.$refs.mySwiper
+      if (swiperRef) {
+        this.index = 0
+        swiperRef.$swiper.slideTo(this.index, 400, false)
+      }
+    },
     next () {
-      this.index++
-      this.swiper.slideTo(this.index, 400, false)
+      const swiperRef = this.$refs.mySwiper
+      if (swiperRef) {
+        this.index++
+        swiperRef.$swiper.slideTo(this.index, 400, false)
+      }
     },
     prev () {
-      this.index--
-      this.swiper.slideTo(this.index, 400, false)
+      const swiperRef = this.$refs.mySwiper
+      if (swiperRef) {
+        this.index--
+        swiperRef.$swiper.slideTo(this.index, 400, false)
+      }
     },
     onSlideChange (event) {
       this.index = event.activeIndex
