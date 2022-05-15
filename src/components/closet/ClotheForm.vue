@@ -211,18 +211,18 @@ export default {
       categories: [
         {
           id: uuidv4(),
-          name: 'Acessórios cabeça',
-          description: 'Bonés, chapéus, óculos, brincos ou laços'
-        },
-        { 
-          id: uuidv4(),
-          name: 'Acessórios pescoço',
-          description: 'Colares, correntes, gravatas ou cachecóis',
+          name: 'Roupas de cima',
+          description: 'Camisas, camisetas, polos, blusas ou regatas',
         },
         {
           id: uuidv4(),
-          name: 'Roupas de cima',
-          description: 'Camisas, camisetas, polos, blusas ou regatas',
+          name: 'Pernas',
+          description: 'Calças, shorts, saias ou bermudas'
+        },
+        {
+          id: uuidv4(),
+          name: 'Pés',
+          description: 'Calçados ou meias'
         },
         {
           id: uuidv4(),
@@ -236,23 +236,23 @@ export default {
         },
         {
           id: uuidv4(),
-          name: 'Acessórios braços e mãos',
-          description: 'Bolsas, pulseiras, relógios, anéis ou luvas'
+          name: 'Acessórios de cabeça',
+          description: 'Bonés, chapéus, óculos, brincos ou laços'
+        },
+        { 
+          id: uuidv4(),
+          name: 'Acessórios de pescoço',
+          description: 'Colares, correntes, gravatas ou cachecóis',
         },
         {
           id: uuidv4(),
-          name: 'Pernas',
-          description: 'Calças, shorts, saias ou bermudas'
+          name: 'Acessórios de braços e mãos',
+          description: 'Bolsas, pulseiras, relógios, anéis ou luvas'
         },
         {
           id: uuidv4(),
           name: 'Cintura',
           description: 'Cintos ou laços'
-        },
-        {
-          id: uuidv4(),
-          name: 'Pés',
-          description: 'Calçados ou meias'
         }
       ],
       selectedCategory: 0,
