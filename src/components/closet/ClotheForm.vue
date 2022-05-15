@@ -352,6 +352,6 @@ export default {
 }
 .backdrop-image {
   background-position: center;
-  background-size: cover;
+  background-size: cover; /* auto; */
 }
 </style>
