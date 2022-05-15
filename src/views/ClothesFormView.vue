@@ -174,6 +174,10 @@ export default {
     removeClothe (event, index) {
       this.removeClotheOnIndex(index)
       this.updateSaveButtonState()
+
+      if (this.index > 0) {
+        this.prev()
+      }
     },
     updateSaveButtonState () {
       let disable = false
