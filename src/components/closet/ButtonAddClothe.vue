@@ -113,9 +113,11 @@ export default {
       }
       this.showDialog = true
 
+      const loadingTimeoutInMiliseconds = 10_000
+
       setTimeout(() => {
         this.showDialog = false
-      }, 5500)
+      }, loadingTimeoutInMiliseconds)
     },
     readImages () {
       for (let image of this.images) {
