@@ -281,6 +281,7 @@ export default {
       selectedSeasons: [],
       id: uuidv4(),
       cardImageHeight: 160, //180,
+      showOverlay: true
     }
   },
   computed: {
