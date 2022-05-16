@@ -35,6 +35,7 @@
           :id="clothe.id"
           :image="clothe.image"
           :cardWidth="cardWidth"
+          :cardHeight="swiperHeight"
           @payload="setClothe($event, clothe.id)"
           @remove="removeClothe($event, index)"
         />
