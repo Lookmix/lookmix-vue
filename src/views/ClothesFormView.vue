@@ -19,7 +19,7 @@
     <swiper
       v-if="existsClothes"
       :style="{ 
-        'height': swiperHeight, 
+        'height': swiperHeight+'px', 
         'margin-top': '10px' 
       }"
       ref="mySwiper" 
