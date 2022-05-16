@@ -34,8 +34,9 @@
 
       <v-sheet
         :ref="'card-content' + id"
-        :style="{'overflow-y': 'auto'}"
-        :height="heightCard"
+        :style="{'overflow-y': 'auto', 'border-radius': '8px !important'}"
+        :height="cardContentHeight"
+        :rounded="'lg'"
       >
         <v-card-subtitle 
           class="text-uppercase font-weight-bold"
