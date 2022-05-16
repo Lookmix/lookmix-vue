@@ -135,7 +135,7 @@ export default {
       const marginTop = 10
       let innerHeight = window.innerHeight
       innerHeight = innerHeight - header - footer - marginTop
-      return `${innerHeight}px`
+      return innerHeight
     },
     widthCard () {
       switch (this.$vuetify.breakpoint.name) {
