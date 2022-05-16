@@ -193,6 +193,20 @@
           </v-sheet>
         </v-card-text>
       </v-sheet>
+
+      <div 
+        v-if="showOverlay"
+        :style="{
+          'height': '35px', 
+          'background': 'linear-gradient(0deg, #ffffff 5%, transparent 68%)',
+          'position': 'fixed',
+          'display': 'block',
+          'width': cardWidth+'px',
+          'z-index': '2',
+          'top': cardHeight-43+'px'
+        }"
+      >
+      </div>
     </v-card>
   </div>
 </template>
