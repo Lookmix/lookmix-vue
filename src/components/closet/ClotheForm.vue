@@ -357,7 +357,16 @@ export default {
         easing: "easeInOutCubic",
         container: this.$refs[ref]
       })
-    }
+    },
+    scrolling () {
+      const element = document.getElementById("card-content" + this.id)
+      if (element) {
+        this.showOverlay = true
+        if (element.scrollTop >= 720) {
+          this.showOverlay = false
+        }
+      }
+    },
   }
 }
 </script>
