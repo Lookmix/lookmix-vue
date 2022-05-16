@@ -137,7 +137,7 @@ export default {
       innerHeight = innerHeight - header - footer - marginTop
       return innerHeight
     },
-    widthCard () {
+    cardWidth () {
       switch (this.$vuetify.breakpoint.name) {
         case "xs": return 319
         case "sm": return 319
