@@ -350,11 +350,11 @@ export default {
       this.$emit("remove", undefined)
     },
     goTo (element) {
-      const ref = 'card-content' + this.id
+      const ref = "card-content" + this.id
       this.$vuetify.goTo(element, {
         duration: 700,
         offset: -60,
-        easing: 'easeInOutCubic',
+        easing: "easeInOutCubic",
         container: this.$refs[ref]
       })
     }
