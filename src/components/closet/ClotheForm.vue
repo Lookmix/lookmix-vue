@@ -87,36 +87,43 @@
         <v-card-text 
           :style="{'width': widthContentCard}"
         >
-          <v-list 
-            dense
+          <v-sheet
+            elevation="0" 
+            rounded 
             outlined
-            three-line
-              :color="'#FAFAFA'"
           >
-            <v-list-item-group
-              v-model="selectedCategory"
-              @change="emitPayload()"
-              mandatory
-              color="accent"
+            <v-list
+          <v-list 
+            <v-list
+              dense
+              three-line
+              :color="'#FAFAFA'"
             >
-              <v-list-item
-                @click="goTo('#season' + id)"
-                style="min-height: unset !important;"
-                v-for="(category, index) in categories"
-                :key="index"
+              <v-list-item-group
+                v-model="selectedCategory"
+                @change="emitPayload()"
+                mandatory
+                color="accent"
               >
-                <v-list-item-content>
-                  <v-list-item-title>
-                    {{ category.name }}
-                  </v-list-item-title>
+                <v-list-item
+                  @click="goTo('#season' + id)"
+                  style="min-height: unset !important;"
+                  v-for="(category, index) in categories"
+                  :key="index"
+                >
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      {{ category.name }}
+                    </v-list-item-title>
 
-                  <v-list-item-subtitle>
-                    {{ category.description }}
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
+                    <v-list-item-subtitle>
+                      {{ category.description }}
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-sheet>
         </v-card-text>
 
         <v-card-subtitle 
