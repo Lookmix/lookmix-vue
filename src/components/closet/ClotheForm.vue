@@ -1,13 +1,13 @@
 <template>
   <div 
     :style="{
-      'width': widthCard+'px', // 85%
+      'width': cardWidth+'px', // 85%
     }"
   >
     <v-card
       elevation="2"
-      :min-width="widthCard+'px'"
-      :max-width="widthCard+'px'"
+      :min-width="cardWidth+'px'"
+      :max-width="cardWidth+'px'"
       :ref="'card-' + id"
       outlined
       :rounded="'lg'"
@@ -318,7 +318,7 @@ export default {
     },
     widthContentCard () {
       const padding = 32
-      return `${this.widthCard - padding}px`
+      return `${this.cardWidth - padding}px`
     }
   },
   methods: {
