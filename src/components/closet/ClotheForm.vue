@@ -91,6 +91,7 @@
             dense
             outlined
             three-line
+              :color="'#FAFAFA'"
           >
             <v-list-item-group
               v-model="selectedCategory"
