@@ -303,7 +303,7 @@ export default {
     ...mapGetters([
       "maxHeight"
     ]),
-    heightCard () {
+    cardContentHeight () {
       // return this.maxHeight - 105 - 250 // 95 + margin10 = 105
       // +10 = margin
       const marginDiscount = 20
