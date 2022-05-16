@@ -27,14 +27,14 @@
       @slideChangeTransitionEnd="onSlideChange($event)"
     >
       <swiper-slide 
-        :style="{'width': widthCard+'px'}"
+        :style="{'width': cardWidth+'px'}"
         v-for="(clothe, index) in clothes" 
         :key="index"
       >
         <ClotheForm 
           :id="clothe.id"
           :image="clothe.image"
-          :widthCard="widthCard"
+          :cardWidth="cardWidth"
           @payload="setClothe($event, clothe.id)"
           @remove="removeClothe($event, index)"
         />
