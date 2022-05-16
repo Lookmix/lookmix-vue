@@ -93,8 +93,6 @@
             outlined
           >
             <v-list
-          <v-list 
-            <v-list
               dense
               three-line
               :color="'#FAFAFA'"
