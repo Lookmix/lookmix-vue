@@ -36,6 +36,7 @@
         :ref="'card-content' + id"
         :style="{'overflow-y': 'auto', 'border-radius': '8px !important'}"
         :height="cardContentHeight"
+        :id="'card-content' + id"
         :rounded="'lg'"
       >
         <v-card-subtitle 
