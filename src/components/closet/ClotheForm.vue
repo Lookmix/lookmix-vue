@@ -38,6 +38,7 @@
         :height="cardContentHeight"
         :id="'card-content' + id"
         :rounded="'lg'"
+        @scroll="scrolling()"
       >
         <v-card-subtitle 
           class="text-uppercase font-weight-bold"
