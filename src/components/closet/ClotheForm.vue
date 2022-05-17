@@ -370,11 +370,27 @@ export default {
     },
     scrolling () {
       const element = document.getElementById("card-content" + this.id)
-      if (element) {
-        this.showOverlay = true
-        if (element.scrollTop >= 720) {
-          this.showOverlay = false
-        }
+      if (!element) {
+        return;
+      }
+      const cardScrollHeight = element.scrollHeight
+      const cardClientHeight = element.clientHeight
+      const cardScrollTopMaxValue = cardScrollHeight - cardClientHeight
+      const pixelsScrolled = element.scrollTop
+
+      this.showOverlayBottom = true
+
+      if (pixelsScrolled === cardScrollTopMaxValue) {
+        this.showOverlayBottom = false
+        return;
+      }
+      if (pixelsScrolled === 0) {
+        this.showOverlayTop = false
+        return;
+      }
+      if (pixelsScrolled > 0) {
+        this.showOverlayTop = true
+        return;
       }
     },
   }
