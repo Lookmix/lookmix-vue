@@ -306,6 +306,7 @@ export default {
       id: uuidv4(),
       cardImageHeight: 160, //180,
       showOverlayBottom: true,
+      showOverlayTop: false
     }
   },
   computed: {
