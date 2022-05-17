@@ -32,6 +32,20 @@
         </v-btn>
       </v-img>
 
+      <div 
+        v-if="showOverlayTop"
+        :style="{
+          'height': '35px', 
+          'background': 'linear-gradient(0deg, transparent 5%, #ffffff 88%)', 
+          'position': 'fixed',
+          'display': 'block',
+          'width': cardWidth+'px',
+          'z-index': '2',
+          'top': 204-43+'px'
+        }"
+      >
+      </div>
+
       <v-sheet
         :ref="'card-content' + id"
         :style="{'overflow-y': 'auto', 'border-radius': '8px !important'}"
