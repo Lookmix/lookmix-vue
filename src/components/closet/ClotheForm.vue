@@ -207,7 +207,7 @@
         v-if="showOverlayBottom"
         :style="{
           'height': '35px', 
-          'background': 'linear-gradient(0deg, #ffffff 5%, transparent 68%)',
+          'background': 'linear-gradient(0deg, #ffffff 5%, transparent 100%)',
           'position': 'fixed',
           'display': 'block',
           'width': cardWidth+'px',
