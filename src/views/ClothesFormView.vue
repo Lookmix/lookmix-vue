@@ -29,7 +29,7 @@
       <swiper-slide 
         :style="{'width': cardWidth+'px'}"
         v-for="(clothe, index) in clothes" 
-        :key="index"
+        :key="clothe.id"
       >
         <ClotheForm 
           :id="clothe.id"
