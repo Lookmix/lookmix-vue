@@ -204,7 +204,7 @@
       </v-sheet>
 
       <div 
-        v-if="showOverlay"
+        v-if="showOverlayBottom"
         :style="{
           'height': '35px', 
           'background': 'linear-gradient(0deg, #ffffff 5%, transparent 68%)',
