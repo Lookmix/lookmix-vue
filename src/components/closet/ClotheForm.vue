@@ -371,7 +371,7 @@ export default {
       this.$emit("payload", payload)
     },
     remove () {
-      this.$emit("remove", undefined)
+      this.$emit("remove", this.id)
     },
     goTo (element) {
       const ref = "card-content" + this.id
