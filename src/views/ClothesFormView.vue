@@ -1,10 +1,19 @@
 <template>
-  <div> <!--style="margin-top: 10px;"-->
-    <div style="display: flex; flex-direction: column;">
-      <v-card elevation="0" v-if="!existsClothes">
+  <div>
+    <div 
+      :style="{
+        'display': !existsClothes ? 'flex' : 'none', 
+        'flex-direction': 'column',
+      }"
+    >
+      <v-card elevation="0">  
         <v-card-text style="text-align: center;">
           <br/>
-          <span> Adicione novas peças ao seu guarda-roupa </span>
+
+          <span> 
+            Adicione novas peças ao seu guarda-roupa
+          </span>
+
           <br/>
 
           <div
@@ -61,11 +70,15 @@
           mdi-chevron-left
         </v-icon>
       </v-btn>
+
       <v-spacer/>
+
       <span style="font-size: 18px; color: white; font-weight: bold;"> 
         {{ pageCount }} de {{ totalClothes }}
       </span>
+
       <v-spacer/>
+
       <v-btn 
         small
         style="margin: 0px 10px;"
