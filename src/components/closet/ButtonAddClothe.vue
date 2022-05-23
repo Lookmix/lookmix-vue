@@ -98,6 +98,9 @@ export default {
       snackbarError: false,
       snackbarErrorMsg: undefined,
       showDialog: false,
+      showCloseButton: false,
+      interval: {},
+      progressLoading: 0
     }
   },
   methods: {
