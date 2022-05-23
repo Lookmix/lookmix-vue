@@ -103,6 +103,25 @@ export default {
       progressLoading: 0
     }
   },
+  watch: {
+    progressLoading: {
+      handler: function (value, oldValue) {
+        const completeProgress = 100
+
+        if (value === completeProgress) {
+          clearInterval(this.interval)
+          this.showCloseButton = true
+        }
+      }
+    },
+    showDialog: {
+      handler: function (value, oldValue) {
+        if (value) {
+          this.progressLoading = 0
+        }
+      },
+    }
+  },
   methods: {
     ...mapMutations([
       "addClothe",
