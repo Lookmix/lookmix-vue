@@ -134,6 +134,10 @@ export default {
         fileUpload.click()
       }
       this.showDialog = true
+      this.showCloseButton = false
+      this.interval = setInterval(() => {
+        this.progressLoading += 5
+      }, 1000)
     },
     readImages () {
       this.progressLoading = 100
