@@ -50,7 +50,52 @@
       </template>
     </v-file-input>
 
-    <dialog-loading :show="showDialog"/>
+    <v-dialog
+      :value="showDialog"
+      width="250"
+      persistent
+    >
+      <v-card
+        width="250"
+        height="250"
+        style="display: flex; justify-content: center; flex-direction: column;"
+      >
+        <v-card-title>
+          Carregando...
+        </v-card-title>
+
+        <v-progress-circular
+          :size="70"
+          :rotate="360"
+          :width="10"
+          color="secondary"
+          style="margin: auto;"
+          :value="progressLoading"
+        >
+          {{ progressLoading }} %
+        </v-progress-circular>
+        <!-- indeterminate -->
+        <v-card-text 
+          :style="{
+            'display': 'flex',
+            'flex-direction': 'row',
+            'justify-content': 'center',
+            'padding-top': '20px',
+            'height': '68px'
+          }"
+        >
+          <v-btn 
+            v-if="showDialog && showCloseButton"
+            text 
+            outlined
+            small
+            @click="showDialog = false; progressLoading = 0; showCloseButton = false;" 
+          >
+            FECHAR
+          </v-btn>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
 
     <v-snackbar
       v-model="snackbarError"
@@ -74,12 +119,8 @@
 <script>
 import { mapMutations, mapGetters } from "vuex"
 import { v4 as uuidv4 } from "uuid"
-import DialogLoading from "./../DialogLoading.vue"
 
 export default {
-  components: {
-    DialogLoading
-  },
   props: {
     iconButton: { 
       type: Boolean, 
