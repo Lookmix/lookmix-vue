@@ -134,17 +134,16 @@ export default {
         fileUpload.click()
       }
       this.showDialog = true
-
-      const loadingTimeoutInMiliseconds = 10_000
-
-      setTimeout(() => {
-        this.showDialog = false
-      }, loadingTimeoutInMiliseconds)
     },
     readImages () {
+      this.progressLoading = 100
+
+      clearInterval(this.interval)
+
       for (let image of this.images) {
         if (!image.type.includes("image")) {
           this.snackbarErrorMsg = "Tipo de arquivo inválido, apenas imagens são aceitas."
+
           this.snackbarError = true
         }
         if (!this.snackbarError) {
@@ -152,6 +151,7 @@ export default {
         }
       }
       this.images = []
+
       this.setDisableSaveClothesButton(false)
 
       if (this.currentRouteName !== "clothesForm") {
