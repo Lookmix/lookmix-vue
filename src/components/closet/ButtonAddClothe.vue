@@ -65,16 +65,13 @@
         </v-card-title>
 
         <v-progress-circular
-          :size="70"
-          :rotate="360"
+          :size="65"
           :width="10"
           color="secondary"
           style="margin: auto;"
-          :value="progressLoading"
-        >
-          {{ progressLoading }} %
-        </v-progress-circular>
-        <!-- indeterminate -->
+          indeterminate
+        />
+
         <v-card-text 
           :style="{
             'display': 'flex',
@@ -85,11 +82,11 @@
           }"
         >
           <v-btn 
-            v-if="showDialog && showCloseButton"
+            v-if="showCloseButton"
             text 
             outlined
             small
-            @click="showDialog = false; progressLoading = 0; showCloseButton = false;" 
+            @click="showDialog = false; showCloseButton = false;" 
           >
             FECHAR
           </v-btn>
@@ -129,7 +126,6 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "clothes",
       "currentRouteName"
     ])
   },
@@ -140,27 +136,7 @@ export default {
       snackbarErrorMsg: undefined,
       showDialog: false,
       showCloseButton: false,
-      interval: {},
-      progressLoading: 0
-    }
-  },
-  watch: {
-    progressLoading: {
-      handler: function (value, oldValue) {
-        const completeProgress = 100
-
-        if (value === completeProgress) {
-          clearInterval(this.interval)
-          this.showCloseButton = true
-        }
-      }
-    },
-    showDialog: {
-      handler: function (value, oldValue) {
-        if (value) {
-          this.progressLoading = 0
-        }
-      },
+      loadingTimeoutInMiliseconds: 20_000
     }
   },
   methods: {
@@ -169,22 +145,19 @@ export default {
       "setDisableSaveClothesButton"
     ]),
     addClotheClick () {
+      this.showDialog = true
+      this.showCloseButton = false
+
       const fileUpload = document.getElementById("fileInput")
 
       if (fileUpload !== undefined) {
         fileUpload.click()
       }
-      this.showDialog = true
-      this.showCloseButton = false
-      this.interval = setInterval(() => {
-        this.progressLoading += 5
-      }, 1000)
+      setTimeout(() => {
+        this.showCloseButton = true
+      }, this.loadingTimeoutInMiliseconds)
     },
     readImages () {
-      this.progressLoading = 100
-
-      clearInterval(this.interval)
-
       for (let image of this.images) {
         if (!image.type.includes("image")) {
           this.snackbarErrorMsg = "Tipo de arquivo inválido, apenas imagens são aceitas."
