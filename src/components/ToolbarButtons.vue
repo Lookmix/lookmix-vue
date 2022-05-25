@@ -5,7 +5,7 @@
       icon
       color="accent"
       :disabled="disableSaveClothesButton"
-      @click="saveClothesForm()"
+      @click="saveClothesButtonClick()"
     >
       <v-icon>
         mdi-check
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import ButtonAddClothe from './closet/ButtonAddClothe.vue';
 
 export default {
@@ -44,11 +44,14 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      "saveClothesForm"
+    ]),
     ...mapMutations([
       "setLoadingDialog"
     ]),
-    saveClothesForm () {
-      
+    saveClothesButtonClick () {
+      this.saveClothesForm()
     },
     addClothe () {
       
