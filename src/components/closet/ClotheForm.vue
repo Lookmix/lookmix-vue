@@ -63,7 +63,7 @@
 
         <v-card-text :style="{'width': widthContentCard}">
           <v-btn-toggle
-            v-model="closet"
+            v-model="selectedCloset"
             @change="emitPayload()"
             mandatory
             borderless
@@ -71,19 +71,13 @@
             style="margin-left: -4px;"
           >
             <v-btn 
+              v-for="closet in closets"
+              :key="closet.id"
               small
               @click="goTo('#category' + id)"
-              value="casual" 
+              :value="closet.id" 
             >
-              CASUAL
-            </v-btn>
-
-            <v-btn 
-              small
-              @click="goTo('#category' + id)"
-              value="social" 
-            >
-              SOCIAL
+              {{ closet.text }}
             </v-btn>
           </v-btn-toggle>            
         </v-card-text>
@@ -294,7 +288,17 @@ export default {
         }
       ],
       selectedCategory: 0,
-      closet: undefined,
+      closets: [
+        {
+          text: "CASUAL",
+          id: uuidv4()
+        },
+        {
+          text: "SOCIAL",
+          id: uuidv4()
+        }
+      ],
+      selectedCloset: undefined,
       occasions: [
         { name: "Básico/comum", id: uuidv4() },
         { name: "Dia", id: uuidv4() },
@@ -363,7 +367,7 @@ export default {
       }
       const payload = {
         category: category,
-        closet: this.closet,
+        closet: this.selectedCloset,
         occasions: occasions,
         seasons: seasons,
         image: this.image
