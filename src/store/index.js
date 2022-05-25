@@ -177,6 +177,33 @@ export default new Vuex.Store({
       const url = `${DOMAIN}/auth/refresh`
 
       return axios.post(`${url}`, null, { withCredentials: true })
+    },
+    async saveClothesForm ({ commit, state }) {
+      try {
+        const url = `${DOMAIN}/clothe/save`
+        const formData = new FormData();
+
+        const clothes = state.clothes
+        let count = 0
+        for (let clothe of clothes) {
+          const file = clothe.image
+  
+          formData.append(count+"file", file, clothe.id);
+  
+          delete clothe.image
+  
+          const json = JSON.stringify(clothe)
+          const blob = new Blob([json], {
+            type: "application/json"
+          });
+          formData.append(count+"document", blob, clothe.id)
+          count++
+        }
+        const response = await axios.post(url, formData, { withCredentials: true })
+        console.log(response.data)
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
   modules: {
