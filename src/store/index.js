@@ -38,7 +38,8 @@ export default new Vuex.Store({
     disableSaveClothesButton: true,
     loadingDialog: false,
     showAddClotheButton: true,
-    clothes: []
+    clothes: [],
+    images: []
   },
   getters: {
     authenticated: state => state.authenticated,
@@ -59,7 +60,8 @@ export default new Vuex.Store({
     disableSaveClothesButton: state => state.disableSaveClothesButton,
     loadingDialog: state => state.loadingDialog,
     showAddClotheButton: state => state.showAddClotheButton,
-    clothes: state => state.clothes
+    clothes: state => state.clothes,
+    images: state => state.images
   },
   mutations: {
     setNewUser(state, data) {
@@ -178,7 +180,8 @@ export default new Vuex.Store({
 
       return axios.post(`${url}`, null, { withCredentials: true })
     },
-    async saveClothesForm ({ commit, state }) {
+    async saveClothesForm ({ commit, dispatch, state }) {
+      let id = undefined
       try {
         const url = `${DOMAIN}/clothe/save`
         const formData = new FormData();
@@ -197,10 +200,26 @@ export default new Vuex.Store({
             type: "application/json"
           });
           formData.append(count+"document", blob, clothe.id)
+          id = clothe.id
           count++
         }
         const response = await axios.post(url, formData, { withCredentials: true })
         console.log(response.data)
+        dispatch("getImageById", id)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async getImageById({ commit, state }, data) {
+      try {
+        const url = `${DOMAIN}/clothe/find_by_id`
+        const response = await axios.get(url, {
+          params: {
+            id: data
+          }
+        })
+        const data = response.data
+        state.images.push(data.url_m)
       } catch (error) {
         console.log(error)
       }
