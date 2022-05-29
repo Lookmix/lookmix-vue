@@ -181,7 +181,6 @@ export default new Vuex.Store({
       return axios.post(`${url}`, null, { withCredentials: true })
     },
     async saveClothesForm ({ commit, dispatch, state }) {
-      let id = undefined
       try {
         const url = `${DOMAIN}/clothe/save`
         const formData = new FormData();
@@ -200,12 +199,10 @@ export default new Vuex.Store({
             type: "application/json"
           });
           formData.append(count+"document", blob, clothe.id)
-          id = clothe.id
           count++
         }
         const response = await axios.post(url, formData, { withCredentials: true })
         console.log(response.data)
-        dispatch("getImageById", id)
       } catch (error) {
         console.log(error)
       }
