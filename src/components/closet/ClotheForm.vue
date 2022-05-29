@@ -75,7 +75,7 @@
               :key="closet.id"
               small
               @click="goTo('#category' + id)"
-              :value="closet.id" 
+              :value="closet.value" 
             >
               {{ closet.text }}
             </v-btn>
@@ -291,11 +291,13 @@ export default {
       closets: [
         {
           text: "CASUAL",
-          id: uuidv4()
+          id: uuidv4(),
+          value: "casual"
         },
         {
           text: "SOCIAL",
-          id: uuidv4()
+          id: uuidv4(),
+          value: "social"
         }
       ],
       selectedCloset: undefined,
@@ -366,10 +368,10 @@ export default {
         }
       }
       const payload = {
-        category: category,
+        category_id: category,
         closet: this.selectedCloset,
-        occasions: occasions,
-        seasons: seasons,
+        occasion_ids: occasions,
+        season_ids: seasons,
         image: this.image
       }
       this.$emit("payload", payload)
