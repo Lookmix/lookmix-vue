@@ -167,7 +167,7 @@
                   {{ 'mdi-'+ season.icon}}
                 </v-icon> -->
 
-                {{ season.name }}
+                {{ season }}
               </v-chip>
             </v-chip-group>
           </v-sheet>
@@ -204,7 +204,7 @@
                 v-for="(item, index) in occasions" 
                 :key="index"
               >
-                {{ item.name }}
+                {{ item }}
               </v-chip>
             </v-chip-group>
           </v-sheet>
