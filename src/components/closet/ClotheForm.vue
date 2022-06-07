@@ -240,53 +240,6 @@ export default {
   },
   data () {
     return {
-      categories: [
-        {
-          id: uuidv4(),
-          name: 'Roupas de cima',
-          description: 'Camisas, camisetas, polos, blusas ou regatas',
-        },
-        {
-          id: uuidv4(),
-          name: 'Pernas',
-          description: 'Calças, shorts, saias ou bermudas'
-        },
-        {
-          id: uuidv4(),
-          name: 'Pés',
-          description: 'Calçados ou meias'
-        },
-        {
-          id: uuidv4(),
-          name: 'Peças sobrepostas',
-          description: 'Casacos, jaquetas, moletons ou sobretudos',
-        },
-        { 
-          id: uuidv4(),
-          name: 'Peças únicas',
-          description: 'Vestidos ou macacões'
-        },
-        {
-          id: uuidv4(),
-          name: 'Acessórios de cabeça',
-          description: 'Bonés, chapéus, óculos, brincos ou laços'
-        },
-        { 
-          id: uuidv4(),
-          name: 'Acessórios de pescoço',
-          description: 'Colares, correntes, gravatas ou cachecóis',
-        },
-        {
-          id: uuidv4(),
-          name: 'Acessórios de braços e mãos',
-          description: 'Bolsas, pulseiras, relógios, anéis ou luvas'
-        },
-        {
-          id: uuidv4(),
-          name: 'Cintura',
-          description: 'Cintos ou laços'
-        }
-      ],
       selectedCategory: 0,
       closets: [
         {
