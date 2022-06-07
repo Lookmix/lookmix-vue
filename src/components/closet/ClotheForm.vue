@@ -197,7 +197,7 @@
               mandatory
               multiple
               column
-              v-model="selectedOcasions"
+              v-model="selectedOccasions"
               @change="emitPayload()"
             >
               <v-chip 
@@ -301,27 +301,7 @@ export default {
         }
       ],
       selectedCloset: undefined,
-      occasions: [
-        { name: "Básico/comum", id: uuidv4() },
-        { name: "Dia", id: uuidv4() },
-        { name: "Noite", id: uuidv4() },
-        { name: "Trabalho", id: uuidv4() },
-        { name: "Curso/Faculdade", id: uuidv4() },
-        { name: "Festa/evento", id: uuidv4() },
-        { name: "Restaurante", id: uuidv4() },
-        { name: "Shopping", id: uuidv4() },
-        { name: "Viagem", id: uuidv4() },
-        { name: "Praia", id: uuidv4() },
-        { name: "Atividade física", id: uuidv4() },
-        { name: "Natureza", id: uuidv4() }
-      ],
-      selectedOcasions: [],
-      seasons: [
-        { name: "Primavera", icon: "image-filter-vintage", id: uuidv4() },
-        { name: "Verão", icon: "white-balance-sunny", id: uuidv4() },
-        { name: "Outono", icon: "leaf-maple", id: uuidv4() },
-        { name: "Inverno", icon: "snowflake", id: uuidv4() }
-      ],
+      selectedOccasions: [],
       selectedSeasons: [],
       id: uuidv4(),
       cardImageHeight: 160, //180,
@@ -357,9 +337,9 @@ export default {
       const occasions = []
       const seasons = []
 
-      if (this.selectedOcasions.length > 0) {
-        for (let ocasion of this.selectedOcasions) {//console.log(this.occasions)
-          occasions.push(this.occasions[ocasion].id)
+      if (this.selectedOccasions.length > 0) {
+        for (let occasion of this.selectedOccasions) {
+          occasions.push(this.occasions[occasion])
         }
       }
       if (this.selectedSeasons.length > 0) {
