@@ -311,7 +311,10 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "maxHeight"
+      "maxHeight",
+      "categories",
+      "occasions",
+      "seasons"
     ]),
     cardContentHeight () {
       // return this.maxHeight - 105 - 250 // 95 + margin10 = 105
