@@ -347,7 +347,7 @@ export default {
       }
       if (this.selectedSeasons.length > 0) {
         for (let season of this.selectedSeasons) {//console.log(this.seasons)
-          seasons.push(this.seasons[season].id)
+          seasons.push(this.seasons[season])
         }
       }
       const payload = {
