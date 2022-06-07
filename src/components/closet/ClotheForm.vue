@@ -333,9 +333,9 @@ export default {
   },
   methods: {
     emitPayload () {
-      const category = this.categories[this.selectedCategory].id
-      const occasions = []
-      const seasons = []
+      const category = this.categories[this.selectedCategory]._id
+      let occasions = []
+      let seasons = []
 
       if (this.selectedOccasions.length > 0) {
         for (let occasion of this.selectedOccasions) {
