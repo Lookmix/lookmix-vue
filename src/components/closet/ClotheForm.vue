@@ -163,9 +163,9 @@
                 v-for="(season, index) in seasons"
                 :key="index"
               >
-                <v-icon left>
+                <!-- <v-icon left>
                   {{ 'mdi-'+ season.icon}}
-                </v-icon>
+                </v-icon> -->
 
                 {{ season.name }}
               </v-chip>
