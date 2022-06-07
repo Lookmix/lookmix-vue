@@ -370,8 +370,8 @@ export default {
       const payload = {
         category_id: category,
         closet: this.selectedCloset,
-        occasion_ids: occasions,
-        season_ids: seasons,
+        occasions: occasions,
+        seasons: seasons,
         image: this.image
       }
       this.$emit("payload", payload)
