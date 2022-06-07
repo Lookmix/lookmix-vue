@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from "vuex"
+import { mapActions, mapMutations, mapGetters } from "vuex"
 import ClotheForm from "./../components/closet/ClotheForm.vue"
 import ButtonAddClothe from "./../components/closet/ButtonAddClothe.vue"
 import { Swiper, SwiperSlide } from "vue-awesome-swiper"
@@ -110,6 +110,9 @@ export default {
   },
   mounted () {
     this.setPreviousPage("/closet")
+    this.getCategories()
+    this.getOccasions()
+    this.getSeasons()
   },
   data () {
     return {
@@ -166,6 +169,11 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      "getCategories",
+      "getOccasions",
+      "getSeasons"
+    ]),
     ...mapMutations([
       "setPreviousPage",
       "setDisableSaveClothesButton",
