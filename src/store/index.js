@@ -39,7 +39,10 @@ export default new Vuex.Store({
     loadingDialog: false,
     showAddClotheButton: true,
     clothes: [],
-    images: []
+    images: [],
+    categories: [],
+    occasions: [],
+    seasons: []
   },
   getters: {
     authenticated: state => state.authenticated,
@@ -61,7 +64,10 @@ export default new Vuex.Store({
     loadingDialog: state => state.loadingDialog,
     showAddClotheButton: state => state.showAddClotheButton,
     clothes: state => state.clothes,
-    images: state => state.images
+    images: state => state.images,
+    categories: state => state.categories,
+    occasions: state => state.occasions,
+    seasons: state => state.seasons
   },
   mutations: {
     setNewUser(state, data) {
@@ -213,10 +219,41 @@ export default new Vuex.Store({
         const response = await axios.get(url, {
           params: {
             id: data
-          }
+          },
+          withCredentials: true
         })
         const data = response.data
         state.images.push(data.url_m)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async getCategories({ state }) {
+      try {
+        const url = `${DOMAIN}/category/find`
+        const response = await axios.get(url, { withCredentials: true })
+        const data = response.data
+        state.categories = data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async getOccasions({ state }) {
+      try {
+        const url = `${DOMAIN}/occasion/find`
+        const response = await axios.get(url, { withCredentials: true })
+        const data = response.data
+        state.occasions = data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async getSeasons({ state }) {
+      try {
+        const url = `${DOMAIN}/season/find`
+        const response = await axios.get(url, { withCredentials: true })
+        const data = response.data
+        state.seasons = data
       } catch (error) {
         console.log(error)
       }
