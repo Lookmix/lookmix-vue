@@ -240,7 +240,7 @@ export default {
   },
   data () {
     return {
-      selectedCategory: 0,
+      selectedCategory: undefined,
       closets: [
         {
           text: "CASUAL",
