@@ -293,6 +293,9 @@ export default {
       let occasions = []
       let seasons = []
 
+      if (this.selectedCategory != undefined) {
+        category = this.categories[this.selectedCategory]._id
+      }
       if (this.selectedOccasions.length > 0) {
         for (let occasion of this.selectedOccasions) {
           occasions.push(this.occasions[occasion])
