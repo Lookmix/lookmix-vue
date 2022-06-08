@@ -289,7 +289,7 @@ export default {
   },
   methods: {
     emitPayload () {
-      const category = this.categories[this.selectedCategory]._id
+      let category = -1
       let occasions = []
       let seasons = []
 
