@@ -257,6 +257,16 @@ export default new Vuex.Store({
       } catch (error) {
         console.log(error)
       }
+    },
+    async getClothes({ state }) {
+      try {
+        const url = `${DOMAIN}/clothe/find_by_closet_id`
+        const response = await axios.get(url, { withCredentials: true })
+        const data = response.data
+        state.images = data.clothes
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
   modules: {
