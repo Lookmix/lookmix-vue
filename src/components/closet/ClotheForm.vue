@@ -305,7 +305,7 @@ export default {
       }
       const payload = {
         category_id: category,
-        closet: this.selectedCloset,
+        type: this.selectedCloset,
         occasions: occasions,
         seasons: seasons,
         image: this.image
