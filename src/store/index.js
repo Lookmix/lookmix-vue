@@ -207,8 +207,9 @@ export default new Vuex.Store({
 
         for (let clothe of clothes) {
           const file = clothe.image
-  
-          formData.append(count+"file", file, clothe.id);
+          const clotheId = clothe.id
+
+          formData.append(count+"file", file, clotheId);
   
           delete clothe.image
   
