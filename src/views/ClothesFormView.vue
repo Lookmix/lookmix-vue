@@ -222,9 +222,15 @@ export default {
   },
   mounted () {
     this.setPreviousPage("/closet")
-    this.getCategories()
-    this.getOccasions()
-    this.getSeasons()
+    if (this.categories.length < 1) {
+      this.getCategories()
+    }
+    if (this.occasions.length < 1) {
+      this.getOccasions()
+    }
+    if (this.seasons.length < 1) {
+      this.getSeasons()
+    }
   },
   data () {
     return {
@@ -266,7 +272,10 @@ export default {
     ...mapGetters([
       "clothes",
       "loadingDialog",
-      "clotheUploadSuccess"
+      "clotheUploadSuccess",
+      "categories",
+      "occasions",
+      "seasons"
     ]),
     existsClothes () {
       const existsClothes = this.clothes.length > 0
