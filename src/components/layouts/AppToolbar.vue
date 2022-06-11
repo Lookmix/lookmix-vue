@@ -14,7 +14,7 @@
       </v-icon>
     </v-app-bar-nav-icon>
 
-    <v-toolbar-title> 
+    <v-toolbar-title class="font-weight-bold"> 
       {{ toolbarTitle }} 
     </v-toolbar-title>
 
