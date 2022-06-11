@@ -91,6 +91,115 @@
         </v-icon>
       </v-btn>
     </v-toolbar>
+
+    <v-dialog
+      :value="loadingDialog" 
+      width="300"
+      persistent
+    >
+      <v-card
+        width="300"
+        height="300"
+      >
+        <template v-if="clotheUploadSuccess === undefined">
+          <v-card-title>
+            Salvando peças...
+          </v-card-title>
+
+          <v-card-text class="mt-10">
+            <div 
+              style="display: flex; justify-content: center; flex-direction: column;"
+            >
+              <v-progress-circular
+                :size="140"
+                :width="20"
+                color="secondary"
+                style="margin: auto;"
+                :value="uploadProgress"
+                :rotate="360"
+              > 
+                <span class="font-weight-bold" v-if="uploadProgress < 100">
+                  {{ uploadProgress }} %
+                </span>
+                <span v-else>
+                  Acabando... 
+                </span>
+              </v-progress-circular>
+            </div>
+          </v-card-text>
+        </template>
+
+        <template v-if="clotheUploadSuccess">
+          <v-card-title>
+            Sucesso
+          </v-card-title>
+
+          <v-card-text class="mt-n3">
+            <v-img 
+              contain
+              height="134"
+              width="194"
+              style="margin: auto;"
+              class="mb-4"
+              src="../assets/hanger-success.svg"
+            >
+            </v-img>
+            <span>
+              Suas peças foram salvas, veja como ficou seu closet
+            </span>
+          </v-card-text>
+
+          <v-card-actions
+            class="mt-n3"
+            style="display: flex; justify-content: center;"
+          >
+            <v-btn 
+              :elevation="0"
+              color="accent"
+              text
+              @click="redirectToCloset();" 
+            >
+              VER CLOSET
+            </v-btn>
+          </v-card-actions>
+        </template>
+
+        <template v-if="clotheUploadSuccess === false">
+          <v-card-title>
+            Oops...
+          </v-card-title>
+
+          <v-card-text class="mt-n3">
+            <v-img 
+              contain
+              src="../assets/hanger-error.svg"
+              height="134"
+              width="194"
+              style="margin: auto;"
+              class="mb-4"
+            >
+            </v-img>
+            <span>
+              Um erro impediu que algumas de suas peças fossem salvas
+            </span>
+          </v-card-text>
+
+          <v-card-actions
+            class="mt-n3"
+            style="display: flex; justify-content: center;"
+          >
+            <v-btn 
+              :elevation="0"
+              color="accent"
+              text
+              @click="redirectToCloset();" 
+            >
+              VER CLOSET
+            </v-btn>
+          </v-card-actions>
+        </template>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -108,6 +217,9 @@ export default {
     SwiperSlide,
     ButtonAddClothe
   },
+  beforeDestroy () {
+    this.clearUploadInterval()
+  },
   mounted () {
     this.setPreviousPage("/closet")
     this.getCategories()
@@ -121,7 +233,9 @@ export default {
         centeredSlides: true,
         slidesPerView: "auto",
         spaceBetween: 10
-      }
+      },
+      uploadProgress: 0,
+      uploadInterval: {}
     }
   },
   watch: {
@@ -133,10 +247,26 @@ export default {
       },
       deep: true
     },
+    loadingDialog: {
+      handler: function (val, oldVal) {
+        if (val) {
+          this.uploadInterval = setInterval(() => {
+            if (this.uploadProgress === 100) {
+              this.clearUploadInterval()
+              return;
+            }
+            let divisionResult = 100 / this.totalClothes
+            this.uploadProgress += divisionResult
+          }, 3000)
+        }
+      }
+    }
   },
   computed: {
     ...mapGetters([
-      "clothes"
+      "clothes",
+      "loadingDialog",
+      "clotheUploadSuccess"
     ]),
     existsClothes () {
       const existsClothes = this.clothes.length > 0
@@ -180,7 +310,9 @@ export default {
       "setLoadingDialog",
       "setShowAddClotheButton",
       "addClotheOnIndex",
-      "removeClotheOnIndex"
+      "removeClotheOnIndex",
+      "setClotheUploadSuccess",
+      "resetClothes"
     ]),
     setClothe (clothe, id) {
       const index = this.clothes.findIndex(item => item.id === id)
@@ -229,6 +361,15 @@ export default {
     onSlideChange (event) {
       this.index = event.activeIndex
     },
+    clearUploadInterval () {
+      clearInterval(this.uploadInterval)
+    },
+    redirectToCloset () {
+      this.setLoadingDialog(false)
+      this.setClotheUploadSuccess(undefined)
+      this.$router.push("/closet")
+      this.resetClothes()
+    }
   }
 }
 </script>
