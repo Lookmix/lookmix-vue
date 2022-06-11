@@ -58,10 +58,15 @@ axiosInstance.interceptors.response.use(
   // Do something with response error
   function (error) {
     const response = error.response
-    const isLogin = response.config.url.includes("/login")
-    const isRefresh = response.config.url.includes("/refresh")
-    const status = response.status
+    let isLogin = null
+    let isRefresh = null
+    let status = null
 
+    if (response) {
+      isLogin = response.config.url.includes("/login")
+      isRefresh = response.config.url.includes("/refresh")
+      status = response.status
+    }
     if (status === 401) {
       if (!isLogin && !isRefresh) {
         return store.dispatch("refreshToken")
