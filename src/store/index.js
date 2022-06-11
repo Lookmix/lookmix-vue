@@ -39,7 +39,7 @@ export default new Vuex.Store({
     loadingDialog: false,
     showAddClotheButton: true,
     clothes: [],
-    images: [],
+    fetchClothes: [],
     categories: [],
     occasions: [],
     seasons: [],
@@ -65,7 +65,7 @@ export default new Vuex.Store({
     loadingDialog: state => state.loadingDialog,
     showAddClotheButton: state => state.showAddClotheButton,
     clothes: state => state.clothes,
-    images: state => state.images,
+    fetchClothes: state => state.fetchClothes,
     categories: state => state.categories,
     occasions: state => state.occasions,
     seasons: state => state.seasons,
@@ -233,21 +233,6 @@ export default new Vuex.Store({
         console.log(error)
       }
     },
-    async getImageById({ commit, state }, data) {
-      try {
-        const url = `${DOMAIN}/clothe/find_by_id`
-        const response = await axios.get(url, {
-          params: {
-            id: data
-          },
-          withCredentials: true
-        })
-        const data = response.data
-        state.images.push(data.url_m)
-      } catch (error) {
-        console.log(error)
-      }
-    },
     async getCategories({ state }) {
       try {
         const url = `${DOMAIN}/category/find`
@@ -283,7 +268,7 @@ export default new Vuex.Store({
         const url = `${DOMAIN}/clothe/find_by_closet_id`
         const response = await axios.get(url, { withCredentials: true })
         const data = response.data
-        state.images = data.clothes
+        state.fetchClothes = data.clothes
       } catch (error) {
         console.log(error)
       }
