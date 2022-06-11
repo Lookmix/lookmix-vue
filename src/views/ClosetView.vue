@@ -25,13 +25,15 @@ export default {
   },
   methods: {
     ...mapActions([
-      "getClothes"
+      "getClothes",
+      "getCategories"
     ])
   },
   computed: {
     ...mapGetters([
-      "images"
-    ])
+      "fetchClothes",
+      "categories"
+    ]),
   }
 }
 </script>
