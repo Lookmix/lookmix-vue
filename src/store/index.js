@@ -196,6 +196,7 @@ export default new Vuex.Store({
     },
     async saveClothesForm ({ state, commit }) {
       try {
+        commit("setLoadingDialog", true)
         const url = `${DOMAIN}/clothe/save`
         const formData = new FormData();
 
