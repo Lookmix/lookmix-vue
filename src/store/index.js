@@ -42,7 +42,8 @@ export default new Vuex.Store({
     images: [],
     categories: [],
     occasions: [],
-    seasons: []
+    seasons: [],
+    clotheUploadSuccess: undefined
   },
   getters: {
     authenticated: state => state.authenticated,
@@ -67,7 +68,8 @@ export default new Vuex.Store({
     images: state => state.images,
     categories: state => state.categories,
     occasions: state => state.occasions,
-    seasons: state => state.seasons
+    seasons: state => state.seasons,
+    clotheUploadSuccess: state => state.clotheUploadSuccess
   },
   mutations: {
     setNewUser(state, data) {
@@ -126,6 +128,10 @@ export default new Vuex.Store({
     },
     removeClotheOnIndex (state, data) {
       state.clothes.splice(data, 1)
+    },
+    setClotheUploadSuccess(state, data) {
+      state.clotheUploadSuccess = data
+    },
     }
   },
   actions: {
