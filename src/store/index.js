@@ -194,7 +194,7 @@ export default new Vuex.Store({
 
       return axios.post(`${url}`, null, { withCredentials: true })
     },
-    async saveClothesForm ({ commit, dispatch, state }) {
+    async saveClothesForm ({ state, commit }) {
       try {
         const url = `${DOMAIN}/clothe/save`
         const formData = new FormData();
