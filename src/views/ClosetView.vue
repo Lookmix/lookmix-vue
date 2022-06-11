@@ -19,6 +19,9 @@ export default {
   },
   mounted () {
     this.getClothes()
+    if (this.categories.length < 1) {
+      this.getCategories()
+    }
   },
   methods: {
     ...mapActions([
