@@ -34,6 +34,23 @@ export default {
       "fetchClothes",
       "categories"
     ]),
+    clothesByCategories () {
+      const result = []
+
+      for (let category of this.categories) {
+        const categoryId = category._id
+        const clothes = this.fetchClothes.filter(clothe => clothe.category_id === categoryId)
+
+        if (clothes.length > 0) {
+          result.push({
+            categoryId: categoryId,
+            category: category.name,
+            clothes: clothes
+          })
+        }
+      }
+      return result
+    }
   }
 }
 </script>
