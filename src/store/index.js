@@ -221,8 +221,8 @@ export default new Vuex.Store({
           const json = JSON.stringify(document)
           const blob = new Blob([json], {
             type: "application/json"
-          });
-          formData.append(count+"document", blob, clothe.id)
+          })
+          formData.append(count+"document", blob, clotheId)
           count++
         }
         await axios.post(url, formData, { withCredentials: true })
