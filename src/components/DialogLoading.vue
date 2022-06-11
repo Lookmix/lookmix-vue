@@ -9,17 +9,16 @@
       height="250"
       style="display: flex; justify-content: center; flex-direction: column;"
     >
-      <v-card-title
-        style="margin: auto;margin: auto;"
-      >
+      <v-card-title>
         Carregando...
       </v-card-title>
+
       <v-progress-circular
-        :size="100"
+        :size="65"
         :width="10"
         color="secondary"
+        style="margin: auto;"
         indeterminate
-        style="margin: auto; margin-bottom: 50px;"
       />
     </v-card>
   </v-dialog>
