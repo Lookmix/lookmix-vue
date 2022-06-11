@@ -119,7 +119,7 @@
                 :rotate="360"
               > 
                 <span class="font-weight-bold" v-if="uploadProgress < 100">
-                  {{ uploadProgress }} %
+                  {{ uploadProgressFormatted }} %
                 </span>
                 <span v-else>
                   Acabando... 
@@ -296,6 +296,9 @@ export default {
     },
     totalClothes () {
       return this.clothes.length
+    },
+    uploadProgressFormatted () {
+      return this.uploadProgress.toFixed()
     }
   },
   methods: {
