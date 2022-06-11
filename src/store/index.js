@@ -211,9 +211,14 @@ export default new Vuex.Store({
 
           formData.append(count+"file", file, clotheId);
   
-          delete clothe.image
-  
-          const json = JSON.stringify(clothe)
+          const document = {
+            id: clotheId,
+            category_id: clothe.category_id,
+            type: clothe.type,
+            occasions: clothe.occasions,
+            seasons: clothe.seasons,
+          }
+          const json = JSON.stringify(document)
           const blob = new Blob([json], {
             type: "application/json"
           });
