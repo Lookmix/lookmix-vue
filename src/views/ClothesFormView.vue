@@ -192,9 +192,9 @@
               :elevation="0"
               color="accent"
               text
-              @click="redirectToCloset();" 
+              @click="setLoadingDialog(false); setClotheUploadSuccess(undefined); uploadProgress=0;" 
             >
-              VER CLOSET
+              FECHAR
             </v-btn>
           </v-card-actions>
         </template>
