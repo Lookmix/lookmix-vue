@@ -216,9 +216,11 @@ export default new Vuex.Store({
           formData.append(count+"document", blob, clothe.id)
           count++
         }
-        const response = await axios.post(url, formData, { withCredentials: true })
-        console.log(response.data)
-      } catch (error) {
+        await axios.post(url, formData, { withCredentials: true })
+        commit("setClotheUploadSuccess", true)
+      }
+      catch (error) {
+        commit("setClotheUploadSuccess", false)
         console.log(error)
       }
     },
