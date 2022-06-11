@@ -198,10 +198,13 @@ export default new Vuex.Store({
       try {
         commit("setLoadingDialog", true)
         const url = `${DOMAIN}/clothe/save`
+
         const formData = new FormData();
 
         const clothes = state.clothes
+
         let count = 0
+
         for (let clothe of clothes) {
           const file = clothe.image
   
