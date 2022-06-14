@@ -244,6 +244,15 @@ export default new Vuex.Store({
         console.log(error)
       }
     },
+    getCategoryById({ state }, data) {
+      const url = `${DOMAIN}/category/find_by_id`
+      return axios.get(url, { 
+        params: {
+          id: data
+        },
+        withCredentials: true 
+      })
+    },
     async getOccasions({ state }) {
       try {
         const url = `${DOMAIN}/occasion/find`
