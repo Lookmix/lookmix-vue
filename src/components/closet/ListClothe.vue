@@ -12,6 +12,7 @@
         cols="4"
       >
         <v-img
+          v-ripple
           :src="clothe.image"
           :lazy-src="clothe.image"
           aspect-ratio="1"
