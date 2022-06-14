@@ -15,3 +15,7 @@ html {
   -webkit-user-drag: none;
   -webkit-tap-highlight-color: transparent;
 }
+.backdrop-image {
+  background-position: center;
+  background-size: cover; /* auto; */
+}
