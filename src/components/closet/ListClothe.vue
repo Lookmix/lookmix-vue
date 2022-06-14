@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="text-h6">
+    <span class="text-h6">
       {{ title }}
-    </div>
+    </span>
 
     <v-row no-gutters class="mb-10">
       <v-col
@@ -17,6 +17,7 @@
           :lazy-src="clothe.image"
           aspect-ratio="1"
           class="grey lighten-2"
+          @click="openDetails(clothe)"
         >
           <template v-slot:placeholder>
             <v-row
@@ -42,6 +43,11 @@ export default {
   props: {
     title: String,
     clothes: Array,
+  },
+  methods: {
+    openDetails(clothe) {
+      this.$emit("openDetails", clothe)
+    }
   }
 }
 </script>
