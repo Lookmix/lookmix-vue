@@ -163,9 +163,9 @@
                 v-for="(season, index) in seasons"
                 :key="index"
               >
-                <!-- <v-icon left>
-                  {{ 'mdi-'+ season.icon}}
-                </v-icon> -->
+                <v-icon left>
+                  {{ getSeasonIcon(season) }}
+                </v-icon>
 
                 {{ season }}
               </v-chip>
@@ -231,6 +231,7 @@
 <script>
 import { mapGetters } from "vuex"
 import { v4 as uuidv4 } from 'uuid';
+import * as utils from "./../../utils"
 
 export default {
   props: {
@@ -352,6 +353,15 @@ export default {
         return;
       }
     },
+    getSeasonIcon (season) {
+      season = season.toLocaleLowerCase()
+      const seasonIcons = utils.seasons
+      for (let item of seasonIcons) {
+        if (item.name === season) {
+          return item.icon
+        }
+      }
+    }
   }
 }
 </script>
