@@ -238,6 +238,7 @@ export default new Vuex.Store({
         const url = `${DOMAIN}/category/find`
         const response = await axios.get(url, { withCredentials: true })
         const data = response.data
+        data.sort((a, b) => (a.sort > b.sort) ? 1 : -1)
         state.categories = data
       } catch (error) {
         console.log(error)
