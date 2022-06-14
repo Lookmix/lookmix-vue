@@ -1,18 +1,30 @@
 <template>
-  <div>
-    <div v-for="n in 10" :key="n">
-      {{ n }}
-      <div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        Home works!
-      </div>
+  <div class="ma-1">
+    <div class="text-h6">
+      Promoções
     </div>
+
+    <v-card ripple rounded="lg" color="accent" height="120" width="100%">
+    </v-card>
+
+    <br/>
+
+    <div class="text-h6">
+      Experimente algo novo
+    </div>
+
+    <v-card ripple rounded="lg" color="accent" height="120" width="100%">
+    </v-card>
+
+    <br/>
+
+    <div class="text-h6">
+      É a sua cara
+    </div>
+
+    <v-card ripple rounded="lg" color="accent" height="120" width="100%">
+    </v-card>
+    <br/>
   </div>
 </template>
 
