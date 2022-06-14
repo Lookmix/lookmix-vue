@@ -370,8 +370,4 @@ export default {
 ::v-deep div.v-image__image--contain {
   backdrop-filter: blur(7px) grayscale(65%);
 }
-.backdrop-image {
-  background-position: center;
-  background-size: cover; /* auto; */
-}
 </style>
