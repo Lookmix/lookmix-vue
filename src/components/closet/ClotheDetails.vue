@@ -36,66 +36,66 @@
           'overflow-y': 'auto'
         }"
       >
-        <br>
-
-        <span 
-          class="text-subtitle-2 text-uppercase font-weight-bold"
-        > 
+        <div class="py-4 text-subtitle-2 text-uppercase font-weight-bold"> 
           Guarda-roupa
-        </span>
-
-        <br>
+        </div>
 
         <v-chip
           label
           color="#fbe4ec"
           text-color="accent"
-          class="mb-6 mt-2 text-capitalize font-weight-medium"
+          class="mb-6 text-capitalize font-weight-medium"
         >
           {{ closet }}
         </v-chip>
 
-        <br>
-
-        <span class="text-subtitle-2 text-uppercase font-weight-bold"> 
+        <div class="py-4 text-subtitle-2 text-uppercase font-weight-bold"> 
           Categoria
-        </span>
+        </div>
 
-        <br>
-
-        <v-list
-          dense
-          three-line
+        <v-sheet
+          elevation="0" 
+          rounded 
+          outlined
+          class="mb-6"
         >
-          <v-list-item-group
-            color="accent"
-            mandatory
+          <v-list
+            dense
+            three-line
+            :color="'#FAFAFA'"
           >
-            <v-list-item
-              style="min-height: unset !important;"
+            <v-list-item-group
+              color="accent"
+              mandatory
             >
-              <v-list-item-content>
-                <v-list-item-title>
-                  {{ category ? category.name : "" }}
-                </v-list-item-title>
-                <!-- class="text--primary" -->
-                <v-list-item-subtitle>
-                  {{ category ? category.description : "" }}
-                </v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
+              <v-list-item
+                style="min-height: unset !important;"
+              >
+                <v-list-item-content>
+                  <v-list-item-title>
+                    {{ category ? category.name : "" }}
+                  </v-list-item-title>
+                  <!-- class="text--primary" -->
+                  <v-list-item-subtitle>
+                    {{ category ? category.description : "" }}
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </v-sheet>
 
-        <br>
-
-        <span class="text-subtitle-2 text-uppercase font-weight-bold"> 
+        <div class="py-4 text-subtitle-2 text-uppercase font-weight-bold"> 
           Estações do ano
-        </span>
+        </div>
 
-        <br>
-
-        <div style="display: flex; flex-wrap: wrap;">
+        <v-sheet 
+          elevation="0" 
+          rounded 
+          style="display: flex; flex-wrap: wrap; padding: 10px;" 
+          outlined
+          class="mb-6"
+        >
           <v-chip 
             v-for="(season, index) in seasons"
             :key="index"
@@ -109,17 +109,19 @@
 
             {{ season }}
           </v-chip>
+        </v-sheet>
+
+        <div class="py-4 text-subtitle-2 text-uppercase font-weight-bold"> 
+          Ocasiões
         </div>
 
-        <br>
-
-        <span class="text-subtitle-2 text-uppercase font-weight-bold"> 
-          Ocasiões
-        </span>
-
-        <br>
-
-        <div style="display: flex; flex-wrap: wrap;">
+        <v-sheet 
+          elevation="0" 
+          rounded 
+          style="display: flex; flex-wrap: wrap; padding: 10px;" 
+          outlined
+          class="mb-6"
+        >
           <v-chip 
             class="mr-1 mb-1 mt-1 font-weight-medium"
             v-for="(item, index) in occasions" 
@@ -129,7 +131,7 @@
           >
             {{ item }}
           </v-chip>
-        </div>
+        </v-sheet>
       </v-card-text>
     </v-card>
   </v-dialog>
