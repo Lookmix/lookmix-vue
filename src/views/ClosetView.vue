@@ -143,11 +143,12 @@
 <script>
 import { mapActions, mapGetters } from "vuex"
 import ListClothe from "./../components/closet/ListClothe.vue"
-import * as utils from "./../utils"
+import ClotheDetails from "./../components/closet/ClotheDetails.vue"
 
 export default {
   components: {
-    ListClothe
+    ListClothe,
+    ClotheDetails
   },
   mounted () {
     this.getClothes()
