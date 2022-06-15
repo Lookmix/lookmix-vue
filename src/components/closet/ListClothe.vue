@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-4">
     <span class="text-h6">
       {{ title }}
     </span>
@@ -12,6 +12,7 @@
         cols="4"
       >
         <v-img
+          style="border: 1px solid transparent;"
           v-ripple
           :src="clothe.image"
           :lazy-src="clothe.image"
