@@ -1,142 +1,45 @@
 <template>
   <div class="ma-1">
-    <ListClothe 
-      v-for="item in clothesByCategories" 
-      :key="item.categoryId" 
-      :title="item.category"
-      :clothes="item.clothes"
-      @openDetails="openDetails($event)"
-    />
-
-    <v-dialog
-      v-model="bottomSheet"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
+    <v-tabs
+      v-model="tabs"
+      class="mt-4"
+      color="secondary"
+      left
     >
-      <v-card
-        elevation="0"
-        :rounded="'0'"
-      >
-        <v-img
-          :height="150"
-          :src="image"
-          :style="{ 'background-image': `url(${image})` }"
-          class="backdrop-image"
-          contain
-          eager
-        >
-          <v-btn 
-            fab 
-            x-small
-            style="margin: 10px; float: right;"
-            @click="bottomSheet = !bottomSheet"
-          >
-            <v-icon>
-              mdi-chevron-down
-            </v-icon>
-          </v-btn>
-        </v-img>
+      <v-tab> CASUAL </v-tab>
+      <v-tab> SOCIAL </v-tab>
+    </v-tabs>
 
-        <v-card-text class="mt-5">
-          <span class="text-subtitle-2 text-uppercase font-weight-bold"> 
-            Guarda-roupa
-          </span>
+    <v-tabs-items 
+      v-model="tabs" 
+      :style="{'height': gridHeight+'px', 'overflow-y': 'auto'}"
+    >
+      <v-tab-item :style="{'height': gridHeight+'px'}">
+        <ListClothe 
+          v-for="item in clothesByCategories" 
+          :key="item.categoryId" 
+          :title="item.category"
+          :clothes="item.clothes"
+          @openDetails="openDetails($event)"
+        />
+      </v-tab-item>
 
-          <br>
+      <v-tab-item :style="{'height': gridHeight+'px'}">
+        <ListClothe 
+          v-for="item in clothesByCategories" 
+          :key="item.categoryId" 
+          :title="item.category"
+          :clothes="item.clothes"
+          @openDetails="openDetails($event)"
+        />
+      </v-tab-item>
+    </v-tabs-items>
 
-          <v-btn-toggle
-            mandatory
-            borderless
-            color="accent"
-            class="mb-6 mt-2"
-          >
-            <v-btn small>
-              {{ closet }}
-            </v-btn>
-          </v-btn-toggle>
-
-          <br>
-
-          <span class="text-subtitle-2 text-uppercase font-weight-bold"> 
-            Categoria
-          </span>
-
-          <br>
-
-          <v-list
-            dense
-            three-line
-            :color="'#FAFAFA'"
-          >
-            <v-list-item-group
-              mandatory
-              color="accent"
-            >
-              <v-list-item
-                style="min-height: unset !important;"
-              >
-                <v-list-item-content>
-                  <v-list-item-title>
-                    {{ category ? category.name : "" }}
-                  </v-list-item-title>
-
-                  <v-list-item-subtitle class="text--primary">
-                    {{ category ? category.description : "" }}
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
-
-          <br>
-
-          <span class="text-subtitle-2 text-uppercase font-weight-bold"> 
-            Estações do ano
-          </span>
-
-          <br>
-
-          <div style="display: flex; flex-wrap: wrap;">
-            <v-chip 
-              v-for="(season, index) in seasons"
-              :key="index"
-              class="mr-1 mb-1 mt-1 font-weight-bold"
-              color="accent"
-            >
-              <!-- color=#fbe4ec  -->
-              <!-- style="color: #ff4081;" -->
-              <v-icon left>
-                {{ getSeasonIcon(season) }}
-              </v-icon>
-
-              {{ season }}
-            </v-chip>
-          </div>
-
-          <br>
-
-          <span class="text-subtitle-2 text-uppercase font-weight-bold"> 
-            Ocasiões
-          </span>
-
-          <br>
-
-          <div style="display: flex; flex-wrap: wrap;">
-            <v-chip 
-              class="mr-1 mb-1 mt-1 font-weight-bold"
-              v-for="(item, index) in occasions" 
-              :key="index"
-              color="accent"
-            >
-              <!-- color="#fbe4ec" -->
-              <!-- style="color: #ff4081;" -->
-              {{ item }}
-            </v-chip>
-          </div>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+    <ClotheDetails 
+      :showDetails="showClotheDetails" 
+      :clothe="clothe"
+      @closeDialog="showClotheDetails = false;"
+    />
   </div>
 </template>
 
@@ -209,9 +112,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-::v-deep div.v-image__image--contain {
-  backdrop-filter: blur(7px) grayscale(65%);
-}
-</style>
