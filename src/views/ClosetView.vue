@@ -158,12 +158,9 @@ export default {
   },
   data () {
     return {
-      bottomSheet: false,
-      category: undefined,
-      occasions: [],
-      seasons: [],
-      closet: undefined,
-      image: undefined
+      tabs: undefined,
+      showClotheDetails: false,
+      clothe: undefined
     }
   },
   methods: {
