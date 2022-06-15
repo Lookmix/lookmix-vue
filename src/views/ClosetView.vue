@@ -222,6 +222,16 @@ export default {
         }
       }
       return result
+    },
+    gridHeight () {
+      const header = 56
+      const footer = 56
+      const marginAll = 4
+      const marginVertical = 16
+      const tabs = 48
+      let innerHeight = window.innerHeight
+      innerHeight = innerHeight - header - footer - marginAll - marginVertical - tabs
+      return innerHeight
     }
   }
 }
