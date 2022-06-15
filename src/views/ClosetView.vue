@@ -170,33 +170,8 @@ export default {
       "getCategoryById"
     ]),
     openDetails (clothe) {
-      const categoryId = clothe.category_id
-
-      this.getCategoryById(categoryId)
-        .then((response) => {
-          const data = response.data
-          this.category = data
-          this.image = clothe.image
-          this.occasions = clothe.occasions
-          this.seasons = clothe.seasons
-          this.closet = clothe.type
-          this.bottomSheet = true
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    },
-    getSeasonIcon (season) {
-      if (season) {
-        season = season.toLocaleLowerCase()
-        const seasonIcons = utils.seasons
-        for (let item of seasonIcons) {
-          if (item.name === season) {
-            return item.icon
-          }
-        }
-      }
-      return ""
+      this.clothe = clothe
+      this.showClotheDetails = true
     }
   },
   computed: {
