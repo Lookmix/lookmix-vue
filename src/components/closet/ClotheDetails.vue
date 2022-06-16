@@ -29,8 +29,8 @@
         </v-btn>
       </v-img>
 
-      <!-- class="mt-5" -->
       <v-card-text 
+        class="pa-4 pt-0"
         :style="{
           'height': contentHeight+'px', 
           'overflow-y': 'auto'
