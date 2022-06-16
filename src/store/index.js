@@ -39,7 +39,8 @@ export default new Vuex.Store({
     loadingDialog: false,
     showAddClotheButton: true,
     clothes: [],
-    fetchClothes: [],
+    fetchCasualClothes: [],
+    fetchSocialClothes: [],
     categories: [],
     occasions: [],
     seasons: [],
@@ -65,7 +66,8 @@ export default new Vuex.Store({
     loadingDialog: state => state.loadingDialog,
     showAddClotheButton: state => state.showAddClotheButton,
     clothes: state => state.clothes,
-    fetchClothes: state => state.fetchClothes,
+    fetchCasualClothes: state => state.fetchCasualClothes,
+    fetchSocialClothes: state => state.fetchSocialClothes,
     categories: state => state.categories,
     occasions: state => state.occasions,
     seasons: state => state.seasons,
@@ -273,13 +275,26 @@ export default new Vuex.Store({
         console.log(error)
       }
     },
-    async getClothes({ state }) {
+    async getClothes({ state }, data) {
       try {
         const url = `${DOMAIN}/clothe/find_by_closet_id`
-        const response = await axios.get(url, { withCredentials: true })
-        const data = response.data
-        state.fetchClothes = data.clothes
-      } catch (error) {
+        const response = await axios.get(url, { 
+          params: {
+            type: data
+          },
+          withCredentials: true 
+        })
+        const responseData = response.data
+        const clothes = responseData.clothes
+
+        if (data === "casual") {
+          state.fetchCasualClothes = clothes
+          return;
+        }
+        state.fetchSocialClothes = clothes
+        return;
+      }
+      catch (error) {
         console.log(error)
       }
     }
