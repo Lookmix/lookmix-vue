@@ -46,22 +46,26 @@
       >
       </div>
 
-      <v-sheet
+      <v-card-text
+        class="pt-n4"
         :ref="'card-content' + id"
-        :style="{'overflow-y': 'auto', 'border-radius': '8px !important'}"
-        :height="cardContentHeight"
+        :style="{
+          'width': widthContentCard, 
+          'height': cardContentHeight, 
+          'overflow-y': 'auto', 
+          'border-radius': '8px !important'
+        }"
         :id="'card-content' + id"
-        :rounded="'lg'"
         @scroll="scrolling()"
       >
-        <v-card-subtitle 
-          class="text-uppercase font-weight-bold"
+        <div 
+          class="text-subtitle-2 text-uppercase font-weight-bold"
           :style="{'width': widthContentCard}"
         >
           Guarda-roupa
-        </v-card-subtitle>
+        </div>
 
-        <v-card-text :style="{'width': widthContentCard}">
+        <div class="py-4" :style="{'width': widthContentCard}">
           <v-btn-toggle
             v-model="selectedCloset"
             @change="emitPayload()"
@@ -80,21 +84,19 @@
               {{ closet.text }}
             </v-btn>
           </v-btn-toggle>            
-        </v-card-text>
+        </div>
 
-        <v-card-subtitle 
-          class="text-uppercase font-weight-bold" 
+        <div 
+          class="pt-4 text-subtitle-2 text-uppercase font-weight-bold" 
           :id="'category' + id" 
           :style="{'width': widthContentCard}"
         >
           Categoria
-        </v-card-subtitle>
+        </div>
 
         <!-- <v-card-subtitle> Selecione uma categoria </v-card-subtitle> -->
 
-        <v-card-text 
-          :style="{'width': widthContentCard}"
-        >
+        <div class="py-4" :style="{'width': widthContentCard}">
           <v-sheet
             elevation="0" 
             rounded 
@@ -130,21 +132,19 @@
               </v-list-item-group>
             </v-list>
           </v-sheet>
-        </v-card-text>
+        </div>
 
-        <v-card-subtitle 
-          class="text-uppercase font-weight-bold" 
+        <div 
+          class="pt-4 text-subtitle-2 text-uppercase font-weight-bold" 
           :id="'season' + id" 
           :style="{'width': widthContentCard}"
         >
           Estações do ano
-        </v-card-subtitle>
+        </div>
 
         <!-- <v-card-subtitle> Quais estações ideais para usar essa peça? </v-card-subtitle> -->
 
-        <v-card-text 
-          :style="{'width': widthContentCard}"
-        >
+        <div class="py-4" :style="{'width': widthContentCard}">
           <v-sheet 
             elevation="0" 
             rounded 
@@ -171,21 +171,19 @@
               </v-chip>
             </v-chip-group>
           </v-sheet>
-        </v-card-text>
+        </div>
 
-        <v-card-subtitle 
-          class="text-uppercase font-weight-bold" 
+        <div 
+          class="pt-4 text-subtitle-2 text-uppercase font-weight-bold" 
           :id="'occasion' + id" 
           :style="{'width': widthContentCard}"
         >
           Ocasiões
-        </v-card-subtitle>
+        </div>
 
         <!-- <v-card-subtitle> Marque uma ou mais </v-card-subtitle> -->
 
-        <v-card-text 
-          :style="{'width': widthContentCard}"
-        >
+        <div class="py-4" :style="{'width': widthContentCard}">
           <v-sheet 
             elevation="0" 
             rounded 
@@ -208,8 +206,8 @@
               </v-chip>
             </v-chip-group>
           </v-sheet>
-        </v-card-text>
-      </v-sheet>
+        </div>
+      </v-card-text>
 
       <div 
         v-if="showOverlayBottom"
@@ -275,7 +273,8 @@ export default {
       // +10 = margin
       const marginDiscount = 20
       const bottomPaginator = 48
-      const height = this.maxHeight - bottomPaginator - this.cardImageHeight - marginDiscount
+      const padding = 32
+      const height = this.maxHeight - bottomPaginator - this.cardImageHeight - marginDiscount - padding
       return `${height}px`
     },
     imageReadable () {
@@ -323,7 +322,7 @@ export default {
       const ref = "card-content" + this.id
       this.$vuetify.goTo(element, {
         duration: 700,
-        offset: -60,
+        offset: -50,
         easing: "easeInOutCubic",
         container: this.$refs[ref]
       })
