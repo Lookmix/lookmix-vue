@@ -1,22 +1,27 @@
 <template>
   <div class="ma-1">
     <v-tabs
-      v-model="tabs"
+      v-model="selectedTab"
       class="mt-4"
       color="secondary"
       left
     >
-      <v-tab> CASUAL </v-tab>
-      <v-tab> SOCIAL </v-tab>
+      <v-tab>
+        CASUAL
+      </v-tab>
+
+      <v-tab>
+        SOCIAL
+      </v-tab>
     </v-tabs>
 
     <v-tabs-items 
-      v-model="tabs" 
+      v-model="selectedTab" 
       :style="{'height': gridHeight+'px', 'overflow-y': 'auto'}"
     >
       <v-tab-item :style="{'height': gridHeight+'px'}">
         <ListClothe 
-          v-for="item in clothesByCategories" 
+          v-for="item in casualClothesByCategories" 
           :key="item.categoryId" 
           :title="item.category"
           :clothes="item.clothes"
@@ -26,7 +31,7 @@
 
       <v-tab-item :style="{'height': gridHeight+'px'}">
         <ListClothe 
-          v-for="item in clothesByCategories" 
+          v-for="item in socialClothesByCategories" 
           :key="item.categoryId" 
           :title="item.category"
           :clothes="item.clothes"
@@ -54,14 +59,25 @@ export default {
     ClotheDetails
   },
   mounted () {
-    this.getClothes()
     if (this.categories.length < 1) {
       this.getCategories()
     }
   },
+  watch: {
+    selectedTab: {
+      handler: function (value, oldValue) {
+        let type = "casual"
+
+        if (value === 1) {
+          type = "social"
+        }
+        this.getClothes(type)
+      }
+    }
+  },
   data () {
     return {
-      tabs: undefined,
+      selectedTab: undefined,
       showClotheDetails: false,
       clothe: undefined
     }
@@ -79,15 +95,33 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "fetchClothes",
+      "fetchCasualClothes",
+      "fetchSocialClothes",
       "categories"
     ]),
-    clothesByCategories () {
+    casualClothesByCategories () {
       const result = []
 
       for (let category of this.categories) {
         const categoryId = category._id
-        const clothes = this.fetchClothes.filter(clothe => clothe.category_id === categoryId)
+        const clothes = this.fetchCasualClothes.filter(clothe => clothe.category_id === categoryId)
+
+        if (clothes.length > 0) {
+          result.push({
+            categoryId: categoryId,
+            category: category.name,
+            clothes: clothes
+          })
+        }
+      }
+      return result
+    },
+    socialClothesByCategories () {
+      const result = []
+
+      for (let category of this.categories) {
+        const categoryId = category._id
+        const clothes = this.fetchSocialClothes.filter(clothe => clothe.category_id === categoryId)
 
         if (clothes.length > 0) {
           result.push({
