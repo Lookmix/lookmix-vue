@@ -72,7 +72,6 @@
             mandatory
             borderless
             color="accent"
-            style="margin-left: -4px;"
           >
             <v-btn 
               v-for="closet in closets"
