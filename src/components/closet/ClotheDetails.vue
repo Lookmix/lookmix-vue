@@ -36,7 +36,7 @@
           'overflow-y': 'auto'
         }"
       >
-        <div class="pt-4 text-subtitle-2 text-uppercase font-weight-bold"> 
+        <div class="pt-4 text-body-2 text-uppercase font-weight-bold"> 
           Guarda-roupa
         </div>
 
@@ -51,7 +51,7 @@
           </v-chip>
         </div>
 
-        <div class="pt-4 text-subtitle-2 text-uppercase font-weight-bold"> 
+        <div class="pt-4 text-body-2 text-uppercase font-weight-bold"> 
           Categoria
         </div>
 
@@ -88,7 +88,7 @@
           </v-sheet>
         </div>
 
-        <div class="pt-4 text-subtitle-2 text-uppercase font-weight-bold"> 
+        <div class="pt-4 text-body-2 text-uppercase font-weight-bold"> 
           Estações do ano
         </div>
 
@@ -115,7 +115,7 @@
           </v-sheet>
         </div>
 
-        <div class="pt-4 text-subtitle-2 text-uppercase font-weight-bold"> 
+        <div class="pt-4 text-body-2 text-uppercase font-weight-bold"> 
           Ocasiões
         </div>
 

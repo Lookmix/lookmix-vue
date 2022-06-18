@@ -59,7 +59,7 @@
         @scroll="scrolling()"
       >
         <div 
-          class="text-subtitle-2 text-uppercase font-weight-bold"
+          class="text-body-2 text-uppercase font-weight-bold"
           :style="{'width': widthContentCard}"
         >
           Guarda-roupa
@@ -86,7 +86,7 @@
         </div>
 
         <div 
-          class="pt-4 text-subtitle-2 text-uppercase font-weight-bold" 
+          class="pt-4 text-body-2 text-uppercase font-weight-bold" 
           :id="'category' + id" 
           :style="{'width': widthContentCard}"
         >
@@ -134,7 +134,7 @@
         </div>
 
         <div 
-          class="pt-4 text-subtitle-2 text-uppercase font-weight-bold" 
+          class="pt-4 text-body-2 text-uppercase font-weight-bold" 
           :id="'season' + id" 
           :style="{'width': widthContentCard}"
         >
@@ -173,7 +173,7 @@
         </div>
 
         <div 
-          class="pt-4 text-subtitle-2 text-uppercase font-weight-bold" 
+          class="pt-4 text-body-2 text-uppercase font-weight-bold" 
           :id="'occasion' + id" 
           :style="{'width': widthContentCard}"
         >
