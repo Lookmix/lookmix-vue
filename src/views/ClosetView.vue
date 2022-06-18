@@ -4,7 +4,7 @@
       v-model="selectedTab"
       color="secondary"
       background-color="#eeeeee"
-      left
+      fixed-tabs
     >
       <v-tab>
         CASUAL
