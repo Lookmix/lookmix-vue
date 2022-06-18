@@ -1,9 +1,9 @@
 <template>
-  <div class="ma-1">
+  <div>
     <v-tabs
       v-model="selectedTab"
-      class="mt-4"
       color="secondary"
+      background-color="#eeeeee"
       left
     >
       <v-tab>
@@ -16,8 +16,12 @@
     </v-tabs>
 
     <v-tabs-items 
-      v-model="selectedTab" 
-      :style="{'height': gridHeight+'px', 'overflow-y': 'auto'}"
+      v-model="selectedTab"
+      class="mx-1" 
+      :style="{
+        'height': gridHeight+'px', 
+        'overflow-y': 'auto'
+      }"
     >
       <v-tab-item :style="{'height': gridHeight+'px'}">
         <ListClothe 
@@ -104,8 +108,9 @@ export default {
 
       for (let category of this.categories) {
         const categoryId = category._id
-        const clothes = this.fetchCasualClothes.filter(clothe => clothe.category_id === categoryId)
-
+        const clothes = this.fetchCasualClothes.filter(clothe => 
+          clothe.category_id === categoryId
+        )
         if (clothes.length > 0) {
           result.push({
             categoryId: categoryId,
@@ -121,8 +126,9 @@ export default {
 
       for (let category of this.categories) {
         const categoryId = category._id
-        const clothes = this.fetchSocialClothes.filter(clothe => clothe.category_id === categoryId)
-
+        const clothes = this.fetchSocialClothes.filter(clothe => 
+          clothe.category_id === categoryId
+        )
         if (clothes.length > 0) {
           result.push({
             categoryId: categoryId,
@@ -137,10 +143,12 @@ export default {
       const header = 56
       const footer = 56
       const marginAll = 4
-      const marginVertical = 16
       const tabs = 48
       let innerHeight = window.innerHeight
-      innerHeight = innerHeight - header - footer - marginAll - marginVertical - tabs
+      innerHeight = innerHeight - header 
+        - footer 
+        - marginAll 
+        - tabs
       return innerHeight
     }
   }
