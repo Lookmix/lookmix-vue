@@ -1,6 +1,6 @@
 <template>
   <div class="mt-4">
-    <span class="text-h6">
+    <span class="text-body-1 font-weight-medium">
       {{ title }}
     </span>
 
