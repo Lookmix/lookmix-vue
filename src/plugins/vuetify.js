@@ -12,6 +12,7 @@ export default new Vuetify({
         primary: colors.shades.white,
         secondary: colors.indigo.base,
         accent: colors.pink.accent2,
+        accentLight: "#fbe4ec",
         error: colors.red.base,
       },
       dark: {
