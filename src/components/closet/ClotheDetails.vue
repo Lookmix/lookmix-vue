@@ -43,7 +43,7 @@
         <div class="py-4">
           <v-chip
             label
-            color="#fbe4ec"
+            color="accentLight"
             text-color="accent"
             class="text-capitalize font-weight-medium"
           >
@@ -103,7 +103,7 @@
               v-for="(season, index) in seasons"
               :key="index"
               class="mr-1 mb-1 mt-1 font-weight-medium"
-              color="#fbe4ec" 
+              color="accentLight" 
               text-color="accent"
             >
               <v-icon left>
@@ -130,7 +130,7 @@
               class="mr-1 mb-1 mt-1 font-weight-medium"
               v-for="(item, index) in occasions" 
               :key="index"
-              color="#fbe4ec"
+              color="accentLight"
               text-color="accent"
             >
               {{ item }}
