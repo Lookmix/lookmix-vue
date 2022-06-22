@@ -2,8 +2,9 @@
   <div>
     <v-tabs
       v-model="selectedTab"
-      color="secondary"
+      color="black"
       fixed-tabs
+      background-color="primaryLighten4"
     >
       <v-tab>
         CASUAL
@@ -24,37 +25,38 @@
     >
       <v-tab-item :style="{'height': gridHeight+'px'}">
         <div 
+          v-ripple
+          @click="selectCasualClothesClick"
           class="pt-4 pb-4 ml-n1"
           :style="{
             'position': 'fixed', 
             'z-index': '2', 
-            'background-color': 'white', 
+            'background-color': accentLightBackground, 
             'width': '100%', 
             'height': '68px',
             'margin-top': '-1px',
           }"
         >
-          <v-btn 
-            v-if="!enableCasualClotheSelect"
-            class="ml-1"
-            color="accent" 
-            text
-            rounded
-            @click="enableCasualClotheSelect = !enableCasualClotheSelect"
-          >
-            <v-icon left>
+          <div class="px-4 ml-1">
+            <v-icon 
+              color="black"
+              v-if="!enableCasualClotheSelect"
+              style="font-size: 18px;"
+              class="ml-n1 mr-2"
+            >
               mdi-checkbox-marked-circle-outline
             </v-icon>
-            SELECIONAR PEÇAS
-          </v-btn>
 
-          <div 
-            v-if="enableCasualClotheSelect"
-            class="pt-1 ml-2"
-          >
             <span
-              class="text-h5 font-weight-bold"
-              @click="enableCasualClotheSelect = !enableCasualClotheSelect"
+              v-if="!enableCasualClotheSelect"
+              class="text-button"
+            >
+              SELECIONAR PEÇAS
+            </span>
+
+            <span
+              v-if="enableCasualClotheSelect"
+              class="text-button"
             >
               {{ casualClothesSelected.length }} selecionadas
             </span>
@@ -74,44 +76,45 @@
 
       <v-tab-item :style="{'height': gridHeight+'px'}">
         <div 
+          v-ripple
+          @click="selectSocialClothesClick"
           class="pt-4 pb-4 ml-n1"
           :style="{
             'position': 'fixed', 
             'z-index': '2', 
-            'background-color': 'white', 
+            'background-color': accentLightBackground, 
             'width': '100%', 
             'height': '68px',
             'margin-top': '-1px',
           }"
         >
-          <v-btn 
-            v-if="!enableSocialClotheSelect"
-            class="ml-1"
-            color="accent" 
-            text
-            rounded
-            @click="enableSocialClotheSelect = !enableSocialClotheSelect"
-          >
-            <v-icon left>
+          <div class="px-4 ml-1">
+            <v-icon 
+              color="black"
+              v-if="!enableSocialClotheSelect"
+              style="font-size: 18px;"
+              class="ml-n1 mr-2"
+            >
               mdi-checkbox-marked-circle-outline
             </v-icon>
-            SELECIONAR PEÇAS
-          </v-btn>
 
-          <div 
-            v-if="enableSocialClotheSelect"
-            class="pt-1 ml-2"
-          >
             <span
-              class="text-h5 font-weight-bold"
-              @click="enableSocialClotheSelect = !enableSocialClotheSelect"
+              v-if="!enableSocialClotheSelect"
+              class="text-button"
+            >
+              SELECIONAR PEÇAS
+            </span>
+
+            <span
+              v-if="enableSocialClotheSelect"
+              class="text-button"
             >
               {{ socialClothesSelected.length }} selecionadas
             </span>
           </div>
         </div>
 
-        <div class="mt-16 pt-3">
+        <div class="mt-16 pt-1">
           <ListClothe 
             v-for="item in socialClothesByCategories" 
             :key="item.categoryId" 
@@ -178,6 +181,12 @@ export default {
     openDetails (clothe) {
       this.clothe = clothe
       this.showClotheDetails = true
+    },
+    selectSocialClothesClick () {
+      this.enableSocialClotheSelect = !this.enableSocialClotheSelect
+    },
+    selectCasualClothesClick () {
+      this.enableCasualClotheSelect = !this.enableCasualClotheSelect
     }
   },
   computed: {
@@ -233,6 +242,9 @@ export default {
         - marginAll 
         - tabs
       return innerHeight
+    },
+    accentLightBackground () {
+      return this.$vuetify.theme.themes.light.accentLightBackground
     }
   }
 }
