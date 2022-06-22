@@ -55,7 +55,7 @@ const routes = [
     meta: { 
       pageTitle: "Adicionar peças", 
       maxHeight: true,
-      backgroundColor: "#EEEEEE"
+      backgroundColor: "primaryLighten3"
     }
   },
 ]
