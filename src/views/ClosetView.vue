@@ -63,12 +63,13 @@
           </div>
         </div>
 
-        <div class="mt-16 pt-1">
+        <div class="mt-16 pt-5">
           <ListClothe 
             v-for="item in casualClothesByCategories" 
             :key="item.categoryId" 
             :title="item.category"
             :clothes="item.clothes"
+            :showCheckbox="enableCasualClotheSelect"
             @openDetails="openDetails($event)"
           />
         </div>
@@ -114,7 +115,7 @@
           </div>
         </div>
 
-        <div class="mt-16 pt-1">
+        <div class="mt-16 pt-5">
           <ListClothe 
             v-for="item in socialClothesByCategories" 
             :key="item.categoryId" 
@@ -203,6 +204,10 @@ export default {
         const clothes = this.fetchCasualClothes.filter(clothe => 
           clothe.category_id === categoryId
         )
+        clothes.map(clothe => {
+          clothe["selected"] = false
+          return { ...clothe }
+        })
         if (clothes.length > 0) {
           result.push({
             categoryId: categoryId,
