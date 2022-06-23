@@ -6,7 +6,7 @@
 
     <v-row no-gutters class="mb-10">
       <v-col
-        v-for="clothe in clothes"
+        v-for="clothe in clothesWithSelected"
         :key="clothe._id"
         class="d-flex child-flex"
         cols="4"
@@ -22,17 +22,20 @@
             'lighten-2': true, 
             'image-selected': clothe.selected && showCheckbox
           }"
-          @click="showCheckbox ? clothe.selected = !clothe.selected : openDetails(clothe)"
+          @click="showCheckbox ? selectClothe(clothe) : openDetails(clothe)"
         >
           <v-checkbox
-            v-if="showCheckbox"
             :value="clothe.selected"
             class="mt-0 pt-0"
-            style="width: 24px;"
+            :style="{
+              'display': showCheckbox ? 'block' : 'none',
+              'width': '24px'
+            }"
             off-icon="mdi-checkbox-blank"
             hide-details
             dense
-            @change="clothe.selected = !clothe.selected; checkboxSelected()"
+            readonly
+            :ripple="false"
           >
           </v-checkbox>
 
@@ -59,8 +62,31 @@
 export default {
   props: {
     title: String,
-    clothes: Array,
+    clothes: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    },
     showCheckbox: Boolean
+  },
+  data () {
+    return {
+      clothesWithSelected: []
+    }
+  },
+  watch: {
+    clothes: {
+      immediate: true,
+      handler: function (value, oldValue) {
+        console.log("watch")
+        const result = value.map(clothe => {
+          clothe["selected"] = false
+          return { ...clothe }
+        })
+        this.clothesWithSelected = result
+      }
+    }
   },
   methods: {
     openDetails(clothe) {
@@ -68,6 +94,9 @@ export default {
     },
     checkboxSelected () {
       this.$emit("checkboxSelected", this.clothe)
+    },
+    selectClothe (clothe) {
+      clothe.selected = !clothe.selected;
     }
   }
 }
