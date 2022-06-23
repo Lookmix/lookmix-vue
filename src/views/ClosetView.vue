@@ -121,6 +121,7 @@
             :key="item.categoryId" 
             :title="item.category"
             :clothes="item.clothes"
+            :showCheckbox="enableSocialClotheSelect"
             @openDetails="openDetails($event)"
           />
         </div>
@@ -204,10 +205,6 @@ export default {
         const clothes = this.fetchCasualClothes.filter(clothe => 
           clothe.category_id === categoryId
         )
-        clothes.map(clothe => {
-          clothe["selected"] = false
-          return { ...clothe }
-        })
         if (clothes.length > 0) {
           result.push({
             categoryId: categoryId,
