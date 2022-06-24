@@ -96,7 +96,22 @@ export default {
       this.$emit("checkboxSelected", this.clothe)
     },
     selectClothe (clothe) {
+      const object = {
+        _id: clothe._id,
+        category_id: clothe.category_id,
+        closet_id: clothe.closet_id,
+        image: clothe.image,
+        occasions: clothe.occasions,
+        seasons: clothe.seasons,
+        type: clothe.type
+      }
       clothe.selected = !clothe.selected;
+
+      if (clothe.selected) {
+        this.$emit("selectClothe", object)
+        return;
+      }
+      this.$emit("unselectClothe", object)
     }
   }
 }
