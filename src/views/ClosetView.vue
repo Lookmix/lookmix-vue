@@ -70,6 +70,8 @@
             :title="item.category"
             :clothes="item.clothes"
             :showCheckbox="enableCasualClotheSelect"
+            @selectClothe="addSelectedCasualClotheToList($event)"
+            @unselectClothe="removeSelectedCasualClotheFromList($event)"
             @openDetails="openDetails($event)"
           />
         </div>
@@ -123,6 +125,8 @@
             :clothes="item.clothes"
             :showCheckbox="enableSocialClotheSelect"
             @openDetails="openDetails($event)"
+            @selectClothe="addSelectedSocialClotheToList($event)"
+            @unselectClothe="removeSelectedSocialClotheFromList($event)"
           />
         </div>
       </v-tab-item>
@@ -188,7 +192,24 @@ export default {
       this.enableSocialClotheSelect = !this.enableSocialClotheSelect
     },
     selectCasualClothesClick () {
-      this.enableCasualClotheSelect = !this.enableCasualClotheSelect
+      this.enableCasualClotheSelect = true //!this.enableCasualClotheSelect
+    },
+    cancelSelectCasualClothesClick () {console.log("cancel")
+      this.enableCasualClotheSelect = false
+    },
+    addSelectedCasualClotheToList (clothe) {
+      this.casualClothesSelected.push(clothe)
+    },
+    removeSelectedCasualClotheFromList (clothe) {
+      const index = this.casualClothesSelected.indexOf(clothe)
+      this.casualClothesSelected.splice(index, 1)
+    },
+    addSelectedSocialClotheToList (clothe) {
+      this.socialClothesSelected.push(clothe)
+    },
+    removeSelectedSocialClotheFromList (clothe) {
+      const index = this.socialClothesSelected.indexOf(clothe)
+      this.socialClothesSelected.splice(index, 1)
     }
   },
   computed: {
