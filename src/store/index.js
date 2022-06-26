@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue"
+import Vuex from "vuex"
 
-import axiosInstance from '@/http.js'
+import axiosInstance from "@/http.js"
 const axios = axiosInstance
 
 Vue.use(Vuex)
