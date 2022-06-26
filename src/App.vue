@@ -53,7 +53,8 @@ export default {
       "isLoginRoute", 
       "maxHeight",
       "currentRouteName",
-      "backgroundColor"
+      "backgroundColor",
+      "showToolbarSelectedClothes"
     ]),
     ...mapState([
       "user",
