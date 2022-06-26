@@ -44,7 +44,10 @@ export default new Vuex.Store({
     categories: [],
     occasions: [],
     seasons: [],
-    clotheUploadSuccess: undefined
+    clotheUploadSuccess: undefined,
+    showToolbarSelectedClothes: false,
+    socialClothesSelected: [],
+    casualClothesSelected: [],
   },
   getters: {
     authenticated: state => state.authenticated,
@@ -71,7 +74,10 @@ export default new Vuex.Store({
     categories: state => state.categories,
     occasions: state => state.occasions,
     seasons: state => state.seasons,
-    clotheUploadSuccess: state => state.clotheUploadSuccess
+    clotheUploadSuccess: state => state.clotheUploadSuccess,
+    showToolbarSelectedClothes: state => state.showToolbarSelectedClothes,
+    socialClothesSelected: state => state.socialClothesSelected,
+    casualClothesSelected: state => state.casualClothesSelected
   },
   mutations: {
     setNewUser(state, data) {
@@ -136,6 +142,21 @@ export default new Vuex.Store({
     },
     resetClothes(state, data) {
       state.clothes = []
+    },
+    setShowToolbarSelectedClothes (state, data) {
+      state.showToolbarSelectedClothes = data
+    },
+    addSocialClotheSelected (state, data) {
+      state.socialClothesSelected.push(data)
+    },
+    addCasualClotheSelected (state, data) {
+      state.casualClothesSelected.push(data)
+    },
+    removeSocialClotheSelected (state, data) {
+      state.socialClothesSelected.splice(data, 1)
+    },
+    removeCasualClotheSelected (state, data) {
+      state.casualClothesSelected.splice(data, 1)
     }
   },
   actions: {
