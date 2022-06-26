@@ -27,20 +27,20 @@
         <div 
           v-ripple
           @click="selectCasualClothesClick"
-          class="pt-4 pb-4 ml-n1"
+          class="py-3 ml-n1"
           :style="{
             'position': 'fixed', 
             'z-index': '2', 
             'background-color': accentLightBackground, 
             'width': '100%', 
-            'height': '68px',
-            'margin-top': '-1px',
+            'height': '60px',
+            'margin-top': '-1px'
           }"
         >
           <div class="px-4 ml-1">
             <v-icon 
-              color="black"
               v-if="!enableCasualClotheSelect"
+              color="black"
               style="font-size: 18px;"
               class="ml-n1 mr-2"
             >
@@ -63,7 +63,7 @@
           </div>
         </div>
 
-        <div class="mt-16 pt-5">
+        <div class="mt-16 pt-2">
           <ListClothe 
             v-for="item in casualClothesByCategories" 
             :key="item.categoryId" 
@@ -81,14 +81,14 @@
         <div 
           v-ripple
           @click="selectSocialClothesClick"
-          class="pt-4 pb-4 ml-n1"
+          class="py-3 ml-n1"
           :style="{
             'position': 'fixed', 
             'z-index': '2', 
             'background-color': accentLightBackground, 
             'width': '100%', 
-            'height': '68px',
-            'margin-top': '-1px',
+            'height': '60px',
+            'margin-top': '-1px'
           }"
         >
           <div class="px-4 ml-1">
@@ -117,7 +117,7 @@
           </div>
         </div>
 
-        <div class="mt-16 pt-5">
+        <div class="mt-16 pt-2">
           <ListClothe 
             v-for="item in socialClothesByCategories" 
             :key="item.categoryId" 
@@ -141,7 +141,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex"
+import { mapActions, mapGetters, mapMutations } from "vuex"
 import ListClothe from "./../components/closet/ListClothe.vue"
 import ClotheDetails from "./../components/closet/ClotheDetails.vue"
 
@@ -165,6 +165,14 @@ export default {
         }
         this.getClothes(type)
       }
+    },
+    showToolbarSelectedClothes: {
+      handler: function (value, oldValue) {
+        if (value === false) {
+          this.enableCasualClotheSelect = false
+          this.enableSocialClotheSelect = false
+        }
+      }
     }
   },
   data () {
@@ -173,9 +181,7 @@ export default {
       showClotheDetails: false,
       clothe: undefined,
       enableSocialClotheSelect: false,
-      enableCasualClotheSelect: false,
-      socialClothesSelected: [],
-      casualClothesSelected: [],
+      enableCasualClotheSelect: false
     }
   },
   methods: {
@@ -184,39 +190,52 @@ export default {
       "getCategories",
       "getCategoryById"
     ]),
+    ...mapMutations([
+      "setShowToolbarSelectedClothes",
+      "addCasualClotheSelected",
+      "addSocialClotheSelected",
+      "removeSocialClotheSelected",
+      "removeCasualClotheSelected"
+    ]),
     openDetails (clothe) {
       this.clothe = clothe
       this.showClotheDetails = true
     },
     selectSocialClothesClick () {
+      this.setShowToolbarSelectedClothes(true)
       this.enableSocialClotheSelect = !this.enableSocialClotheSelect
     },
     selectCasualClothesClick () {
+      this.setShowToolbarSelectedClothes(true)
       this.enableCasualClotheSelect = true //!this.enableCasualClotheSelect
     },
-    cancelSelectCasualClothesClick () {console.log("cancel")
+    cancelSelectCasualClothesClick () {
       this.enableCasualClotheSelect = false
+      this.casualClothesSelected = []
     },
     addSelectedCasualClotheToList (clothe) {
-      this.casualClothesSelected.push(clothe)
+      this.addCasualClotheSelected(clothe)
     },
     removeSelectedCasualClotheFromList (clothe) {
       const index = this.casualClothesSelected.indexOf(clothe)
-      this.casualClothesSelected.splice(index, 1)
+      this.removeCasualClotheSelected(index)
     },
     addSelectedSocialClotheToList (clothe) {
-      this.socialClothesSelected.push(clothe)
+      this.addSocialClotheSelected(clothe)
     },
     removeSelectedSocialClotheFromList (clothe) {
       const index = this.socialClothesSelected.indexOf(clothe)
-      this.socialClothesSelected.splice(index, 1)
+      this.removeSocialClotheSelected(index)
     }
   },
   computed: {
     ...mapGetters([
       "fetchCasualClothes",
       "fetchSocialClothes",
-      "categories"
+      "categories",
+      "showToolbarSelectedClothes",
+      "socialClothesSelected",
+      "casualClothesSelected"
     ]),
     casualClothesByCategories () {
       const result = []
@@ -257,12 +276,10 @@ export default {
     gridHeight () {
       const header = 56
       const footer = 56
-      const marginAll = 4
       const tabs = 48
       let innerHeight = window.innerHeight
       innerHeight = innerHeight - header 
         - footer 
-        - marginAll 
         - tabs
       return innerHeight
     },
