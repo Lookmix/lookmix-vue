@@ -1,10 +1,10 @@
 <template>
-  <div class="mt-4">
+  <div class="mt-4 py-1">
     <span class="text-body-1 font-weight-medium">
       {{ title }}
     </span>
 
-    <v-row no-gutters class="mb-10">
+    <v-row no-gutters class="mb-2">
       <v-col
         v-for="clothe in clothesWithSelected"
         :key="clothe._id"
