@@ -112,6 +112,11 @@ export default {
         return;
       }
       this.$emit("unselectClothe", object)
+    },
+    resetSelected () {
+      for (let clothe of this.clothes) {
+        clothe.selected = false
+      }
     }
   }
 }
