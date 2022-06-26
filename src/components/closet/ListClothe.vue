@@ -79,7 +79,6 @@ export default {
     clothes: {
       immediate: true,
       handler: function (value, oldValue) {
-        console.log("watch")
         const result = value.map(clothe => {
           clothe["selected"] = false
           return { ...clothe }
