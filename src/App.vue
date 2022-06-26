@@ -20,8 +20,12 @@
       </v-sheet>
     </v-main>
 
-    <template v-if="showBottomNavigator">
+    <template v-if="showBottomNavigator && !showToolbarSelectedClothes">
       <BottomNavigator />
+    </template>
+
+    <template v-if="showToolbarSelectedClothes">
+      <ToolbarSelectedClothes /> 
     </template>
 
     <SnackbarOfflineError />
@@ -34,6 +38,7 @@ import AppToolbar from "./components/layouts/AppToolbar.vue";
 import NavigationDrawer from "./components/layouts/NavigationDrawer.vue";
 import BottomNavigator from "./components/layouts/BottomNavigator.vue"
 import SnackbarOfflineError from "./components/SnackbarOfflineError.vue";
+import ToolbarSelectedClothes from "./components/closet/ToolbarSelectedClothes.vue";
 import * as resize from "./resize.js"
 
 export default {
@@ -42,6 +47,7 @@ export default {
     NavigationDrawer,
     BottomNavigator,
     SnackbarOfflineError,
+    ToolbarSelectedClothes
   },
   mounted () {
     resize.onResize()
