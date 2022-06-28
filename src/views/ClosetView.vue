@@ -163,14 +163,15 @@ export default {
         if (value === 1) {
           type = "social"
         }
+        this.resetSelectionMode()
+        this.setShowToolbarSelectedClothes(false)
         this.getClothes(type)
       }
     },
     showToolbarSelectedClothes: {
       handler: function (value, oldValue) {
         if (value === false) {
-          this.enableCasualClotheSelect = false
-          this.enableSocialClotheSelect = false
+          this.resetSelectionMode()
         }
       }
     }
@@ -195,7 +196,9 @@ export default {
       "addCasualClotheSelected",
       "addSocialClotheSelected",
       "removeSocialClotheSelected",
-      "removeCasualClotheSelected"
+      "removeCasualClotheSelected",
+      "resetSocialClotheSelected",
+      "resetCasualClotheSelected"
     ]),
     openDetails (clothe) {
       this.clothe = clothe
@@ -226,6 +229,12 @@ export default {
     removeSelectedSocialClotheFromList (clothe) {
       const index = this.socialClothesSelected.indexOf(clothe)
       this.removeSocialClotheSelected(index)
+    },
+    resetSelectionMode () {
+      this.enableCasualClotheSelect = false
+      this.enableSocialClotheSelect = false
+      this.resetSocialClotheSelected()
+      this.resetCasualClotheSelected()
     }
   },
   computed: {
@@ -282,10 +291,11 @@ export default {
         - footer 
         - tabs
       return innerHeight
-    },
-    accentLightBackground () {
-      return this.$vuetify.theme.themes.light.accentLightBackground
     }
+  },
+  beforeDestroy () {
+    this.resetSelectionMode()
+    this.setShowToolbarSelectedClothes(false)
   }
 }
 </script>
