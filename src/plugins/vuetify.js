@@ -15,7 +15,6 @@ export default new Vuetify({
         secondary: colors.indigo.base,
         accent: colors.pink.accent2,
         accentLight: "#fbe4ec",
-        accentLightBackground: "#fff0f5",
         error: colors.red.base,
       },
       dark: {
