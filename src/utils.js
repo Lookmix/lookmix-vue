@@ -11,6 +11,14 @@ export function formatPhoneToOnlyDigits (phone) {
   return result
 }
 
+export function getImageId (imageUrl) {
+  const result = imageUrl.substring(30)
+  let splited = result.split("/")
+  splited = splited[1].split("_")
+  const id = splited[0]
+  return id
+}
+
 export const seasons = [
   {
     name: "primavera",
