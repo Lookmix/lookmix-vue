@@ -85,6 +85,12 @@ export default {
         })
         this.clothesWithSelected = result
       }
+    },
+    showCheckbox: {
+      immediate: true,
+      handler: function (value, oldValue) {
+        this.resetSelected()
+      }
     }
   },
   methods: {
@@ -113,7 +119,7 @@ export default {
       this.$emit("unselectClothe", object)
     },
     resetSelected () {
-      for (let clothe of this.clothes) {
+      for (let clothe of this.clothesWithSelected) {
         clothe.selected = false
       }
     }
