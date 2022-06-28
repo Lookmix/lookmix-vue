@@ -22,10 +22,14 @@
 
     <v-btn 
       text
+      :disabled="!existsSocialClothesSelected && !existsCasualClothesSelected"
       :ripple="false"
       color="primary"
       elevation="0"
-      class="mx-1"
+      :class="{
+        'mx-1': true,
+        'text--secondary': !existsSocialClothesSelected && !existsCasualClothesSelected
+      }"
       @click="editSelectedClick()"
     >
       editar
@@ -35,10 +39,14 @@
 
     <v-btn 
       text
+      :disabled="!existsSocialClothesSelected && !existsCasualClothesSelected"
       :ripple="false"
       color="primary"
       elevation="0"
-      class="mx-1"
+      :class="{
+        'mx-1': true,
+        'text--secondary': !existsSocialClothesSelected && !existsCasualClothesSelected
+      }"
       @click="removeSelectedClick()"
     >
       excluir
@@ -47,7 +55,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 
 export default {
   methods: {
@@ -64,6 +72,20 @@ export default {
     editSelectedClick () {
       this.$emit("editSelected")
     },
+  },
+  computed: {
+    ...mapGetters([
+      "socialClothesSelected",
+      "casualClothesSelected"
+    ]),
+    existsSocialClothesSelected () {
+      const length = this.socialClothesSelected.length
+      return length > 0      
+    },
+    existsCasualClothesSelected () {
+      const length = this.casualClothesSelected.length
+      return length > 0
+    }
   }
 }
 </script>
