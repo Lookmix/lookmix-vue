@@ -210,10 +210,6 @@ export default {
       this.setShowToolbarSelectedClothes(true)
       this.enableCasualClotheSelect = true //!this.enableCasualClotheSelect
     },
-    cancelSelectCasualClothesClick () {
-      this.enableCasualClotheSelect = false
-      this.casualClothesSelected = []
-    },
     addSelectedCasualClotheToList (clothe) {
       this.addCasualClotheSelected(clothe)
     },
