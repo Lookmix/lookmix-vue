@@ -57,7 +57,7 @@
               v-if="enableCasualClotheSelect"
               class="text-button"
             >
-              {{ casualClothesSelected.length }} selecionadas
+              {{ selectedClothes.length }} selecionadas
             </span>
           </div>
         </div>
@@ -69,8 +69,8 @@
             :title="item.category"
             :clothes="item.clothes"
             :showCheckbox="enableCasualClotheSelect"
-            @selectClothe="addSelectedCasualClotheToList($event)"
-            @unselectClothe="removeSelectedCasualClotheFromList($event)"
+            @selectClothe="addSelectedClotheToList($event)"
+            @unselectClothe="removeSelectedClotheFromList($event)"
             @openDetails="openDetails($event)"
           />
         </div>
@@ -110,7 +110,7 @@
               v-if="enableSocialClotheSelect"
               class="text-button"
             >
-              {{ socialClothesSelected.length }} selecionadas
+              {{ selectedClothes.length }} selecionadas
             </span>
           </div>
         </div>
@@ -123,8 +123,8 @@
             :clothes="item.clothes"
             :showCheckbox="enableSocialClotheSelect"
             @openDetails="openDetails($event)"
-            @selectClothe="addSelectedSocialClotheToList($event)"
-            @unselectClothe="removeSelectedSocialClotheFromList($event)"
+            @selectClothe="addSelectedClotheToList($event)"
+            @unselectClothe="removeSelectedClotheFromList($event)"
           />
         </div>
       </v-tab-item>
@@ -191,12 +191,9 @@ export default {
     ]),
     ...mapMutations([
       "setShowToolbarSelectedClothes",
-      "addCasualClotheSelected",
-      "addSocialClotheSelected",
-      "removeSocialClotheSelected",
-      "removeCasualClotheSelected",
-      "resetSocialClotheSelected",
-      "resetCasualClotheSelected"
+      "addSelectedClothe",
+      "removeSelectedClothe",
+      "resetSelectedClothes",
     ]),
     openDetails (clothe) {
       this.clothe = clothe
@@ -210,25 +207,17 @@ export default {
       this.setShowToolbarSelectedClothes(true)
       this.enableCasualClotheSelect = true //!this.enableCasualClotheSelect
     },
-    addSelectedCasualClotheToList (clothe) {
-      this.addCasualClotheSelected(clothe)
+    addSelectedClotheToList (clothe) {
+      this.addSelectedClothe(clothe)
     },
-    removeSelectedCasualClotheFromList (clothe) {
-      const index = this.casualClothesSelected.indexOf(clothe)
-      this.removeCasualClotheSelected(index)
-    },
-    addSelectedSocialClotheToList (clothe) {
-      this.addSocialClotheSelected(clothe)
-    },
-    removeSelectedSocialClotheFromList (clothe) {
-      const index = this.socialClothesSelected.indexOf(clothe)
-      this.removeSocialClotheSelected(index)
+    removeSelectedClotheFromList (clothe) {
+      const index = this.selectedClothes.indexOf(clothe)
+      this.removeSelectedClothe(index)
     },
     resetSelectionMode () {
       this.enableCasualClotheSelect = false
       this.enableSocialClotheSelect = false
-      this.resetSocialClotheSelected()
-      this.resetCasualClotheSelected()
+      this.resetSelectedClothes()
     }
   },
   computed: {
@@ -237,8 +226,7 @@ export default {
       "fetchSocialClothes",
       "categories",
       "showToolbarSelectedClothes",
-      "socialClothesSelected",
-      "casualClothesSelected"
+      "selectedClothes"
     ]),
     casualClothesByCategories () {
       const result = []

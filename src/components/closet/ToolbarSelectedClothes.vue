@@ -22,13 +22,13 @@
 
     <v-btn 
       text
-      :disabled="!existsSocialClothesSelected && !existsCasualClothesSelected"
+      :disabled="!existsSelectedClothes"
       :ripple="false"
       color="primary"
       elevation="0"
       :class="{
         'mx-1': true,
-        'text--secondary': !existsSocialClothesSelected && !existsCasualClothesSelected
+        'text--secondary': !existsSelectedClothes
       }"
       @click="editSelectedClick()"
     >
@@ -39,13 +39,13 @@
 
     <v-btn 
       text
-      :disabled="!existsSocialClothesSelected && !existsCasualClothesSelected"
+      :disabled="!existsSelectedClothes"
       :ripple="false"
       color="primary"
       elevation="0"
       :class="{
         'mx-1': true,
-        'text--secondary': !existsSocialClothesSelected && !existsCasualClothesSelected
+        'text--secondary': !existsSelectedClothes
       }"
       @click="removeSelectedClick()"
     >
@@ -75,15 +75,10 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "socialClothesSelected",
-      "casualClothesSelected"
+      "selectedClothes"
     ]),
-    existsSocialClothesSelected () {
-      const length = this.socialClothesSelected.length
-      return length > 0      
-    },
-    existsCasualClothesSelected () {
-      const length = this.casualClothesSelected.length
+    existsSelectedClothes () {
+      const length = this.selectedClothes.length
       return length > 0
     }
   }
