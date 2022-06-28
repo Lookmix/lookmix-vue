@@ -13,7 +13,7 @@
         }"
       >
         <v-list-item-avatar>
-          <v-img src="https://randomuser.me/api/portraits/men/25.jpg"></v-img>
+          <v-img src="../../assets/icon-512x512.png"></v-img>
         </v-list-item-avatar>
 
         <v-list-item-content>
