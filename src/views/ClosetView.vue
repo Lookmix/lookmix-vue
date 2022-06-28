@@ -27,11 +27,10 @@
         <div 
           v-ripple
           @click="selectCasualClothesClick"
-          class="py-3 ml-n1"
+          class="py-3 ml-n1 red lighten-5"
           :style="{
             'position': 'fixed', 
             'z-index': '2', 
-            'background-color': accentLightBackground, 
             'width': '100%', 
             'height': '60px',
             'margin-top': '-1px'
@@ -81,11 +80,10 @@
         <div 
           v-ripple
           @click="selectSocialClothesClick"
-          class="py-3 ml-n1"
+          class="py-3 ml-n1 red lighten-5"
           :style="{
             'position': 'fixed', 
             'z-index': '2', 
-            'background-color': accentLightBackground, 
             'width': '100%', 
             'height': '60px',
             'margin-top': '-1px'
