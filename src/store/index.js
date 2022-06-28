@@ -157,7 +157,13 @@ export default new Vuex.Store({
     },
     removeCasualClotheSelected (state, data) {
       state.casualClothesSelected.splice(data, 1)
-    }
+    },
+    resetSocialClotheSelected (state, data) {
+      state.socialClothesSelected = []
+    },
+    resetCasualClotheSelected (state, data) {
+      state.casualClothesSelected = []
+    },
   },
   actions: {
     verifyDuplicatedPhone ({ state }, data) { // withCredentials: false
