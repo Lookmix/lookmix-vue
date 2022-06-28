@@ -59,6 +59,8 @@
 </template>
 
 <script>
+import * as utils from "./../../utils"
+
 export default {
   props: {
     title: String,
@@ -101,14 +103,12 @@ export default {
       this.$emit("checkboxSelected", this.clothe)
     },
     selectClothe (clothe) {
+      const imageId = utils.getImageId(clothe.image)
+
       const object = {
         _id: clothe._id,
-        category_id: clothe.category_id,
         closet_id: clothe.closet_id,
-        image: clothe.image,
-        occasions: clothe.occasions,
-        seasons: clothe.seasons,
-        type: clothe.type
+        image_id: imageId,
       }
       clothe.selected = !clothe.selected;
 
