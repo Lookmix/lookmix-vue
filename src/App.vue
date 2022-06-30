@@ -20,34 +20,26 @@
       </v-sheet>
     </v-main>
 
-    <template v-if="showBottomNavigator && !showToolbarSelectedClothes">
-      <BottomNavigator />
-    </template>
-
-    <template v-if="showToolbarSelectedClothes">
-      <ToolbarSelectedClothes /> 
-    </template>
+    <ToolbarBottom/>
 
     <SnackbarOfflineError />
   </v-app>
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import AppToolbar from "./components/layouts/AppToolbar.vue";
 import NavigationDrawer from "./components/layouts/NavigationDrawer.vue";
-import BottomNavigator from "./components/layouts/BottomNavigator.vue"
 import SnackbarOfflineError from "./components/SnackbarOfflineError.vue";
-import ToolbarSelectedClothes from "./components/closet/ToolbarSelectedClothes.vue";
+import ToolbarBottom from "./components/ToolbarBottom.vue"
 import * as resize from "./resize.js"
 
 export default {
   components: {
     AppToolbar,
     NavigationDrawer,
-    BottomNavigator,
+    ToolbarBottom,
     SnackbarOfflineError,
-    ToolbarSelectedClothes
   },
   mounted () {
     resize.onResize()
@@ -58,20 +50,8 @@ export default {
       "isNewUserRoute", 
       "isLoginRoute", 
       "maxHeight",
-      "currentRouteName",
       "backgroundColor",
-      "showToolbarSelectedClothes"
-    ]),
-    ...mapState([
-      "user",
-      "connectionOffline"
-    ]),
-    showBottomNavigator () {
-      return this.authenticated && this.currentRouteName !== "clothesForm"
-    },
-    isClothesFormRoute () {
-      return this.currentRouteName === "clothesForm"
-    },
+    ])
   },
 }
 </script>
