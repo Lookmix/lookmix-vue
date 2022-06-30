@@ -20,16 +20,16 @@
 
     <v-spacer></v-spacer>
 
-    <toolbar-buttons/>
+    <toolbar-top-buttons/>
   </v-app-bar>
 </template>
 
 <script>
 import { mapState, mapMutations, mapGetters } from "vuex";
-import ToolbarButtons from '../ToolbarButtons.vue';
+import ToolbarTopButtons from '../ToolbarTopButtons.vue';
 
 export default {
-  components: { ToolbarButtons },
+  components: { ToolbarTopButtons },
   name: "AppToolbar",
   computed: {
     ...mapState([
