@@ -10,7 +10,7 @@
       style="display: flex; justify-content: center; flex-direction: column;"
     >
       <v-card-title>
-        Carregando...
+        {{ text }}...
       </v-card-title>
 
       <v-progress-circular
@@ -31,6 +31,10 @@ export default {
     show: {
       type: Boolean,
       default: false
+    },
+    text: {
+      type: String,
+      default: "Carregando"
     }
   }
 }
