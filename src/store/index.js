@@ -153,6 +153,22 @@ export default new Vuex.Store({
     resetSelectedClothes (state, data) {
       state.selectedClothes = []
     },
+    removeFetchSocialClotheById (state, data) {
+      const clothes = state.fetchSocialClothes
+      const clothe = clothes.filter((clothe) => clothe._id === data)[0]
+      if (clothe) {
+        const indexToRemove = clothes.indexOf(clothe)
+        state.fetchSocialClothes.splice(indexToRemove, 1)
+      }
+    },
+    removeFetchCasualClotheById (state, data) {
+      const clothes = state.fetchCasualClothes
+      const clothe = clothes.filter((clothe) => clothe._id === data)[0]
+      if (clothe) {
+        const indexToRemove = clothes.indexOf(clothe)
+        state.fetchCasualClothes.splice(indexToRemove, 1)
+      }
+    },
   },
   actions: {
     verifyDuplicatedPhone ({ state }, data) { // withCredentials: false
@@ -313,6 +329,11 @@ export default new Vuex.Store({
       catch (error) {
         console.log(error)
       }
+    },
+    deleteClothes ({ state }, data) {
+      const url = `${DOMAIN}/clothe/delete`
+
+      return axios.delete(url, { data: data, withCredentials: true })
     }
   },
   modules: {
