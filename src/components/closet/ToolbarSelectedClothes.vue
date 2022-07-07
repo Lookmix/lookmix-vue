@@ -101,9 +101,6 @@ export default {
     },
     confirmationDescriptionText () {
       return `Você vai excluir ${this.selectedClothesLenght} peças, deseja continuar?`
-    },
-    selectedClothesLenght () {
-      return this.selectedClothes.length
     }
   },
   methods: {
