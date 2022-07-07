@@ -60,6 +60,7 @@
 
 <script>
 import * as utils from "./../../utils"
+import { mapMutations } from "vuex"
 
 export default {
   props: {
@@ -96,6 +97,10 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      "setSelectedClothes",
+      "removeSelectedClothe"
+    ]),
     openDetails(clothe) {
       this.$emit("openDetails", clothe)
     },
@@ -105,18 +110,18 @@ export default {
     selectClothe (clothe) {
       const imageId = utils.getImageId(clothe.image)
 
-      const object = {
-        _id: clothe._id,
-        closet_id: clothe.closet_id,
-        image_id: imageId,
+      const payload = {
+        clotheId: clothe._id,
+        closetId: clothe.closet_id,
+        imageId: imageId,
       }
       clothe.selected = !clothe.selected;
 
       if (clothe.selected) {
-        this.$emit("selectClothe", object)
+        this.setSelectedClothes(payload)
         return;
       }
-      this.$emit("unselectClothe", object)
+      this.removeSelectedClothe(payload)
     },
     resetSelected () {
       for (let clothe of this.clothesWithSelected) {
