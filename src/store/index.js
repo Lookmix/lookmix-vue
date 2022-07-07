@@ -46,7 +46,11 @@ export default new Vuex.Store({
     seasons: [],
     clotheUploadSuccess: undefined,
     showToolbarSelectedClothes: false,
-    selectedClothes: [],
+    selectedClothes: {
+      closet_id: undefined,
+      clothe_ids: [],
+      image_ids: []
+    }
   },
   getters: {
     authenticated: state => state.authenticated,
