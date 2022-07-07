@@ -153,14 +153,37 @@ export default new Vuex.Store({
     setShowToolbarSelectedClothes (state, data) {
       state.showToolbarSelectedClothes = data
     },
-    addSelectedClothe (state, data) {
-      state.selectedClothes.push(data)
+    setSelectedClothes (state, data) {
+      const closetId = data.closetId
+      const clotheId = data.clotheId
+      const imageId = data.imageId
+
+      if (!state.selectedClothes.closet_id) {
+        state.selectedClothes.closet_id = closetId
+      }
+      state.selectedClothes.clothe_ids.push(clotheId)
+      state.selectedClothes.image_ids.push(imageId)
     },
     removeSelectedClothe (state, data) {
-      state.selectedClothes.splice(data, 1)
+      const clotheId = data.clotheId
+      const imageId = data.imageId
+
+      const imageIdIndex = state.selectedClothes.image_ids.indexOf(imageId)
+      const clotheIdIndex = state.selectedClothes.clothe_ids.indexOf(clotheId)
+
+      state.selectedClothes.clothe_ids.splice(clotheIdIndex, 1)
+      state.selectedClothes.image_ids.splice(imageIdIndex, 1)
+
+      if (state.selectedClothes.clothe_ids.length === 0) {
+        state.selectedClothes.closet_id = undefined
+      }
     },
     resetSelectedClothes (state, data) {
-      state.selectedClothes = []
+      state.selectedClothes = {
+        closet_id: undefined,
+        clothe_ids: [],
+        image_ids: []
+      }
     },
     removeFetchSocialClotheById (state, data) {
       const clothes = state.fetchSocialClothes
