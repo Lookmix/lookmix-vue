@@ -69,8 +69,6 @@
             :title="item.category"
             :clothes="item.clothes"
             :showCheckbox="enableCasualClotheSelect"
-            @selectClothe="addSelectedClotheToList($event)"
-            @unselectClothe="removeSelectedClotheFromList($event)"
             @openDetails="openDetails($event)"
           />
         </div>
@@ -123,8 +121,6 @@
             :clothes="item.clothes"
             :showCheckbox="enableSocialClotheSelect"
             @openDetails="openDetails($event)"
-            @selectClothe="addSelectedClotheToList($event)"
-            @unselectClothe="removeSelectedClotheFromList($event)"
           />
         </div>
       </v-tab-item>
@@ -191,8 +187,6 @@ export default {
     ]),
     ...mapMutations([
       "setShowToolbarSelectedClothes",
-      "addSelectedClothe",
-      "removeSelectedClothe",
       "resetSelectedClothes",
     ]),
     openDetails (clothe) {
@@ -206,13 +200,6 @@ export default {
     selectCasualClothesClick () {
       this.setShowToolbarSelectedClothes(true)
       this.enableCasualClotheSelect = true //!this.enableCasualClotheSelect
-    },
-    addSelectedClotheToList (clothe) {
-      this.addSelectedClothe(clothe)
-    },
-    removeSelectedClotheFromList (clothe) {
-      const index = this.selectedClothes.indexOf(clothe)
-      this.removeSelectedClothe(index)
     },
     resetSelectionMode () {
       this.enableCasualClotheSelect = false
