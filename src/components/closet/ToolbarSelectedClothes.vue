@@ -92,7 +92,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "selectedClothes"
+      "selectedClothes",
+      "selectedClothesLenght"
     ]),
     existsSelectedClothes () {
       const length = this.selectedClothesLenght
