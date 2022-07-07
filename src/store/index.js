@@ -79,7 +79,12 @@ export default new Vuex.Store({
     seasons: state => state.seasons,
     clotheUploadSuccess: state => state.clotheUploadSuccess,
     showToolbarSelectedClothes: state => state.showToolbarSelectedClothes,
-    selectedClothes: state => state.selectedClothes
+    selectedClothes: state => state.selectedClothes,
+    selectedClothesLenght (state) {
+      const clotheIds = state.selectedClothes.clothe_ids
+      const clotheIdsLength = clotheIds.length
+      return clotheIdsLength
+    }
   },
   mutations: {
     setNewUser(state, data) {
