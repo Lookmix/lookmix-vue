@@ -57,7 +57,7 @@
               v-if="enableCasualClotheSelect"
               class="text-button"
             >
-              {{ selectedClothes.length }} selecionadas
+              {{ selectedClothesLenght }} selecionadas
             </span>
           </div>
         </div>
@@ -110,7 +110,7 @@
               v-if="enableSocialClotheSelect"
               class="text-button"
             >
-              {{ selectedClothes.length }} selecionadas
+              {{ selectedClothesLenght }} selecionadas
             </span>
           </div>
         </div>
@@ -226,7 +226,7 @@ export default {
       "fetchSocialClothes",
       "categories",
       "showToolbarSelectedClothes",
-      "selectedClothes"
+      "selectedClothesLenght"
     ]),
     casualClothesByCategories () {
       const result = []
