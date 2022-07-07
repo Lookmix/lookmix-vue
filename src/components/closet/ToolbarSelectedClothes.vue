@@ -146,9 +146,10 @@ export default {
       this.setShowToolbarSelectedClothes(false)
     },
     removeClothesFromState () {
-      for (let clothe of this.selectedClothes) {
-        this.removeFetchSocialClotheById(clothe._id)
-        this.removeFetchCasualClotheById(clothe._id)
+      const clotheIds = this.selectedClothes.clothe_ids
+      for (let id of clotheIds) {
+        this.removeFetchSocialClotheById(id)
+        this.removeFetchCasualClotheById(id)
       }
     }
   }
