@@ -47,7 +47,6 @@ export default new Vuex.Store({
     clotheUploadSuccess: undefined,
     showToolbarSelectedClothes: false,
     selectedClothes: {
-      closet_id: undefined,
       clothe_ids: [],
       image_ids: []
     }
@@ -154,13 +153,8 @@ export default new Vuex.Store({
       state.showToolbarSelectedClothes = data
     },
     setSelectedClothes (state, data) {
-      const closetId = data.closetId
       const clotheId = data.clotheId
       const imageId = data.imageId
-
-      if (!state.selectedClothes.closet_id) {
-        state.selectedClothes.closet_id = closetId
-      }
       state.selectedClothes.clothe_ids.push(clotheId)
       state.selectedClothes.image_ids.push(imageId)
     },
@@ -173,14 +167,9 @@ export default new Vuex.Store({
 
       state.selectedClothes.clothe_ids.splice(clotheIdIndex, 1)
       state.selectedClothes.image_ids.splice(imageIdIndex, 1)
-
-      if (state.selectedClothes.clothe_ids.length === 0) {
-        state.selectedClothes.closet_id = undefined
-      }
     },
     resetSelectedClothes (state, data) {
       state.selectedClothes = {
-        closet_id: undefined,
         clothe_ids: [],
         image_ids: []
       }
