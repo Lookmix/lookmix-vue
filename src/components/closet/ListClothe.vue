@@ -112,7 +112,6 @@ export default {
 
       const payload = {
         clotheId: clothe._id,
-        closetId: clothe.closet_id,
         imageId: imageId,
       }
       clothe.selected = !clothe.selected;
