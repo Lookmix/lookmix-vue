@@ -27,7 +27,7 @@
         <div 
           v-ripple
           @click="selectCasualClothesClick"
-          class="py-3 ml-n1 grey lighten-3"
+          class="py-3 ml-n1 red lighten-5"
           :style="{
             'position': 'fixed', 
             'z-index': '2', 

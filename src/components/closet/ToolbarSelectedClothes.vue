@@ -5,13 +5,13 @@
       dense
       bottom
       flat
-      color="accent"
+      color="primary"
       elevation="0"
     >
       <v-btn 
         text
         :ripple="false"
-        color="primary"
+        color="backgroundBase"
         elevation="0"
         class="mx-1"
         @click="cancelSelectedClick()"
@@ -25,11 +25,10 @@
         text
         :disabled="!existsSelectedClothes"
         :ripple="false"
-        color="primary"
+        color="backgroundBase"
         elevation="0"
         :class="{
-          'mx-1': true,
-          'text--secondary': !existsSelectedClothes
+          'mx-1': true
         }"
         @click="editSelectedClick()"
       >
@@ -42,11 +41,10 @@
         text
         :disabled="!existsSelectedClothes"
         :ripple="false"
-        color="primary"
+        color="backgroundBase"
         elevation="0"
         :class="{
-          'mx-1': true,
-          'text--secondary': !existsSelectedClothes
+          'mx-1': true
         }"
         @click="removeSelectedClick()"
       >
