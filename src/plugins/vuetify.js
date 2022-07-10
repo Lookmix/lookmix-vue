@@ -9,13 +9,14 @@ export default new Vuetify({
     dark: false,
     themes: {
       light: {
-        primary: colors.shades.white,
-        primaryLighten4: colors.grey.lighten4,
-        primaryLighten3: colors.grey.lighten3,
+        primary: colors.pink.accent2,
+        primaryLight: "#fbe4ec",
         secondary: colors.indigo.base,
-        accent: colors.pink.accent2,
-        accentLight: "#fbe4ec",
+        accent: colors.purple.base,
         error: colors.red.base,
+        backgroundBase: colors.shades.white,
+        backgroundLighten4: colors.grey.lighten4,
+        backgroundLighten3: colors.grey.lighten3
       },
       dark: {
         accent: colors.pink.accent2,
