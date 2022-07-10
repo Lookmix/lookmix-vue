@@ -2,6 +2,7 @@
   <v-app-bar 
     app
     absolute
+    color="primary"
     :dark="false"
     elevate-on-scroll
     scroll-target="#sheet-main"

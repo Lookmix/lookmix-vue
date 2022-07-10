@@ -4,7 +4,7 @@
       v-model="selectedTab"
       color="black"
       fixed-tabs
-      background-color="primaryLighten4"
+      background-color="transparent"
     >
       <v-tab>
         CASUAL
