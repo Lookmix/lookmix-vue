@@ -27,6 +27,7 @@
           <v-checkbox
             :value="clothe.selected"
             class="mt-0 pt-0"
+            color="backgroundBase"
             :style="{
               'display': showCheckbox ? 'block' : 'none',
               'width': '24px'
