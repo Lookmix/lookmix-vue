@@ -43,8 +43,8 @@
         <div class="py-4">
           <v-chip
             label
-            color="accentLight"
-            text-color="accent"
+            color="primaryLight"
+            text-color="primary"
             class="text-capitalize font-weight-medium"
           >
             {{ closet }}
@@ -67,7 +67,7 @@
               :color="'#FAFAFA'"
             >
               <v-list-item-group
-                color="accent"
+                color="primary"
                 mandatory
               >
                 <v-list-item
@@ -77,7 +77,7 @@
                     <v-list-item-title>
                       {{ category ? category.name : "" }}
                     </v-list-item-title>
-                    <!-- class="text--primary" -->
+
                     <v-list-item-subtitle>
                       {{ category ? category.description : "" }}
                     </v-list-item-subtitle>
@@ -103,8 +103,8 @@
               v-for="(season, index) in seasons"
               :key="index"
               class="mr-1 mb-1 mt-1 font-weight-medium"
-              color="accentLight" 
-              text-color="accent"
+              color="primaryLight" 
+              text-color="primary"
             >
               <v-icon left>
                 {{ getSeasonIcon(season) }}
@@ -130,8 +130,8 @@
               class="mr-1 mb-1 mt-1 font-weight-medium"
               v-for="(item, index) in occasions" 
               :key="index"
-              color="accentLight"
-              text-color="accent"
+              color="primaryLight"
+              text-color="primary"
             >
               {{ item }}
             </v-chip>

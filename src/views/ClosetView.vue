@@ -27,7 +27,7 @@
         <div 
           v-ripple
           @click="selectCasualClothesClick"
-          class="py-3 ml-n1 red lighten-5"
+          class="py-3 ml-n1 grey lighten-3"
           :style="{
             'position': 'fixed', 
             'z-index': '2', 
@@ -195,7 +195,7 @@ export default {
     },
     selectSocialClothesClick () {
       this.setShowToolbarSelectedClothes(true)
-      this.enableSocialClotheSelect = !this.enableSocialClotheSelect
+      this.enableSocialClotheSelect = true //!this.enableSocialClotheSelect
     },
     selectCasualClothesClick () {
       this.setShowToolbarSelectedClothes(true)

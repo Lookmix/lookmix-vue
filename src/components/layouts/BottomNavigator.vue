@@ -2,7 +2,7 @@
   <v-bottom-navigation
     app
     v-model="value"
-    color="accent"
+    color="primary"
     style="border-top: solid 1px lightgray;"
     shift
     grow

@@ -71,7 +71,7 @@
             @change="emitPayload()"
             mandatory
             borderless
-            color="accent"
+            color="primary"
           >
             <v-btn 
               v-for="closet in closets"
@@ -110,7 +110,7 @@
                 v-model="selectedCategory"
                 @change="emitPayload()"
                 mandatory
-                color="accent"
+                color="primary"
               >
                 <v-list-item
                   @click="goTo('#season' + id)"
@@ -151,7 +151,7 @@
             outlined
           >
             <v-chip-group
-              color="accent"
+              color="primary"
               mandatory
               multiple
               column
@@ -190,7 +190,7 @@
             outlined
           >
             <v-chip-group
-              color="accent"
+              color="primary"
               mandatory
               multiple
               column

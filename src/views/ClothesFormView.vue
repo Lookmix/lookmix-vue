@@ -56,7 +56,7 @@
       dense
       bottom
       flat
-      color="accent"
+      color="primary"
       elevation="0"
     >
       <v-btn 
@@ -155,7 +155,7 @@
           >
             <v-btn 
               :elevation="0"
-              color="accent"
+              color="primary"
               text
               @click="redirectToCloset();" 
             >
@@ -190,7 +190,7 @@
           >
             <v-btn 
               :elevation="0"
-              color="accent"
+              color="primary"
               text
               @click="setLoadingDialog(false); setClotheUploadSuccess(undefined); uploadProgress=0;" 
             >

@@ -60,7 +60,7 @@
 
             <v-btn
               style="width: 140px; margin: auto;"
-              color="accent"
+              color="primary"
               text
               rounded
               small

@@ -62,7 +62,7 @@
         >
           <v-btn 
             :elevation="0"
-            color="accent"
+            color="primary"
             text
             @click="successActionClick()" 
           >
@@ -97,7 +97,7 @@
         >
           <v-btn 
             :elevation="0"
-            color="accent"
+            color="primary"
             text
             @click="errorActionClick(); progress=0;" 
           >

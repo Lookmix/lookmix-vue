@@ -22,7 +22,7 @@
       É a sua cara
     </div>
 
-    <v-card ripple rounded="lg" color="accent" height="120" width="100%">
+    <v-card ripple rounded="lg" color="primary" height="120" width="100%">
     </v-card>
     <br/>
   </div>

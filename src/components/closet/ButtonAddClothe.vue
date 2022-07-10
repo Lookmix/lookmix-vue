@@ -4,7 +4,7 @@
       id="fileInput"
       v-if="iconButton"
       hide-input
-      color="accent"
+      color="primary"
       accept="image/*"
       multiple
       prepend-icon=""
@@ -14,7 +14,7 @@
       <template v-slot:append-outer>
         <v-btn 
           icon
-          color="accent"
+          color="primary"
           @click="addClotheClick()"
         >
           <v-icon>
@@ -28,7 +28,7 @@
       id="fileInput"
       v-if="!iconButton"
       hide-input
-      color="accent"
+      color="primary"
       accept="image/*"
       multiple
       prepend-icon=""
@@ -37,7 +37,7 @@
     >
       <template v-slot:append-outer>
         <v-btn
-          color="accent"
+          color="primary"
           :elevation="2"
           rounded
           large

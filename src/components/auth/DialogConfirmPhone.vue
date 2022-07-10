@@ -38,7 +38,7 @@
             style="box-shadow: unset; display: none;"
           >
             <v-stepper-step
-              color="accent"
+              color="primary"
               :complete="currentStep > 1"
               step="1"
             >
@@ -50,7 +50,7 @@
             <v-stepper-step
               :complete="currentStep > 2"
               step="2"
-              color="accent"
+              color="primary"
             >
               Código de confirmação
             </v-stepper-step>
@@ -60,7 +60,7 @@
             <v-stepper-step 
               :complete="currentStep > 3"
               step="3"
-              color="accent"
+              color="primary"
             >
               Redefinição de senha
             </v-stepper-step>
@@ -70,7 +70,7 @@
             <v-stepper-step
               :complete="currentStep > 4"
               step="3"
-              color="accent"
+              color="primary"
             >
               Confirmação de número
             </v-stepper-step>
