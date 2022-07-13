@@ -91,7 +91,9 @@ export default {
   computed: {
     ...mapGetters([
       "selectedClothes",
-      "selectedClothesLenght"
+      "selectedClothesLenght",
+      "fetchCasualClothes",
+      "fetchSocialClothes",
     ]),
     existsSelectedClothes () {
       const length = this.selectedClothesLenght
@@ -108,7 +110,8 @@ export default {
     ...mapMutations([
       "setShowToolbarSelectedClothes",
       "removeFetchSocialClotheById",
-      "removeFetchCasualClotheById"
+      "removeFetchCasualClotheById",
+      "setEditClothes"
     ]),
     cancelSelectedClick () {
       this.setShowToolbarSelectedClothes(false)
@@ -134,6 +137,29 @@ export default {
       this.$emit("removeSelected")
     },
     editSelectedClick () {
+      const clotheIds = this.selectedClothes.clothe_ids
+      const clothes = []
+
+      for (let id of clotheIds) {
+        const casualClothe = this.fetchCasualClothes.filter(clothe => clothe._id === id)[0]
+
+        if (casualClothe) {
+          clothes.push(casualClothe)
+        }
+        const socialClothe = this.fetchSocialClothes.filter(clothe => clothe._id === id)[0]
+
+        if (socialClothe) {
+          clothes.push(socialClothe)
+        }
+      }
+      this.setEditClothes(clothes)
+
+      const clotheFormRouteName = "clothesForm"
+
+      this.$router.push({ 
+        name: clotheFormRouteName, 
+        query: { edit: true }
+      })
       this.$emit("editSelected")
     },
     successOkClick () {
