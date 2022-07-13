@@ -21,6 +21,7 @@
         eager
       >
         <v-btn 
+          v-if="editClothe === undefined"
           fab 
           x-small 
           style="margin: 10px; float: right;"
@@ -232,9 +233,21 @@ import * as utils from "./../../utils"
 
 export default {
   props: {
-    image: File,
+    image: [String, File],
     cardWidth: Number,
-    cardHeight: Number
+    cardHeight: Number,
+    editClothe: Object
+  },
+  watch: {
+    editClothe: {
+      immediate: true,
+      // deep: true,
+      handler: function (val, oldVal) {
+        if (val) {
+          this.setClotheData()
+        }
+      }
+    }
   },
   data () {
     return {
@@ -277,7 +290,10 @@ export default {
       return `${height}px`
     },
     imageReadable () {
-      if (this.image) {
+      if (this.editClothe) {
+        return this.editClothe.image
+      }
+      if (this.image && typeof this.image === "object") {
         return URL.createObjectURL(this.image)
       } return ""
     },
@@ -312,10 +328,35 @@ export default {
         seasons: seasons,
         image: this.image
       }
-      this.$emit("payload", payload)
+      if (!this.editClothe) {
+        this.$emit("payload", payload)
+      }
     },
     remove () {
       this.$emit("remove", this.id)
+    },
+    setClotheData () {
+      const category = this.categories.filter(category => category._id === this.editClothe.category_id)[0]
+      this.selectedCategoryIndex = this.categories.indexOf(category)
+      this.selectedCloset = this.closets.filter(closet => closet.value === this.editClothe.type)[0].value
+      
+      const clotheOccasions = this.editClothe.occasions
+      const occasionIndexes = []
+
+      for (let occasion of clotheOccasions) {
+        const index = this.occasions.indexOf(occasion)
+        occasionIndexes.push(index)
+      }
+      this.selectedOccasions = occasionIndexes
+      
+      const clotheSeasons = this.editClothe.seasons
+      const seasonIndexes = []
+
+      for (let season of clotheSeasons) {
+        const index = this.seasons.indexOf(season)
+        seasonIndexes.push(index)
+      }
+      this.selectedSeasons = seasonIndexes
     },
     goTo (element) {
       const ref = "card-content" + this.id
