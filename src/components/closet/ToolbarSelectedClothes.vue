@@ -13,7 +13,7 @@
         :ripple="false"
         color="backgroundBase"
         elevation="0"
-        class="mx-1"
+        class="mx-0"
         @click="cancelSelectedClick()"
       >
         cancelar
@@ -28,11 +28,11 @@
         color="backgroundBase"
         elevation="0"
         :class="{
-          'mx-1': true
+          'mx-0': true
         }"
         @click="editSelectedClick()"
       >
-        editar
+        atualizar
       </v-btn>
 
       <v-spacer/>
@@ -44,7 +44,7 @@
         color="backgroundBase"
         elevation="0"
         :class="{
-          'mx-1': true
+          'mx-0': true
         }"
         @click="removeSelectedClick()"
       >
