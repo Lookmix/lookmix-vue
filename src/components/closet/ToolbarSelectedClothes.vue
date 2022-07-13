@@ -81,6 +81,14 @@ export default {
     DialogLoading,
     DialogConfirmation
   },
+  mounted () {
+    if (this.occasions.length < 1) {
+      this.getOccasions()
+    }
+    if (this.seasons.length < 1) {
+      this.getSeasons()
+    }
+  },
   data () {
     return {
       loadingDialog: false,
@@ -94,6 +102,8 @@ export default {
       "selectedClothesLenght",
       "fetchCasualClothes",
       "fetchSocialClothes",
+      "occasions",
+      "seasons"
     ]),
     existsSelectedClothes () {
       const length = this.selectedClothesLenght
@@ -105,7 +115,9 @@ export default {
   },
   methods: {
     ...mapActions([
-      "deleteClothes"
+      "deleteClothes",
+      "getOccasions",
+      "getSeasons"
     ]),
     ...mapMutations([
       "setShowToolbarSelectedClothes",
