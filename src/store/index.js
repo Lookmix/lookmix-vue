@@ -146,6 +146,9 @@ export default new Vuex.Store({
     setClotheUploadSuccess(state, data) {
       state.clotheUploadSuccess = data
     },
+    setEditClothes (state, data) {
+      state.clothes = data
+    },
     resetClothes(state, data) {
       state.clothes = []
     },
