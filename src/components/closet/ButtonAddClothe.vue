@@ -172,8 +172,12 @@ export default {
 
       this.setDisableSaveClothesButton(false)
 
-      if (this.currentRouteName !== "clothesForm") {
-        this.$router.push("clothes-form")
+      const clotheFormRouteName = "clothesForm"
+
+      if (this.currentRouteName !== clotheFormRouteName) {
+        this.$router.push({
+          name: clotheFormRouteName
+        })
       }
       this.showDialog = false
     }
