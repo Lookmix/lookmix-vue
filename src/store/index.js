@@ -358,6 +358,36 @@ export default new Vuex.Store({
       const url = `${DOMAIN}/clothe/delete`
 
       return axios.delete(url, { data: data, withCredentials: true })
+    },
+    async updateClothes ({ state, commit }, data) {
+      try {
+        commit("setLoadingDialog", true)
+
+        const url = `${DOMAIN}/clothe/update`
+
+        const clothes = state.clothes
+        const payload = []
+
+        for (let clothe of clothes) {
+          const clotheId = clothe._id
+  
+          const item = {
+            id: clotheId,
+            category_id: clothe.category_id,
+            type: clothe.type,
+            occasions: clothe.occasions,
+            seasons: clothe.seasons,
+          }
+          payload.push(item)
+        }
+        await axios.put(url, payload, { withCredentials: true })
+
+        commit("setClotheUploadSuccess", true)
+      }
+      catch (error) {
+        commit("setClotheUploadSuccess", false)
+        console.log(error)
+      }
     }
   },
   modules: {
