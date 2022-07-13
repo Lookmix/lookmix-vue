@@ -1,115 +1,119 @@
 <template>
   <div>
-    <v-file-input
-      id="fileInput"
-      v-if="iconButton"
-      hide-input
-      color="primary"
-      accept="image/*"
-      multiple
-      prepend-icon=""
-      v-model="images"
-      @change="readImages()"
+    <template 
+      v-if="edit === undefined"
     >
-      <template v-slot:append-outer>
-        <v-btn 
-          icon
-          color="primary"
-          @click="addClotheClick()"
-        >
-          <v-icon>
-            mdi-plus
-          </v-icon>
-        </v-btn>
-      </template>
-    </v-file-input>
-
-    <v-file-input
-      id="fileInput"
-      v-if="!iconButton"
-      hide-input
-      color="primary"
-      accept="image/*"
-      multiple
-      prepend-icon=""
-      v-model="images"
-      @change="readImages()"
-    >
-      <template v-slot:append-outer>
-        <v-btn
-          color="primary"
-          :elevation="2"
-          rounded
-          large
-          @click="addClotheClick()"
-        >
-          <v-icon>mdi-plus</v-icon>
-
-          ADICIONAR
-        </v-btn>
-      </template>
-    </v-file-input>
-
-    <v-dialog
-      :value="showDialog"
-      width="250"
-      persistent
-    >
-      <v-card
-        width="250"
-        height="250"
-        style="display: flex; justify-content: center; flex-direction: column;"
+      <v-file-input
+        id="fileInput"
+        v-if="iconButton"
+        hide-input
+        color="primary"
+        accept="image/*"
+        multiple
+        prepend-icon=""
+        v-model="images"
+        @change="readImages()"
       >
-        <v-card-title>
-          Carregando...
-        </v-card-title>
-
-        <v-progress-circular
-          :size="65"
-          :width="10"
-          color="secondary"
-          style="margin: auto;"
-          indeterminate
-        />
-
-        <v-card-text 
-          :style="{
-            'display': 'flex',
-            'flex-direction': 'row',
-            'justify-content': 'center',
-            'padding-top': '20px',
-            'height': '68px'
-          }"
-        >
+        <template v-slot:append-outer>
           <v-btn 
-            v-if="showCloseButton"
-            text 
-            outlined
-            small
-            @click="showDialog = false; showCloseButton = false;" 
+            icon
+            color="primary"
+            @click="addClotheClick()"
           >
-            FECHAR
+            <v-icon>
+              mdi-plus-circle-outline
+            </v-icon>
           </v-btn>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+        </template>
+      </v-file-input>
 
-    <v-snackbar
-      v-model="snackbarError"
-      color="error"
-    >
-      {{ snackbarErrorMsg }}
+      <v-file-input
+        id="fileInput"
+        v-if="!iconButton"
+        hide-input
+        color="primary"
+        accept="image/*"
+        multiple
+        prepend-icon=""
+        v-model="images"
+        @change="readImages()"
+      >
+        <template v-slot:append-outer>
+          <v-btn
+            color="primary"
+            :elevation="2"
+            rounded
+            large
+            @click="addClotheClick()"
+          >
+            <v-icon>mdi-plus</v-icon>
 
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          text
-          v-bind="attrs"
-          @click="snackbarError = false"
+            ADICIONAR
+          </v-btn>
+        </template>
+      </v-file-input>
+
+      <v-dialog
+        :value="showDialog"
+        width="250"
+        persistent
+      >
+        <v-card
+          width="250"
+          height="250"
+          style="display: flex; justify-content: center; flex-direction: column;"
         >
-          OK
-        </v-btn>
-      </template>
-    </v-snackbar>
+          <v-card-title>
+            Carregando...
+          </v-card-title>
+
+          <v-progress-circular
+            :size="65"
+            :width="10"
+            color="secondary"
+            style="margin: auto;"
+            indeterminate
+          />
+
+          <v-card-text 
+            :style="{
+              'display': 'flex',
+              'flex-direction': 'row',
+              'justify-content': 'center',
+              'padding-top': '20px',
+              'height': '68px'
+            }"
+          >
+            <v-btn 
+              v-if="showCloseButton"
+              text 
+              outlined
+              small
+              @click="showDialog = false; showCloseButton = false;" 
+            >
+              FECHAR
+            </v-btn>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+
+      <v-snackbar
+        v-model="snackbarError"
+        color="error"
+      >
+        {{ snackbarErrorMsg }}
+
+        <template v-slot:action="{ attrs }">
+          <v-btn
+            text
+            v-bind="attrs"
+            @click="snackbarError = false"
+          >
+            OK
+          </v-btn>
+        </template>
+      </v-snackbar>
+    </template>
   </div>
 </template>
 
@@ -127,7 +131,11 @@ export default {
   computed: {
     ...mapGetters([
       "currentRouteName"
-    ])
+    ]),
+    edit () {
+      const edit = this.$route.query.edit
+      return edit
+    }
   },
   data () {
     return {
