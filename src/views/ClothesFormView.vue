@@ -44,6 +44,7 @@
           :id="clothe._id"
           :key="clothe._id"
           :image="clothe.image"
+          :editClothe="edit ? clothe : undefined"
           :cardWidth="cardWidth"
           :cardHeight="swiperHeight"
           @payload="setClothe($event, clothe._id)"
@@ -218,11 +219,25 @@ export default {
     SwiperSlide,
     ButtonAddClothe
   },
+  props: [
+    "edit"
+  ],
   beforeDestroy () {
     this.clearUploadInterval()
+
+    this.resetClothes()
+
+    if (this.edit) {
+      this.setToolbarTitle("Lookmix")
+    }
   },
   mounted () {
     this.setPreviousPage("/closet")
+
+    if (this.edit) {
+      this.setToolbarTitle("Atualizar peças")
+      this.updateSaveButtonState(false)
+    }
     if (this.categories.length < 1) {
       this.getCategories()
     }
@@ -325,7 +340,8 @@ export default {
       "addClotheOnIndex",
       "removeClotheOnIndex",
       "setClotheUploadSuccess",
-      "resetClothes"
+      "resetClothes",
+      "setToolbarTitle"
     ]),
     setClothe (clothe, _id) {
       const index = this.clothes.findIndex(item => item._id === _id)
