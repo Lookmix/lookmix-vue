@@ -8,7 +8,7 @@
       @click="saveClothesButtonClick()"
     >
       <v-icon>
-        mdi-check
+        mdi-check-outline
       </v-icon>
     </v-btn>
 
@@ -41,16 +41,25 @@ export default {
     },
     showAddClotheButton () {
       return this.isClosetRoute || (this.isClothesFormRoute && this.clothes.length > 0)
+    },
+    edit () {
+      const edit = this.$route.query.edit
+      return edit
     }
   },
   methods: {
     ...mapActions([
-      "saveClothesForm"
+      "saveClothesForm",
+      "updateClothes"
     ]),
     ...mapMutations([
       "setLoadingDialog"
     ]),
     saveClothesButtonClick () {
+      if (this.edit) {
+        this.updateClothes()
+        return
+      }
       this.saveClothesForm()
     },
     addClothe () {
