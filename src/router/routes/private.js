@@ -52,6 +52,7 @@ const routes = [
     path: '/clothes-form',
     name: 'clothesForm',
     component: ClothesFormView,
+    props: route => ({ edit: route.query.edit }),
     meta: { 
       pageTitle: "Adicionar peças", 
       maxHeight: true,
