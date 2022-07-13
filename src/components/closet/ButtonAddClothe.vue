@@ -165,7 +165,7 @@ export default {
           this.snackbarError = true
         }
         if (!this.snackbarError) {
-          this.addClothe({ id: uuidv4(), image: image })
+          this.addClothe({ _id: uuidv4(), image: image })
         }
       }
       this.images = []
