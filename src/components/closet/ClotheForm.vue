@@ -108,7 +108,7 @@
               :color="'#FAFAFA'"
             >
               <v-list-item-group
-                v-model="selectedCategory"
+                v-model="selectedCategoryIndex"
                 @change="emitPayload()"
                 mandatory
                 color="primary"
@@ -251,7 +251,6 @@ export default {
   },
   data () {
     return {
-      selectedCategory: undefined,
       closets: [
         {
           text: "CASUAL",
@@ -264,6 +263,7 @@ export default {
           value: "social"
         }
       ],
+      selectedCategoryIndex: undefined,
       selectedCloset: undefined,
       selectedOccasions: [],
       selectedSeasons: [],
@@ -308,17 +308,17 @@ export default {
       let occasions = []
       let seasons = []
 
-      if (this.selectedCategory != undefined) {
-        category = this.categories[this.selectedCategory]._id
+      if (this.selectedCategoryIndex != undefined) {
+        category = this.categories[this.selectedCategoryIndex]._id
       }
       if (this.selectedOccasions.length > 0) {
-        for (let occasion of this.selectedOccasions) {
-          occasions.push(this.occasions[occasion])
+        for (let occasionIndex of this.selectedOccasions) {
+          occasions.push(this.occasions[occasionIndex])
         }
       }
       if (this.selectedSeasons.length > 0) {
-        for (let season of this.selectedSeasons) {//console.log(this.seasons)
-          seasons.push(this.seasons[season])
+        for (let seasonIndex of this.selectedSeasons) {
+          seasons.push(this.seasons[seasonIndex])
         }
       }
       const payload = {
