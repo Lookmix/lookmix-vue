@@ -38,14 +38,15 @@
       <swiper-slide 
         :style="{'width': cardWidth+'px'}"
         v-for="(clothe, index) in clothes" 
-        :key="clothe.id"
+        :key="clothe._id"
       >
         <ClotheForm 
-          :id="clothe.id"
+          :id="clothe._id"
+          :key="clothe._id"
           :image="clothe.image"
           :cardWidth="cardWidth"
           :cardHeight="swiperHeight"
-          @payload="setClothe($event, clothe.id)"
+          @payload="setClothe($event, clothe._id)"
           @remove="removeClothe($event, index)"
         />
       </swiper-slide>
@@ -326,11 +327,11 @@ export default {
       "setClotheUploadSuccess",
       "resetClothes"
     ]),
-    setClothe (clothe, id) {
-      const index = this.clothes.findIndex(item => item.id === id)
+    setClothe (clothe, _id) {
+      const index = this.clothes.findIndex(item => item._id === _id)
 
       if (index !== -1) {
-        this.addClotheOnIndex({ index: index, value: { id, ...clothe } })
+        this.addClotheOnIndex({ index: index, value: { _id, ...clothe } })
       }
     },
     removeClothe (event, index) {
