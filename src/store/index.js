@@ -376,22 +376,9 @@ export default new Vuex.Store({
 
         const url = `${DOMAIN}/clothe/update`
 
-        const clothes = state.clothes
-        const payload = []
+        const clothes = state.updatedClothes
 
-        for (let clothe of clothes) {
-          const clotheId = clothe._id
-  
-          const item = {
-            id: clotheId,
-            category_id: clothe.category_id,
-            type: clothe.type,
-            occasions: clothe.occasions,
-            seasons: clothe.seasons,
-          }
-          payload.push(item)
-        }
-        await axios.put(url, payload, { withCredentials: true })
+        await axios.put(url, clothes, { withCredentials: true })
 
         commit("setClotheUploadSuccess", true)
       }
