@@ -47,7 +47,8 @@
           :editClothe="edit ? clothe : undefined"
           :cardWidth="cardWidth"
           :cardHeight="swiperHeight"
-          @payload="setClothe($event, clothe._id)"
+          @payloadSave="setClothe($event, clothe._id)"
+          @payloadUpdate="setUpdatedClothe($event, clothe._id)"
           @remove="removeClothe($event, index)"
         />
       </swiper-slide>
@@ -227,6 +228,8 @@ export default {
 
     this.resetClothes()
 
+    this.resetUpdatedClothes()
+
     if (this.edit) {
       this.setToolbarTitle("Lookmix")
     }
@@ -291,7 +294,8 @@ export default {
       "clotheUploadSuccess",
       "categories",
       "occasions",
-      "seasons"
+      "seasons",
+      "updatedClothes"
     ]),
     existsClothes () {
       const existsClothes = this.clothes.length > 0
@@ -341,7 +345,10 @@ export default {
       "removeClotheOnIndex",
       "setClotheUploadSuccess",
       "resetClothes",
-      "setToolbarTitle"
+      "resetUpdatedClothes",
+      "setToolbarTitle",
+      "addUpdatedClotheOnIndex",
+      "addUpdatedClothe"
     ]),
     setClothe (clothe, _id) {
       const index = this.clothes.findIndex(item => item._id === _id)
@@ -349,6 +356,15 @@ export default {
       if (index !== -1) {
         this.addClotheOnIndex({ index: index, value: { _id, ...clothe } })
       }
+    },
+    setUpdatedClothe (clothe, _id) {
+      const index = this.updatedClothes.findIndex(item => item._id === _id)
+
+      if (index !== -1) {
+        this.addUpdatedClotheOnIndex({ index: index, value: { _id, ...clothe } })
+        return;
+      }
+      this.addUpdatedClothe({ _id, ...clothe })
     },
     removeClothe (event, index) {
       this.removeClotheOnIndex(index)
