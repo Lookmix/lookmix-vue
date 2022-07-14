@@ -39,6 +39,7 @@ export default new Vuex.Store({
     loadingDialog: false,
     showAddClotheButton: true,
     clothes: [],
+    updatedClothes: [],
     fetchCasualClothes: [],
     fetchSocialClothes: [],
     categories: [],
@@ -71,6 +72,7 @@ export default new Vuex.Store({
     loadingDialog: state => state.loadingDialog,
     showAddClotheButton: state => state.showAddClotheButton,
     clothes: state => state.clothes,
+    updatedClothes: state => state.updatedClothes,
     fetchCasualClothes: state => state.fetchCasualClothes,
     fetchSocialClothes: state => state.fetchSocialClothes,
     categories: state => state.categories,
@@ -140,6 +142,12 @@ export default new Vuex.Store({
     addClotheOnIndex (state, data) {
       state.clothes[data.index] = data.value
     },
+    addUpdatedClothe (state, data) {
+      state.updatedClothes.push(data)
+    },
+    addUpdatedClotheOnIndex (state, data) {
+      state.updatedClothes[data.index] = data.value
+    },
     removeClotheOnIndex (state, data) {
       state.clothes.splice(data, 1)
     },
@@ -151,6 +159,9 @@ export default new Vuex.Store({
     },
     resetClothes(state, data) {
       state.clothes = []
+    },
+    resetUpdatedClothes (state, data) {
+      state.updatedClothes = []
     },
     setShowToolbarSelectedClothes (state, data) {
       state.showToolbarSelectedClothes = data
