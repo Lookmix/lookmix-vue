@@ -329,8 +329,10 @@ export default {
         image: this.image
       }
       if (!this.editClothe) {
-        this.$emit("payload", payload)
+        this.$emit("payloadSave", payload)
+        return;
       }
+      this.$emit("payloadUpdate", payload)
     },
     remove () {
       this.$emit("remove", this.id)
