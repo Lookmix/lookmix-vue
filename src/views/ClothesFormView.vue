@@ -114,114 +114,20 @@
       </v-btn>
     </v-toolbar>
 
-    <v-dialog
-      :value="loadingDialog" 
-      width="300"
-      persistent
-    >
-      <v-card
-        width="300"
-        height="300"
-      >
-        <template v-if="clotheUploadSuccess === undefined">
-          <v-card-title>
-            Salvando peças...
-          </v-card-title>
+    <dialog-loading
+      :intervalInMiliseconds="edit ? 250 : 3000"
+      :loadingTitle="loadingTitleDialog"
+      :loadingDialog="loadingDialog"
+      :totalCircularProgressParts="totalClothes"
+      :successFeedback="clotheUploadSuccess"
+      :successDescription="successDescriptionDialog"
+      :successActionText="'VER CLOSET'"
+      :errorDescription="errorDescriptionDialog"
+      :errorActionText="'FECHAR'"
+      @success="redirectToCloset();"
+      @error="setLoadingDialog(false); setClotheUploadSuccess(undefined); uploadProgress=0;"
+    />
 
-          <v-card-text class="mt-10">
-            <div 
-              style="display: flex; justify-content: center; flex-direction: column;"
-            >
-              <v-progress-circular
-                :size="140"
-                :width="20"
-                color="secondary"
-                style="margin: auto;"
-                :value="uploadProgress"
-                :rotate="360"
-              > 
-                <span class="font-weight-bold" v-if="uploadProgress < 100">
-                  {{ uploadProgressFormatted }} %
-                </span>
-                <span v-else>
-                  Acabando... 
-                </span>
-              </v-progress-circular>
-            </div>
-          </v-card-text>
-        </template>
-
-        <template v-if="clotheUploadSuccess">
-          <v-card-title>
-            Sucesso
-          </v-card-title>
-
-          <v-card-text class="mt-n3">
-            <v-img 
-              contain
-              height="134"
-              width="194"
-              style="margin: auto;"
-              class="mb-4"
-              src="../assets/hanger-success.svg"
-            >
-            </v-img>
-            <span>
-              Suas peças foram salvas, veja como ficou seu closet
-            </span>
-          </v-card-text>
-
-          <v-card-actions
-            class="mt-n3"
-            style="display: flex; justify-content: center;"
-          >
-            <v-btn 
-              :elevation="0"
-              color="primary"
-              text
-              @click="redirectToCloset();" 
-            >
-              VER CLOSET
-            </v-btn>
-          </v-card-actions>
-        </template>
-
-        <template v-if="clotheUploadSuccess === false">
-          <v-card-title>
-            Oops...
-          </v-card-title>
-
-          <v-card-text class="mt-n3">
-            <v-img 
-              contain
-              src="../assets/hanger-error.svg"
-              height="134"
-              width="194"
-              style="margin: auto;"
-              class="mb-4"
-            >
-            </v-img>
-            <span>
-              Um erro impediu que algumas de suas peças fossem salvas
-            </span>
-          </v-card-text>
-
-          <v-card-actions
-            class="mt-n3"
-            style="display: flex; justify-content: center;"
-          >
-            <v-btn 
-              :elevation="0"
-              color="primary"
-              text
-              @click="setLoadingDialog(false); setClotheUploadSuccess(undefined); uploadProgress=0;" 
-            >
-              FECHAR
-            </v-btn>
-          </v-card-actions>
-        </template>
-      </v-card>
-    </v-dialog>
   </div>
 </template>
 
@@ -229,6 +135,7 @@
 import { mapActions, mapMutations, mapGetters } from "vuex"
 import ClotheForm from "./../components/closet/ClotheForm.vue"
 import ButtonAddClothe from "./../components/closet/ButtonAddClothe.vue"
+import DialogLoading from "./../components/DialogLoading.vue"
 import { Swiper, SwiperSlide } from "vue-awesome-swiper"
 import "swiper/swiper-bundle.css"
 
@@ -237,7 +144,8 @@ export default {
     ClotheForm,
     Swiper,
     SwiperSlide,
-    ButtonAddClothe
+    ButtonAddClothe,
+    DialogLoading
   },
   props: [
     "edit"
@@ -291,20 +199,6 @@ export default {
       },
       deep: true
     },
-    loadingDialog: {
-      handler: function (val, oldVal) {
-        if (val) {
-          this.uploadInterval = setInterval(() => {
-            if (this.uploadProgress === 100) {
-              this.clearUploadInterval()
-              return;
-            }
-            let divisionResult = 100 / this.totalClothes
-            this.uploadProgress += divisionResult
-          }, 3000)
-        }
-      }
-    }
   },
   computed: {
     ...mapGetters([
@@ -347,6 +241,24 @@ export default {
     },
     uploadProgressFormatted () {
       return this.uploadProgress.toFixed()
+    },
+    successDescriptionDialog () {
+      if (!this.edit) {
+        return "Suas peças foram salvas, veja como ficou seu closet"
+      }
+      return "Suas peças foram atualizadas, veja como ficou seu closet"
+    },
+    loadingTitleDialog () {
+      if (!this.edit) {
+        return "Salvando peças..."
+      }
+      return "Atualizando peças..."
+    },
+    errorDescriptionDialog () {
+      if (!this.edit) {
+        return "Um erro impediu o cadastro das suas peças, tente de novo depois"
+      }
+      return "Um erro impediu a atualização das suas peças, tente de novo depois"
     }
   },
   methods: {
