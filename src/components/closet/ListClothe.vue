@@ -56,14 +56,24 @@
         </v-img>
       </v-col>
     </v-row>
+
+    <clothe-details 
+      :showDetails="showClotheDetails" 
+      :clothe="clotheDetails"
+      @closeDialog="showClotheDetails = false; clotheDetails = undefined;"
+    />
   </div>  
 </template>
 
 <script>
 import * as utils from "./../../utils"
 import { mapMutations } from "vuex"
+import ClotheDetails from "./../closet/ClotheDetails.vue"
 
 export default {
+  components: {
+    ClotheDetails
+  },
   props: {
     title: String,
     clothes: {
@@ -76,7 +86,9 @@ export default {
   },
   data () {
     return {
-      clothesWithSelected: []
+      clothesWithSelected: [],
+      showClotheDetails: false,
+      clotheDetails: undefined
     }
   },
   watch: {
@@ -103,7 +115,8 @@ export default {
       "removeSelectedClothe"
     ]),
     openDetails(clothe) {
-      this.$emit("openDetails", clothe)
+      this.clotheDetails = clothe
+      this.showClotheDetails = true
     },
     checkboxSelected () {
       this.$emit("checkboxSelected", this.clothe)
