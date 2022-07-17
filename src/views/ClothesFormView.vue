@@ -26,6 +26,19 @@
             style="padding: 10px 5px; display: flex; justify-content: center;"
           >
             <button-add-clothe :icon-button="false"/>
+
+            <v-btn
+              v-if="edit"
+              color="primary"
+              :elevation="2"
+              rounded
+              large
+              @click="redirectToCloset()"
+            >
+              <v-icon></v-icon>
+
+              ver peças
+            </v-btn>
           </div>
         </v-card-text>
       </v-card>
