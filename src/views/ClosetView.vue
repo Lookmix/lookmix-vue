@@ -69,7 +69,6 @@
             :title="item.category"
             :clothes="item.clothes"
             :showCheckbox="enableCasualClotheSelect"
-            @openDetails="openDetails($event)"
           />
         </div>
       </v-tab-item>
@@ -120,29 +119,21 @@
             :title="item.category"
             :clothes="item.clothes"
             :showCheckbox="enableSocialClotheSelect"
-            @openDetails="openDetails($event)"
           />
         </div>
       </v-tab-item>
     </v-tabs-items>
 
-    <ClotheDetails 
-      :showDetails="showClotheDetails" 
-      :clothe="clothe"
-      @closeDialog="showClotheDetails = false;"
-    />
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex"
 import ListClothe from "./../components/closet/ListClothe.vue"
-import ClotheDetails from "./../components/closet/ClotheDetails.vue"
 
 export default {
   components: {
     ListClothe,
-    ClotheDetails
   },
   mounted () {
     if (this.categories.length < 1) {
@@ -173,8 +164,6 @@ export default {
   data () {
     return {
       selectedTab: undefined,
-      showClotheDetails: false,
-      clothe: undefined,
       enableSocialClotheSelect: false,
       enableCasualClotheSelect: false
     }
@@ -189,10 +178,6 @@ export default {
       "setShowToolbarSelectedClothes",
       "resetSelectedClothes",
     ]),
-    openDetails (clothe) {
-      this.clothe = clothe
-      this.showClotheDetails = true
-    },
     selectSocialClothesClick () {
       this.setShowToolbarSelectedClothes(true)
       this.enableSocialClotheSelect = true //!this.enableSocialClotheSelect
