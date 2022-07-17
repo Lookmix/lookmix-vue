@@ -144,7 +144,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex"
+import { mapActions, mapGetters } from "vuex"
 import * as utils from "./../../utils"
 
 export default {
@@ -167,6 +167,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      "categories"
+    ]),
     contentHeight () {
       let innerHeight = window.innerHeight
       const marginTop = 0
@@ -188,16 +191,23 @@ export default {
       "getCategoryById"
     ]),
     openDetails () {
+      this.image = this.clothe.image
+      this.occasions = this.clothe.occasions
+      this.seasons = this.clothe.seasons
+      this.closet = this.clothe.type
+
       const categoryId = this.clothe.category_id
 
+      if (this.categories.length > 0) {
+        const category = this.categories.filter(category => category._id === categoryId)[0]
+        this.category = category
+        this.dialog = true
+        return;
+      }
       this.getCategoryById(categoryId)
         .then((response) => {
           const data = response.data
           this.category = data
-          this.image = this.clothe.image
-          this.occasions = this.clothe.occasions
-          this.seasons = this.clothe.seasons
-          this.closet = this.clothe.type
           this.dialog = true
         })
         .catch((error) => {
