@@ -10,8 +10,14 @@
         <v-card-text style="text-align: center;">
           <br/>
 
-          <span> 
-            Adicione novas peças ao seu guarda-roupa
+          <span v-if="!edit"> 
+            Adicione novas peças ao seu closet
+          </span>
+
+          <span v-else>
+            Volte para o seu closet e selecione as peças 
+            <br/>
+            que deseja atualizar
           </span>
 
           <br/>
