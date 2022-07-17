@@ -99,7 +99,7 @@
             :elevation="0"
             color="primary"
             text
-            @click="errorActionClick(); progress=0;" 
+            @click="errorActionClick();" 
           >
             {{ errorActionText }}
           </v-btn>
@@ -163,6 +163,8 @@ export default {
     },
     errorActionClick () {
       this.dialog = false
+      this.progress = 0
+      this.resetInterval()
       this.$emit("error")
     }
   },
