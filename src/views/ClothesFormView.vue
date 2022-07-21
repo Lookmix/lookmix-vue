@@ -2,11 +2,16 @@
   <div>
     <div 
       :style="{
+        'height': maxHeight+'px',
         'display': !existsClothes ? 'flex' : 'none', 
         'flex-direction': 'column',
       }"
     >
-      <v-card elevation="0">  
+      <v-card 
+        elevation="0"
+        :min-height="maxHeight"
+        :max-height="maxHeight"
+      >  
         <v-card-text style="text-align: center;">
           <br/>
 
@@ -208,7 +213,8 @@ export default {
       "categories",
       "occasions",
       "seasons",
-      "updatedClothes"
+      "updatedClothes",
+      "maxHeight"
     ]),
     existsClothes () {
       const existsClothes = this.clothes.length > 0
