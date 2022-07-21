@@ -36,7 +36,7 @@ const routes = [
     component: DailyLookView,
     meta: { 
       pageTitle: "Lookmix",
-      backgroundColor: "initial"
+      backgroundColor: "backgroundLighten4"
     }
   },
   {
