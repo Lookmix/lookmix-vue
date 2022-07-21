@@ -9,6 +9,7 @@
       <v-sheet
         :color="backgroundColor"
         :max-height="maxHeight"
+        :min-height="maxHeight"
         id="sheet-main"
         class="overflow-y-auto"
         :class="{
