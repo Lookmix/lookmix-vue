@@ -50,7 +50,8 @@ export default new Vuex.Store({
     selectedClothes: {
       clothe_ids: [],
       image_ids: []
-    }
+    },
+    looks: []
   },
   getters: {
     authenticated: state => state.authenticated,
@@ -85,7 +86,8 @@ export default new Vuex.Store({
       const clotheIds = state.selectedClothes.clothe_ids
       const clotheIdsLength = clotheIds.length
       return clotheIdsLength
-    }
+    },
+    looks: state => state.looks
   },
   mutations: {
     setNewUser(state, data) {
@@ -204,6 +206,9 @@ export default new Vuex.Store({
         state.fetchCasualClothes.splice(indexToRemove, 1)
       }
     },
+    setLooks (state, data) {
+      state.looks = data
+    }
   },
   actions: {
     verifyDuplicatedPhone ({ state }, data) { // withCredentials: false
