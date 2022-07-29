@@ -5,50 +5,46 @@
       elevation="0"
       color="backgroundLighten3"
       class="pt-1 px-2"
+      style="display: flex; justify-content: center;"
+      :width="width"
+      :max-width="width"
     >
-      <span class="font-weight-medium text-center" style="font-size: 14px;">
-        SEX <br/> 27
-      </span>
+      <v-sheet
+        color="backgroundLighten3"
+        class="mx-auto"
+        elevation="0"
+        :max-width="width"
+      >
+        <v-slide-group
+          v-model="selectedDay"
+          center-active
+          mandatory
+        >
+          <v-slide-item
+            v-for="(item, index) in week"
+            :key="item.day+item.dayWeek+index"
+            v-slot="{ active, toggle }"
+          >
+            <div
+              class="px-5 text-center d-flex rounded-lg"
+              :key="item.day+item.dayWeek+index+'div'"
+              v-ripple
+              @click="toggle"
+            >
+              <div>
+                <span 
+                  :class="{ 'indigo--text': active }"
+                  class="font-weight-medium"
+                  style="font-size: 14px;"
+                >
+                  {{ item.dayWeek }} <br/> {{ item.day }}
+                </span>
+              </div>
 
-      <v-spacer/>
-
-      <v-divider inset vertical></v-divider>
-
-      <v-spacer/>
-
-      <span class="font-weight-medium text-center" style="font-size: 14px;"> 
-        SÁB <br/> 28
-      </span>
-
-      <v-spacer/>
-
-      <v-divider inset vertical></v-divider>
-
-      <v-spacer/>
-
-      <span class="indigo--text font-weight-medium text-center" style="font-size: 14px;"> 
-        DOM <br/> 29
-      </span>
-
-      <v-spacer/>
-
-      <v-divider inset vertical></v-divider>
-
-      <v-spacer/>
-
-      <span class="font-weight-medium text-center" style="font-size: 14px;"> 
-        SEG <br/> 30
-      </span>
-
-      <v-spacer/>
-
-      <v-divider inset vertical></v-divider>
-
-      <v-spacer/>
-
-      <span class="font-weight-medium text-center" style="font-size: 14px;"> 
-        TER <br/> 31
-      </span>
+            </div>
+          </v-slide-item>
+        </v-slide-group>
+      </v-sheet>
     </v-toolbar>
 
     <v-chip-group
@@ -65,7 +61,7 @@
     </v-chip-group>
 
     <div class="my-1 mx-2">
-      <v-card rounded="lg" elevation="8">
+      <v-card rounded="lg" elevation="6">
         <v-card-title>
           Look para o dia
         </v-card-title>
@@ -114,7 +110,7 @@
 
       <br/>
 
-      <v-card rounded="lg" elevation="8">
+      <v-card rounded="lg" elevation="6">
         <v-card-title>
           Look para a noite
         </v-card-title>
@@ -159,6 +155,8 @@
           </v-row>
         </v-card-text>
       </v-card>
+
+      <br/>
     </div>
   </div>
 </template>
@@ -169,6 +167,41 @@ import { mapActions, mapGetters, mapMutations } from "vuex"
 export default {
   data () {
     return {
+      week: [
+        {
+          dayWeek: "SEX",
+          day: "27"
+        },
+        {
+          dayWeek: "SAB",
+          day: "28"
+        },
+        {
+          dayWeek: "DOM",
+          day: "29"
+        },
+        {
+          dayWeek: "SEG",
+          day: "30"
+        },
+        {
+          dayWeek: "TER",
+          day: "31"
+        },
+        {
+          dayWeek: "QUA",
+          day: "01"
+        },
+        {
+          dayWeek: "QUI",
+          day: "02"
+        },
+        {
+          dayWeek: "SEX",
+          day: "03"
+        },
+      ],
+      selectedDay: null,
       clotheTypeSelected: 0
     }
   },
@@ -210,6 +243,9 @@ export default {
       "categories",
       "looks"
     ]),
+    width () {
+      return window.innerWidth
+    }
   },
   methods: {
     ...mapActions([
