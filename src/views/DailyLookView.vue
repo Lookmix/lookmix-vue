@@ -40,7 +40,6 @@
                   {{ item.dayWeek }} <br/> {{ item.day }}
                 </span>
               </div>
-
             </div>
           </v-slide-item>
         </v-slide-group>
@@ -73,12 +72,13 @@
         <v-card-text>
           <v-row no-gutters>
             <v-col
-              class="d-flex child-flex"
-              cols="3"
-              v-for="(value, key) in looks[0]"
+              v-for="(value, key) in looks[selectedDay]"
               :key="key"
+              :cols="value !== null ? 3 : 0"
+              class="d-flex child-flex"
             >
               <v-img
+                v-if="value !== null"
                 style="border: 1px solid transparent; border-radius: 16px;"
                 v-ripple
                 :src="value.image"
@@ -121,12 +121,13 @@
         <v-card-text>
           <v-row no-gutters>
             <v-col
-              class="d-flex child-flex"
-              cols="3"
-              v-for="(value, key) in looks[35]"
+              v-for="(value, key) in looks[selectedDay+17]"
               :key="key"
+              :cols="value !== null ? 3 : 0"
+              class="d-flex child-flex"
             >
               <v-img
+                v-if="value !== null"
                 style="border: 1px solid transparent; border-radius: 16px;"
                 v-ripple
                 :src="value.image"
