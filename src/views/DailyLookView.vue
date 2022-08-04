@@ -26,12 +26,14 @@
             v-slot="{ active, toggle }"
           >
             <div
-              class="px-5 text-center d-flex rounded-lg"
+              class="px-5 text-center d-flex rounded-sm"
               :key="item.day+item.dayWeek+index+'div'"
               v-ripple
               @click="toggle"
             >
-              <div>
+              <div
+                :style="{'border-bottom': active ? 'solid 4px #3F51B5' : 'solid 4px transparent'}"
+              >
                 <span 
                   :class="{ 'indigo--text': active }"
                   class="font-weight-medium"
