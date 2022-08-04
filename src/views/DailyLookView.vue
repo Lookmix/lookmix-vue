@@ -305,97 +305,98 @@ export default {
             const look = JSON.parse(JSON.stringify(lookTemplate))
             look[result[0].categoryId] = a
             looks.push(look)
-          } else {
-            for (let b of result[1].clothes) {
-              if (result[2].totalClothes < 1) {
+            continue;
+          }
+          for (let b of result[1].clothes) {
+            if (result[2].totalClothes < 1) {
+              const look = JSON.parse(JSON.stringify(lookTemplate))
+              look[result[0].categoryId] = a
+              look[result[1].categoryId] = b
+              looks.push(look)
+              continue;
+            }
+            for (let c of result[2].clothes) {
+              if (result[3].totalClothes < 1) {
                 const look = JSON.parse(JSON.stringify(lookTemplate))
                 look[result[0].categoryId] = a
                 look[result[1].categoryId] = b
+                look[result[2].categoryId] = c
                 looks.push(look)
-              } else {
-                for (let c of result[2].clothes) {
-                  if (result[3].totalClothes < 1) {
+                continue;
+              }
+              for (let d of result[3].clothes) {
+                if (result[4].totalClothes < 1) {
+                  const look = JSON.parse(JSON.stringify(lookTemplate))
+                  look[result[0].categoryId] = a
+                  look[result[1].categoryId] = b
+                  look[result[2].categoryId] = c
+                  look[result[3].categoryId] = d
+                  looks.push(look)
+                  continue;
+                }
+                for (let e of result[4].clothes) {
+                  if (result[5].totalClothes < 1) {
                     const look = JSON.parse(JSON.stringify(lookTemplate))
                     look[result[0].categoryId] = a
                     look[result[1].categoryId] = b
                     look[result[2].categoryId] = c
+                    look[result[3].categoryId] = d
+                    look[result[4].categoryId] = e
                     looks.push(look)
-                  } else {
-                    for (let d of result[3].clothes) {
-                      if (result[4].totalClothes < 1) {
+                    continue;
+                  }
+                  for (let f of result[5].clothes) {
+                    if (result[6].totalClothes < 1) {
+                      const look = JSON.parse(JSON.stringify(lookTemplate))
+                      look[result[0].categoryId] = a
+                      look[result[1].categoryId] = b
+                      look[result[2].categoryId] = c
+                      look[result[3].categoryId] = d
+                      look[result[4].categoryId] = e
+                      look[result[5].categoryId] = f
+                      looks.push(look)
+                      continue;
+                    }
+                    for (let g of result[6].clothes) {
+                      if (result[7].totalClothes < 1) {
                         const look = JSON.parse(JSON.stringify(lookTemplate))
                         look[result[0].categoryId] = a
                         look[result[1].categoryId] = b
                         look[result[2].categoryId] = c
                         look[result[3].categoryId] = d
+                        look[result[4].categoryId] = e
+                        look[result[5].categoryId] = f
+                        look[result[6].categoryId] = g
                         looks.push(look)
-                      } else {
-                        for (let e of result[4].clothes) {
-                          if (result[5].totalClothes < 1) {
-                            const look = JSON.parse(JSON.stringify(lookTemplate))
-                            look[result[0].categoryId] = a
-                            look[result[1].categoryId] = b
-                            look[result[2].categoryId] = c
-                            look[result[3].categoryId] = d
-                            look[result[4].categoryId] = e
-                            looks.push(look)
-                          } else {
-                            for (let f of result[5].clothes) {
-                              if (result[6].totalClothes < 1) {
-                                const look = JSON.parse(JSON.stringify(lookTemplate))
-                                look[result[0].categoryId] = a
-                                look[result[1].categoryId] = b
-                                look[result[2].categoryId] = c
-                                look[result[3].categoryId] = d
-                                look[result[4].categoryId] = e
-                                look[result[5].categoryId] = f
-                                looks.push(look)
-                              } else {
-                                for (let g of result[6].clothes) {
-                                  if (result[7].totalClothes < 1) {
-                                    const look = JSON.parse(JSON.stringify(lookTemplate))
-                                    look[result[0].categoryId] = a
-                                    look[result[1].categoryId] = b
-                                    look[result[2].categoryId] = c
-                                    look[result[3].categoryId] = d
-                                    look[result[4].categoryId] = e
-                                    look[result[5].categoryId] = f
-                                    look[result[6].categoryId] = g
-                                    looks.push(look)
-                                  } else {
-                                    for (let h of result[7].clothes) {
-                                      if (result[8].totalClothes < 1) {
-                                        const look = JSON.parse(JSON.stringify(lookTemplate))
-                                        look[result[0].categoryId] = a
-                                        look[result[1].categoryId] = b
-                                        look[result[2].categoryId] = c
-                                        look[result[3].categoryId] = d
-                                        look[result[4].categoryId] = e
-                                        look[result[5].categoryId] = f
-                                        look[result[6].categoryId] = g
-                                        look[result[7].categoryId] = h
-                                        looks.push(look)
-                                      } else {
-                                        for (let i of result[8].clothes) {
-                                          const look = JSON.parse(JSON.stringify(lookTemplate))
-                                          look[result[0].categoryId] = a
-                                          look[result[1].categoryId] = b
-                                          look[result[2].categoryId] = c
-                                          look[result[3].categoryId] = d
-                                          look[result[4].categoryId] = e
-                                          look[result[5].categoryId] = f
-                                          look[result[6].categoryId] = g
-                                          look[result[7].categoryId] = h
-                                          look[result[8].categoryId] = i
-                                          looks.push(look)
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
+                        continue;
+                      }
+                      for (let h of result[7].clothes) {
+                        if (result[8].totalClothes < 1) {
+                          const look = JSON.parse(JSON.stringify(lookTemplate))
+                          look[result[0].categoryId] = a
+                          look[result[1].categoryId] = b
+                          look[result[2].categoryId] = c
+                          look[result[3].categoryId] = d
+                          look[result[4].categoryId] = e
+                          look[result[5].categoryId] = f
+                          look[result[6].categoryId] = g
+                          look[result[7].categoryId] = h
+                          looks.push(look)
+                          continue;
+                        }
+                        for (let i of result[8].clothes) {
+                          const look = JSON.parse(JSON.stringify(lookTemplate))
+                          look[result[0].categoryId] = a
+                          look[result[1].categoryId] = b
+                          look[result[2].categoryId] = c
+                          look[result[3].categoryId] = d
+                          look[result[4].categoryId] = e
+                          look[result[5].categoryId] = f
+                          look[result[6].categoryId] = g
+                          look[result[7].categoryId] = h
+                          look[result[8].categoryId] = i
+                          looks.push(look)
+                          continue;
                         }
                       }
                     }
