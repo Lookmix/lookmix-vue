@@ -259,28 +259,6 @@ export default {
       "setLooks"
     ]),
     generateLook () {
-      /*
-      "roupasDeCima": false,
-      "pernas": false,
-      "pes":  false,
-      "pecasSobrepostas": false,
-      "pecasUnicas": false,
-      "acessoriosDeCabeca": false,
-      "acessoriosDePescoco": false,
-      "acessoriosDeBracosEMaos": false,
-      "cintura": false
-      [
-        "Roupas de cima",
-        "Pernas",
-        "Pés",
-        "Peças sobrepostas",
-        "Peças únicas",
-        "Acessórios de cabeça",
-        "Acessórios de pescoço",
-        "Acessórios de braços e mãos",
-        "Cintura"
-      ]
-      */
       if (this.categories.length > 0 && this.fetchCasualClothes.length > 0) {
         const result = []
         for (let category of this.categories) {
@@ -450,11 +428,6 @@ export default {
         "cintura": false
       }
       */
-    },
-    getIndex() {
-      const max = 12
-      const min = 0
-      return Math.floor(Math.random() * (max - min + 1)) + min;
     }
   }
 }
