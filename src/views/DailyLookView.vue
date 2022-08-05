@@ -267,7 +267,7 @@ export default {
             clothe.category_id === categoryId
           )
           const totalClothes = clothes.length
-  
+
           result.push({
             categoryId: categoryId,
             category: category.name,
