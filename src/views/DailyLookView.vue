@@ -289,16 +289,11 @@ export default {
         if (result[0].totalClothes < 1) {
           return;
         }
-        const lookTemplate = {
-          "629d286bec74d540eb5fb0e7": null, // Roupas de cima
-          "629d286bec74d540eb5fb0e8": null, // Pernas
-          "629d286bec74d540eb5fb0e9": null, // Pés
-          "629d286bec74d540eb5fb0ea": null, // Peças sobrepostas
-          "629d286bec74d540eb5fb0eb": null, // Peças únicas
-          "629d286bec74d540eb5fb0ec": null, // Acessórios de cabeça
-          "629d286bec74d540eb5fb0ed": null, // Acessórios de pescoço
-          "629d286bec74d540eb5fb0ee": null, // Acessórios de braços e mãos
-          "629d286bec74d540eb5fb0ef": null, // Cintura
+        const categoryIds = this.categories.map(category => category._id)
+        const lookTemplate = {}
+
+        for (let categoryId of categoryIds) {
+          lookTemplate[categoryId] = null
         }
         for (let a of result[0].clothes) {
           if (result[1].totalClothes < 1) {
