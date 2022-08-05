@@ -35,8 +35,11 @@
                 :style="{'border-bottom': active ? 'solid 4px #3F51B5' : 'solid 4px transparent'}"
               >
                 <span 
-                  :class="{ 'indigo--text': active }"
-                  class="font-weight-medium"
+                  :class="{ 
+                    'indigo--text': active, 
+                    'font-weight-bold': active,
+                    'font-weight-medium': !active
+                  }"
                   style="font-size: 14px;"
                 >
                   {{ item.dayWeek }} <br/> {{ item.day }}
@@ -90,6 +93,7 @@
                   'grey': true, 
                   'lighten-2': true, 
                 }"
+                @click="openDetails(value)"
               >
                 <template v-slot:placeholder>
                   <v-row
@@ -139,6 +143,7 @@
                   'grey': true, 
                   'lighten-2': true, 
                 }"
+                @click="openDetails(value)"
               >
                 <template v-slot:placeholder>
                   <v-row
@@ -161,13 +166,23 @@
 
       <br/>
     </div>
+
+    <clothe-details
+      :showDetails="showClotheDetails" 
+      :clothe="clotheDetails"
+      @closeDialog="showClotheDetails = false; clotheDetails = undefined;"
+    />
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex"
+import ClotheDetails from "./../components/closet/ClotheDetails.vue"
 
 export default {
+  components: {
+    ClotheDetails
+  },
   data () {
     return {
       week: [
@@ -205,7 +220,9 @@ export default {
         },
       ],
       selectedDay: null,
-      clotheTypeSelected: 0
+      clotheTypeSelected: 0,
+      showClotheDetails: false,
+      clotheDetails: undefined
     }
   },
   watch: {
@@ -424,7 +441,11 @@ export default {
         "cintura": false
       }
       */
-    }
+    },
+    openDetails (clothe) {
+      this.clotheDetails = clothe
+      this.showClotheDetails = true
+    },
   }
 }
 </script>
