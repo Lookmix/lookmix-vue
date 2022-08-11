@@ -27,8 +27,8 @@
       return {
         value: undefined,
         options: [
-          { text: "Feed", icon: "mdi-home", to: "/home" },
-          { text: "Look diário", icon: "mdi-calendar", to: "/daily-look" },
+          { text: "Feed", icon: "mdi-home-outline", to: "/home" },
+          { text: "Look diário", icon: "mdi-calendar-outline", to: "/daily-look" },
           { text: "Look aleatório", icon: "mdi-shuffle", to: "/shuffle-look" },
           { text: "Closet", icon: "mdi-hanger", to: "/closet" }
         ]

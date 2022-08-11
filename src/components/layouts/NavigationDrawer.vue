@@ -78,7 +78,7 @@ export default {
     return {
       drawer: null,
       items: [
-        { title: 'PERFIL', icon: 'mdi-account' },
+        { title: 'PERFIL', icon: 'mdi-account-outline' },
       ],
       logoutFailError: "logoutFail",
       errorSnackbar: false,
