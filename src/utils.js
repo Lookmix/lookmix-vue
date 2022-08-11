@@ -18,22 +18,3 @@ export function getImageId (imageUrl) {
   const id = splited[0]
   return id
 }
-
-export const seasons = [
-  {
-    name: "primavera",
-    icon: "mdi-image-filter-vintage"
-  },
-  {
-    name: "verão",
-    icon: "mdi-white-balance-sunny"
-  },
-  {
-    name: "outono",
-    icon: "mdi-leaf-maple"
-  },
-  {
-    name: "inverno",
-    icon: "mdi-snowflake"
-  },
-]
