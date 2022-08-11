@@ -12,6 +12,26 @@
       </v-icon>
     </v-btn>
 
+    <template v-if="isDailyLookRoute" >
+      <v-btn 
+        icon
+        color="primary"
+      >
+        <v-icon>
+          mdi-calendar-check-outline
+        </v-icon>
+      </v-btn>
+
+      <v-btn 
+        icon
+        color="primary"
+      >
+        <v-icon>
+          mdi-cog-outline
+        </v-icon>
+      </v-btn>
+    </template>
+
     <button-add-clothe v-if="showAddClotheButton" />
   </div>
 </template>
@@ -45,6 +65,9 @@ export default {
     edit () {
       const edit = this.$route.query.edit
       return edit
+    },
+    isDailyLookRoute () {
+      return this.currentRouteName === "dailyLook"
     }
   },
   methods: {
