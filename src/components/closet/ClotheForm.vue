@@ -229,7 +229,7 @@
 <script>
 import { mapGetters } from "vuex"
 import { v4 as uuidv4 } from 'uuid';
-import * as utils from "./../../utils"
+import * as models from "./../../models"
 
 export default {
   props: {
@@ -396,7 +396,7 @@ export default {
     },
     getSeasonIcon (season) {
       season = season.toLocaleLowerCase()
-      const seasonIcons = utils.seasons
+      const seasonIcons = models.seasonIcons
       for (let item of seasonIcons) {
         if (item.name === season) {
           return item.icon
