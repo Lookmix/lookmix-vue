@@ -22,14 +22,51 @@
         </v-icon>
       </v-btn>
 
-      <v-btn 
-        icon
-        color="primary"
+      <v-menu
+        bottom
+        left
+        :rounded="'lg'"
       >
-        <v-icon>
-          mdi-cog-outline
-        </v-icon>
-      </v-btn>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn 
+            icon
+            color="primary"
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon>
+              mdi-dots-vertical
+            </v-icon>
+          </v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item link>
+            <v-list-item-title>
+              ATUALIZAR OCASIÕES
+            </v-list-item-title>
+          </v-list-item>
+
+          <v-list-item link>
+            <v-list-item-title>
+              LOOKS FAVORITOS
+            </v-list-item-title>
+          </v-list-item>
+
+          <v-list-item link>
+            <v-list-item-title>
+              LOOKS DESCARTADOS
+            </v-list-item-title>
+          </v-list-item>
+
+          <v-list-item link>
+            <v-list-item-title>
+              TODOS OS LOOKS
+              <!-- VISUALIZAR LOOKS -->
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </template>
 
     <button-add-clothe v-if="showAddClotheButton" />
