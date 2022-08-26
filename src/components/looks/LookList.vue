@@ -1,144 +1,99 @@
 <template>
   <div>
-    <v-toolbar
-      flat
-      elevation="0"
-      color="backgroundLighten3"
-      class="my-4 py-0 px-2"
-      style="display: flex; justify-content: center;"
-      :width="width"
-      :max-width="width"
-    >
-      <v-sheet
-        color="backgroundLighten3"
-        class="mx-auto"
-        elevation="0"
-        :max-width="width"
+    <div class="my-4 mx-2">
+      <v-card 
+        rounded="lg" 
+        :elevation="3"
       >
-        <v-slide-group
-          v-model="selectedDay"
-          center-active
-          mandatory
-        >
-          <v-slide-item
-            v-for="(item, index) in week"
-            :key="item.day+item.dayWeek+index"
-            v-slot="{ active, toggle }"
+      <!-- :style="{ 'border': showLookOptions ? 'solid 2px #BDBDBD' : 'initial' }" -->
+      <!-- #3f51b5 #ff4081 -->
+        <div class="d-flex">
+          <div>
+            <v-card-title>
+              Look básico/comum
+            </v-card-title>
+
+            <v-card-subtitle>
+              Perfeito para usar de dia
+            </v-card-subtitle>
+          </div>
+
+          <v-spacer/>
+
+          <v-bottom-sheet 
+            v-model="showLookOptions"
           >
-            <div
-              class="px-5 text-center d-flex rounded-sm"
-              :key="item.day+item.dayWeek+index+'div'"
-              v-ripple
-              @click="toggle"
-            >
-              <div
-                :style="{'border-bottom': active ? 'solid 4px #3F51B5' : 'solid 4px transparent'}"
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn 
+                icon
+                class="ma-3"
+                color="primary"
+                large
+                v-bind="attrs"
+                v-on="on"
               >
-                <span 
-                  :class="{ 
-                    'indigo--text': active, 
-                    'font-weight-bold': active,
-                    'font-weight-medium': !active
-                  }"
-                  style="font-size: 14px;"
-                >
-                  {{ item.dayWeek }} <br/> {{ item.day }}
-                </span>
-              </div>
-            </div>
-          </v-slide-item>
-        </v-slide-group>
-      </v-sheet>
-    </v-toolbar>
-
-    <div class="my-4 mx-2">
-      <v-card rounded="lg" elevation="3">
-        <v-card-text>
-          <div style="display:flex; justify-content: space-around;">
-            <span 
-              style="margin: auto;" 
-              class="font-weight-medium text-body-1 grey--text text--darken-2"
-            > 
-              Temperatura
-            </span>
-
-            <div style="flex: 1 1 0%; display: flex; justify-content: space-around; margin: auto;">
-              <v-chip :color="'secondary'" class="font-weight-medium">
-                <v-icon left>
-                  mdi-chevron-down
+                <!-- color="primary" color="secondary"-->
+                <v-icon>
+                  mdi-dots-vertical
+                  <!-- mdi-dots-vertical-circle-outline -->
                 </v-icon>
-                18°  /  23°
-                <v-icon right>
-                  mdi-chevron-up
-                </v-icon>
-              </v-chip>
-            </div>
+              </v-btn>
+            </template>
 
-            <!--
-            <v-spacer/>
-
-            <div style="flex: 1 1 0%; display: flex; margin: auto;">
-              <v-chip class="mr-2 font-weight-medium" :color="'secondary'">
-                <v-icon left>
-                  mdi-chevron-down
-                </v-icon>
-                18 °
-              </v-chip>
-
-              <v-chip class="mr-1 font-weight-medium" :color="'secondary'">
-                <v-icon left>
-                  mdi-chevron-up
-                </v-icon>
-
-                23 º
-              </v-chip>
-            </div>
-            -->
-          </div>
-        </v-card-text>
-
-        <v-divider> </v-divider>
-
-        <v-card-text>
-          <div style="display:flex; justify-content: space-between;">
-            <span 
-              style="margin: auto 0;" 
-              class="font-weight-medium text-body-1 grey--text text--darken-2"
-            > 
-              Guarda-roupa
-            </span>
-                        
-            <div style="display: flex;">
-              <v-chip-group
-                id="closet-chips"
-                class="my-0 py-0"
-                v-model="clotheTypeSelected"
-                active-class="indigo white--text"
-                mandatory
-                column
-                @change="changeCloset($event)"
+            <v-list>
+              <v-list-item 
+                link
+                @click="showLookOptions = false"
               >
-                <v-chip class="my-0 py-0 font-weight-medium">CASUAL</v-chip>
+                <v-list-item-icon>
+                  <v-icon>
+                    mdi-heart-outline
+                  </v-icon>
+                </v-list-item-icon>
 
-                <v-chip class="my-0 py-0 font-weight-medium">SOCIAL</v-chip>
-              </v-chip-group>
-            </div>
-          </div>
-        </v-card-text>
-      </v-card>
-    </div>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    FAVORITAR LOOK
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
 
-    <v-divider class="mx-2"> </v-divider>
+              <v-list-item 
+                link
+                @click="showLookOptions = false"
+              >
+                <v-list-item-icon>
+                  <v-icon>
+                    mdi-swap-horizontal
+                  </v-icon>
+                </v-list-item-icon>
 
-    <div class="my-4 mx-2">
-      <v-card rounded="lg" elevation="3">
-        <v-card-title>
-          Look para o dia
-        </v-card-title>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    TROCAR LOOK
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
 
-        <v-card-subtitle>
-          Perfeito para usar de dia
-        </v-card-subtitle>
+              <v-list-item 
+                link
+                @click="showLookOptions = false"
+              >
+                <v-list-item-icon>
+                  <v-icon>
+                    mdi-delete-outline
+                  </v-icon>
+                </v-list-item-icon>
+
+                <v-list-item-content>
+                  <v-list-item-title>
+                    DESCARTAR LOOK
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-bottom-sheet>
+        </div>
 
         <v-card-text>
           <v-row no-gutters>
@@ -180,12 +135,13 @@
         </v-card-text>
       </v-card>
     </div>
-    
+
     <div class="my-4 mx-2">
       <v-card rounded="lg" elevation="3">
         <v-card-title>
-          Look para a noite
+          Look para o trabalho
         </v-card-title>
+
         <v-card-subtitle>
           Ideal para usar de noite
         </v-card-subtitle>
@@ -193,7 +149,7 @@
         <v-card-text>
           <v-row no-gutters>
             <v-col
-              v-for="(value, key) in looks[selectedDay+17]"
+              v-for="(value, key) in looks[selectedDay+67]"
               :key="key"
               :cols="value !== null ? 3 : 0"
               class="d-flex child-flex"
@@ -251,73 +207,24 @@ export default {
       default: function () {
         return []
       }
-    }
+    },
+    selectedDay: null
   },
   components: {
     ClotheDetails
   },
   data () {
     return {
-      week: [
-        {
-          dayWeek: "SEX",
-          day: "27"
-        },
-        {
-          dayWeek: "SAB",
-          day: "28"
-        },
-        {
-          dayWeek: "DOM",
-          day: "29"
-        },
-        {
-          dayWeek: "SEG",
-          day: "30"
-        },
-        {
-          dayWeek: "TER",
-          day: "31"
-        },
-        {
-          dayWeek: "QUA",
-          day: "01"
-        },
-        {
-          dayWeek: "QUI",
-          day: "02"
-        },
-        {
-          dayWeek: "SEX",
-          day: "03"
-        },
-      ],
-      selectedDay: null,
-      clotheTypeSelected: 0,
       showClotheDetails: false,
-      clotheDetails: undefined
-    }
-  },
-  computed: {
-    width () {
-      return window.innerWidth
+      clotheDetails: undefined,
+      showLookOptions: false
     }
   },
   methods: {
     openDetails (clothe) {
       this.clotheDetails = clothe
       this.showClotheDetails = true
-    },
-    changeCloset (event) {
-      this.$emit("changeCloset", event)
     }
   }
 }
 </script>
-
-<style scoped>
-::v-deep #closet-chips > div.v-slide-group__wrapper > div {
-  padding-top: 0px !important;
-  padding-bottom: 0px !important;
-}
-</style>
