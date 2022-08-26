@@ -6,6 +6,7 @@ import ShuffleLookView from '@/views/ShuffleLookView.vue'
 import DailyLookView from '@/views/DailyLookView.vue'
 import ClosetView from '@/views/ClosetView.vue'
 import ClothesFormView from "@/views/ClothesFormView.vue"
+import DailyLookSetupView from "@/views/DailyLookSetupView.vue"
 
 const routes = [
   {
@@ -57,6 +58,16 @@ const routes = [
       pageTitle: "Adicionar peças", 
       maxHeight: true,
       backgroundColor: "backgroundLighten3"
+    }
+  },
+  {
+    path: '/daily-look-setup',
+    name: 'dailyLookSetup',
+    component: DailyLookSetupView,
+    meta: { 
+      pageTitle: "Rotina semanal", 
+      maxHeight: true,
+      backgroundColor: "initial"
     }
   },
 ]
