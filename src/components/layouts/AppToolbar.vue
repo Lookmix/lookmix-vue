@@ -33,16 +33,13 @@ export default {
   components: { ToolbarTopButtons },
   name: "AppToolbar",
   computed: {
-    ...mapState([
-      "showNavDrawer",
-      "previousPage"
-    ]),
     ...mapGetters([
       "currentRouteName",
-      "toolbarTitle"
+      "toolbarTitle",
+      "previousPage"
     ]),
     leftArrowFunction () {
-      const routesLeftArrowIcon = [ "clothesForm" ]
+      const routesLeftArrowIcon = [ "clothesForm", "dailyLookSetup" ]
       
       if (routesLeftArrowIcon.includes(this.currentRouteName)) {
         return true
