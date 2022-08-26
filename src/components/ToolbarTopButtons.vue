@@ -22,10 +22,8 @@
         </v-icon>
       </v-btn>
 
-      <v-menu
-        bottom
-        left
-        :rounded="'lg'"
+      <v-bottom-sheet
+        v-model="showDailyLookOptions"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn 
@@ -35,15 +33,18 @@
             v-on="on"
           >
             <v-icon>
-              mdi-dots-vertical
+              mdi-cog-outline
             </v-icon>
           </v-btn>
         </template>
 
         <v-list>
-          <v-list-item link>
+          <v-list-item 
+            link 
+            @click="showDailyLookOptions=false; changeDailyLookSetup()"
+          >
             <v-list-item-title>
-              ATUALIZAR OCASIÕES
+              ATUALIZAR ROTINA
             </v-list-item-title>
           </v-list-item>
 
@@ -62,12 +63,22 @@
           <v-list-item link>
             <v-list-item-title>
               TODOS OS LOOKS
-              <!-- VISUALIZAR LOOKS -->
             </v-list-item-title>
           </v-list-item>
         </v-list>
-      </v-menu>
+      </v-bottom-sheet>
     </template>
+
+    <v-btn 
+      v-if="isDailyLookSetupRoute" 
+      icon
+      color="primary"
+      @click="saveDailyLookSetup()"
+    >
+      <v-icon>
+        mdi-check-outline
+      </v-icon>
+    </v-btn>
 
     <button-add-clothe v-if="showAddClotheButton" />
   </div>
@@ -84,11 +95,17 @@ export default {
   props: [
     "value"
   ],
+  data () {
+    return {
+      showDailyLookOptions: false
+    }
+  },
   computed: {
     ...mapGetters([
       "currentRouteName",
       "disableSaveClothesButton",
-      "clothes"
+      "clothes",
+      // "hasDailyLookSetup"
     ]),
     isClosetRoute () {
       return this.currentRouteName === "closet"
@@ -105,6 +122,9 @@ export default {
     },
     isDailyLookRoute () {
       return this.currentRouteName === "dailyLook"
+    },
+    isDailyLookSetupRoute () {
+      return this.currentRouteName === "dailyLookSetup"
     }
   },
   methods: {
@@ -124,6 +144,12 @@ export default {
     },
     addClothe () {
       
+    },
+    saveDailyLookSetup () {
+      this.$router.push("/daily-look")
+    },
+    changeDailyLookSetup () {
+      this.$router.push("/daily-look-setup")
     }
   }
 }
