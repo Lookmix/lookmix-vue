@@ -27,7 +27,8 @@ export default {
       "showToolbarSelectedClothes"
     ]),
     showBottomNavigator () {
-      return this.authenticated && this.currentRouteName !== "clothesForm"
+      const blackListRoutes = ["clothesForm", "dailyLookSetup"]
+      return this.authenticated && !blackListRoutes.includes(this.currentRouteName)
     }
   },
 }
