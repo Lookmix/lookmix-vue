@@ -109,7 +109,7 @@
               style="margin: auto 0;" 
               class="font-weight-medium text-body-1 grey--text text--darken-2"
             > 
-              Closet
+              Guarda-roupa
             </span>
 
             <div style="display: flex;">
