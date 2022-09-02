@@ -40,7 +40,8 @@
               <occasion-setup 
                 v-for="(occasion, index) in occasions" 
                 :key="index"
-                :occasion="occasion"
+                :occasion="occasion.name ? occasion.name : occasion"
+                :social="occasion.social === false ? false : true"
               />
             </div>
           </v-expansion-panel-content>
@@ -78,7 +79,7 @@ export default {
         "Básico/comum", 
         "Trabalho", // uniforme, dress code
         "Curso/faculdade", // uniforme, atividades estudantis
-        "Atividade física", // esportes, caminhada, academia
+        { name: "Atividade física", social: false }, // esportes, caminhada, academia
         "Prática religiosa",
       ],
       daysOfWeek: [
