@@ -38,7 +38,7 @@
           active-class="pink accent-2 white--text"
         >
           <v-chip
-            class="font-weight-medium"
+            class="font-weight-medium text-uppercase"
             v-for="(item, index) in filteredClosets" 
             :key="index"
           >
@@ -61,7 +61,7 @@
           active-class="pink accent-2 white--text"
         >
           <v-chip
-            class="font-weight-medium"
+            class="font-weight-medium text-uppercase"
             v-for="(item, index) in filteredClosets" 
             :key="index"
           >
@@ -83,19 +83,60 @@ export default {
     social: {
       type: Boolean,
       default: true
+    },
+    initialCheckbox: {
+      type: Boolean,
+      default: undefined
+    },
+    initialSelectedDay: {
+      type: String,
+      default: undefined
+    },
+    initialSelectedNight: {
+      type: String,
+      default: undefined
     }
   },
   data () {
     return {
-      checkbox: undefined,
-      casual: "Casual",
+      checkbox: this.initialCheckbox,
+      casual: "casual",
       closets: [],
       selectedDay: undefined,
       selectedNight: undefined
     }
   },
   mounted () {
-    this.closets = [ this.casual, "Social" ]
+    this.closets = [ this.casual, "social" ]
+    if (this.initialSelectedDay !== undefined) {
+      this.selectedDay = this.closets.indexOf(this.initialSelectedDay)
+    }
+    if (this.initialSelectedNight !== undefined) {
+      this.selectedNight = this.closets.indexOf(this.initialSelectedNight)
+    }
+  },
+  watch: {
+    checkbox: {
+      handler (newValue, oldValue) {
+        if (newValue) {
+          this.selectedDay = 0
+          this.selectedNight = undefined
+          this.generatePayload()
+          return;
+        }
+        this.deletePayload()
+      }
+    },
+    selectedDay: {
+      handler (newValue, oldValue) {
+        this.generatePayload()
+      }
+    },
+    selectedNight: {
+      handler (newValue, oldValue) {
+        this.generatePayload()
+      }
+    }
   },
   computed: {
     enableMandatoryDay () {
@@ -109,6 +150,27 @@ export default {
         return this.closets
       }
       return [ this.casual ]
+    }
+  },
+  methods: {
+    generatePayload () {
+      const payload = {
+        occasion: this.occasion,
+        casual: [],
+        social: []
+      }
+      if (this.selectedDay !== undefined) {
+        const closetDay = this.closets[this.selectedDay]
+        payload[closetDay].push("dia")
+      }
+      if (this.selectedNight !== undefined) {
+        const closetNight = this.closets[this.selectedNight]
+        payload[closetNight].push("noite")
+      }
+      console.log(payload)
+    },
+    deletePayload () {
+      console.log("delete...")
     }
   }
 }
