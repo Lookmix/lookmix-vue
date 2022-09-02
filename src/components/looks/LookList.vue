@@ -25,17 +25,16 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn 
-                icon
                 class="ma-3"
-                color="primary"
-                large
+                elevation="0"
+                fab
+                small
                 v-bind="attrs"
                 v-on="on"
               >
-                <!-- color="primary" color="secondary"-->
-                <v-icon>
+                <v-icon
+                >
                   mdi-dots-vertical
-                  <!-- mdi-dots-vertical-circle-outline -->
                 </v-icon>
               </v-btn>
             </template>
