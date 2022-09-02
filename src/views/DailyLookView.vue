@@ -63,19 +63,28 @@
               Temperatura
             </span>
 
-            <div style="flex: 1 1 0%; display: flex; justify-content: space-around; margin: auto;">
-              <v-chip 
-                :color="'secondary'" 
-                class="font-weight-medium"
+            <div
+              style="flex: 1 1 0%; display: flex; justify-content: space-around; margin: auto;"
+            >
+              <v-chip-group
+                class="my-0 py-0"
+                mandatory
+                column
+                active-class="indigo white--text"
               >
-                <v-icon left>
-                  mdi-chevron-down
-                </v-icon>
-                18°  /  23°
-                <v-icon right>
-                  mdi-chevron-up
-                </v-icon>
-              </v-chip>
+                <v-chip 
+                  :color="'secondary'" 
+                  class="my-0 py-0 font-weight-medium"
+                >
+                  <v-icon left>
+                    mdi-chevron-down
+                  </v-icon>
+                  18°  /  23°
+                  <v-icon right>
+                    mdi-chevron-up
+                  </v-icon>
+                </v-chip>
+              </v-chip-group>
             </div>
 
             <!--
