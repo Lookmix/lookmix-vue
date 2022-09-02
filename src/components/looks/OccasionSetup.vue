@@ -34,11 +34,12 @@
 
         <v-chip-group
           v-model="selectedDay"
+          :mandatory="enableMandatoryDay"
           active-class="pink accent-2 white--text"
         >
           <v-chip
             class="font-weight-medium"
-            v-for="(item, index) in closets" 
+            v-for="(item, index) in filteredClosets" 
             :key="index"
           >
             {{ item }}
@@ -56,11 +57,12 @@
 
         <v-chip-group
           v-model="selectedNight"
+          :mandatory="enableMandatoryNight"
           active-class="pink accent-2 white--text"
         >
           <v-chip
             class="font-weight-medium"
-            v-for="(item, index) in closets" 
+            v-for="(item, index) in filteredClosets" 
             :key="index"
           >
             {{ item }}
@@ -77,14 +79,36 @@ export default {
   props: {
     occasion: {
       type: String
+    },
+    social: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
     return {
       checkbox: undefined,
-      closets: ["Casual", "Social"],
+      casual: "Casual",
+      closets: [],
       selectedDay: undefined,
       selectedNight: undefined
+    }
+  },
+  mounted () {
+    this.closets = [ this.casual, "Social" ]
+  },
+  computed: {
+    enableMandatoryDay () {
+      return this.selectedNight === undefined
+    },
+    enableMandatoryNight () {
+      return this.selectedDay === undefined && !this.enableMandatoryDay
+    },
+    filteredClosets () {
+      if (this.social) {
+        return this.closets
+      }
+      return [ this.casual ]
     }
   }
 }
