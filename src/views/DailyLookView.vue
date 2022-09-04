@@ -55,144 +55,182 @@
     <div class="my-4 mx-2">
       <v-card rounded="lg" elevation="3">
         <v-card-text>
-          <div style="display:flex; justify-content: space-around;">
+          <div style="display:flex;">
             <span 
-              style="margin: auto;" 
+              style="margin: auto; flex: 1;" 
               class="font-weight-medium text-body-1 grey--text text--darken-2"
             > 
-              Temperatura
+              Temperatura hoje
             </span>
 
-            <div
-              style="flex: 1 1 0%; display: flex; justify-content: space-around; margin: auto;"
+            <v-chip-group
+              class="my-0 py-0"
+              mandatory
+              column
+              active-class="indigo white--text"
             >
-              <v-chip-group
-                class="my-0 py-0"
-                mandatory
-                column
-                active-class="indigo white--text"
+              <v-chip
+                :color="'secondary'" 
+                class="my-0 py-0 font-weight-medium"
               >
-                <v-chip 
-                  :color="'secondary'" 
-                  class="my-0 py-0 font-weight-medium"
-                >
-                  <v-icon left>
-                    mdi-chevron-down
-                  </v-icon>
-                  18°  /  23°
-                  <v-icon right>
-                    mdi-chevron-up
-                  </v-icon>
-                </v-chip>
-              </v-chip-group>
-            </div>
-
-            <!--
-            <v-spacer/>
-
-            <div style="flex: 1 1 0%; display: flex; margin: auto;">
-              <v-chip class="mr-2 font-weight-medium" :color="'secondary'">
                 <v-icon left>
-                  mdi-chevron-down
+                  mdi-menu-down
                 </v-icon>
-                18 °
-              </v-chip>
-
-              <v-chip class="mr-1 font-weight-medium" :color="'secondary'">
-                <v-icon left>
-                  mdi-chevron-up
+                18°  /  23°
+                <v-icon right>
+                  mdi-menu-up
                 </v-icon>
-
-                23 º
               </v-chip>
-            </div>
-            -->
+            </v-chip-group>
           </div>
         </v-card-text>
 
         <v-divider> </v-divider>
 
-        <v-card-text>
-          <div style="display:flex; justify-content: space-between;">
-            <span 
-              style="margin: auto 0;" 
-              class="font-weight-medium text-body-1 grey--text text--darken-2"
-            > 
-              Guarda-roupa
-            </span>
-
-            <div style="display: flex;">
-              <v-chip-group
-                class="my-0 py-0"
-                v-model="selectedCloset"
-                mandatory
-                column
-                active-class="indigo white--text"
+        <v-expansion-panels 
+          accordeon 
+          flat
+          tile
+          v-model="expansionPanelFilters"
+        >
+          <v-expansion-panel>
+            <v-expansion-panel-header 
+              class="px-4"
+            >
+              <span
+                class="font-weight-medium text-body-1 grey--text text--darken-2"
               >
-                <v-chip 
-                  class="my-0 py-0 font-weight-medium"
-                >
-                  CASUAL
-                </v-chip>
+                {{ !hasSelectedAllFilters && hasSelectedFilters && expansionPanelFilters === undefined ? 'Filtros selecionados' : 'Filtros' }}
+              </span>
 
-                <v-chip 
-                  class="my-0 py-0 font-weight-medium"
-                >
-                  SOCIAL
-                </v-chip>
-              </v-chip-group>
-            </div>
-          </div>
-        </v-card-text>
-
-        <v-divider> </v-divider>
-
-        <v-card-text>
-          <div style="display:flex; justify-content: space-between;">
-            <span 
-              style="margin: auto 0;" 
-              class="font-weight-medium text-body-1 grey--text text--darken-2"
-            > 
-              Período
-            </span>
-
-            <div style="display:- flex;">
-              <v-chip-group
-                class="my-0 py-0"
-                v-model="selectedPeriod"
-                active-class="indigo white--text"
-                mandatory
-                column
+              <div
+                v-if="expansionPanelFilters === undefined"
+                class="d-flex" 
+                :style="{ 
+                  'justify-content': hasSelectedFilters ? 'right' : 'left'
+                }"
               >
-                <v-chip 
-                  class="my-0 py-0 font-weight-medium"
+                <v-chip-group
+                  v-if="selectedPeriod !== undefined"
+                  class="my-0 py-0"
+                  active-class="indigo white--text"
+                  mandatory
+                  column
                 >
-                  <v-icon left>
-                    mdi-white-balance-sunny
-                  </v-icon>
-                  DIA
-                </v-chip>
+                  <v-chip
+                    class="my-0 py-0 font-weight-medium text-uppercase"
+                  >
+                    <v-icon left>
+                      {{ periodFilters[selectedPeriod].icon }}
+                    </v-icon>
+                    {{ periodFilters[selectedPeriod].name }}
+                  </v-chip>
+                </v-chip-group>
 
-                <v-chip 
-                  class="my-0 py-0 font-weight-medium"
+                <v-chip-group
+                  v-if="selectedCloset !== undefined"
+                  class="my-0 py-0"
+                  active-class="indigo white--text"
+                  mandatory
+                  column
                 >
-                  <v-icon left>
-                    mdi-weather-night
-                  </v-icon>
-                  NOITE
-                </v-chip>
-              </v-chip-group>
-            </div>
-          </div>
-        </v-card-text>
+                  <v-chip
+                    class="my-0 py-0 font-weight-medium text-uppercase"
+                  >
+                    {{ closetFilters[selectedCloset] }}
+                  </v-chip>
+                </v-chip-group>
+
+                <span 
+                  v-if="!hasSelectedFilters"
+                  style="height: 40px; line-height: 40px;"
+                  class="text-body-2 grey--text text--darken-2"
+                >
+                  Nenhum filtro selecionado
+                </span>
+              </div>
+
+              <div 
+                v-else
+                class="d-flex" 
+                :style="{ 
+                  'justify-content': 'left'
+                }"
+              >
+                <span 
+                  style="width: 204px; text-align: end; height: 40px; line-height: 40px;"
+                  class="text-body-2 grey--text text--darken-2"
+                >
+                  Toque para aplicar/remover
+                </span>
+              </div>
+            </v-expansion-panel-header>
+
+            <v-expansion-panel-content class="mx-n2">
+              <div class="d-flex mt-3" style="justify-content: space-between;">
+                <span
+                  style="margin: auto 0;" 
+                  class="text-body-1 grey--text text--darken-2"
+                >
+                  Período
+                </span>
+
+                <div style="display: flex;">
+                  <v-chip-group
+                    class="my-0 py-0"
+                    v-model="selectedPeriod"
+                    active-class="indigo white--text"
+                    column
+                  >
+                    <v-chip
+                      v-for="(period, index) in periodFilters"
+                      :key="index"
+                      class="my-0 py-0 font-weight-medium text-uppercase"
+                    >
+                      <v-icon left>
+                        {{ period.icon }}
+                      </v-icon>
+                      {{ period.name }}
+                    </v-chip>
+                  </v-chip-group>
+                </div>
+              </div>
+
+              <div class="mt-6" style="display:flex; justify-content: space-between;">
+                <span 
+                  style="margin: auto 0;" 
+                  class="text-body-1 grey--text text--darken-2"
+                > 
+                  Guarda-roupa
+                </span>
+
+                <div style="display: flex;">
+                  <v-chip-group
+                    class="my-0 py-0"
+                    v-model="selectedCloset"
+                    column
+                    active-class="indigo white--text"
+                  >
+                    <v-chip
+                      v-for="(closet, index) in closetFilters"
+                      :key="index"
+                      class="my-0 py-0 font-weight-medium text-uppercase"
+                    >
+                      {{ closet }}
+                    </v-chip>
+                  </v-chip-group>
+                </div>
+              </div>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
       </v-card>
     </div>
 
     <v-divider class="mx-2"> </v-divider>
 
     <look-list 
-      :looks="looks"
-      :selectedDay="selectedDay"
+      :look="looks[selectedDay]"
     />
   </div>
 </template>
@@ -200,13 +238,11 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex"
 import LookList from "./../components/looks/LookList.vue"
-// import DailyLookSetup from "./../components/looks/DailyLookSetup.vue"
 import * as models from "./../models.js"
 
 export default {
   components: {
-    LookList,
-    // DailyLookSetup
+    LookList
   },
   data () {
     return {
@@ -247,6 +283,12 @@ export default {
         },
       ],
       selectedDay: null,
+      expansionPanelFilters: undefined,
+      closetFilters: [ "casual", "social" ],
+      periodFilters: [ 
+        { name: "dia", icon: "mdi-white-balance-sunny" }, 
+        { name: "noite", icon: "mdi-weather-night" } 
+      ]
     }
   },
   watch: {
@@ -289,10 +331,19 @@ export default {
       return window.innerWidth
     },
     looks () {
+      if (this.selectedCloset === undefined) {
+        return this.socialLooks.concat(this.casualLooks)
+      }
       if (this.selectedCloset === 1) {
         return this.socialLooks
       }
       return this.casualLooks
+    },
+    hasSelectedFilters () {
+      return this.selectedCloset !== undefined || this.selectedPeriod !== undefined
+    },
+    hasSelectedAllFilters () {
+      return this.selectedCloset !== undefined && this.selectedPeriod !== undefined
     }
   },
   methods: {
