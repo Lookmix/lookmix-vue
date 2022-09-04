@@ -229,7 +229,7 @@
 
     <v-divider class="mx-2"> </v-divider>
 
-    <look-list 
+    <look 
       :look="looks[selectedDay]"
     />
   </div>
@@ -237,12 +237,12 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex"
-import LookList from "./../components/looks/LookList.vue"
+import Look from "./../components/looks/Look.vue"
 import * as models from "./../models.js"
 
 export default {
   components: {
-    LookList
+    Look
   },
   data () {
     return {
