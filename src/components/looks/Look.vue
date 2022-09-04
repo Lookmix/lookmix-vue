@@ -128,11 +128,12 @@
             <v-col
               v-for="(value, key) in look"
               :key="key"
-              :cols="value !== null ? 3 : 0"
-              class="d-flex child-flex"
+              :cols="3"
+              class="child-flex"
+              :style="{ 'display': value ? 'flex' : 'none' }"
             >
               <v-img
-                v-if="value !== null"
+                v-if="value"
                 style="border: 1px solid transparent; border-radius: 16px;"
                 v-ripple
                 :src="value.image"
