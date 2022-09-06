@@ -128,8 +128,8 @@
             outlined
           >
             <v-chip 
-              class="mr-1 mb-1 mt-1 font-weight-medium"
-              v-for="(item, index) in occasions" 
+              class="mr-1 mb-1 mt-1 font-weight-medium text-capitalize"
+              v-for="(item, index) in occasionNames" 
               :key="index"
               color="primaryLight"
               text-color="primary"
@@ -155,11 +155,15 @@ export default {
     },
     clothe: Object
   },
+  mounted () {
+    if (this.occasions.length < 1) {
+      this.getOccasions()
+    }
+  },
   data () {
     return {
       imageHeight: 150,
       category: undefined,
-      occasions: [],
       seasons: [],
       closet: undefined,
       image: undefined,
@@ -168,13 +172,24 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "categories"
+      "categories",
+      "occasions"
     ]),
     contentHeight () {
       let innerHeight = window.innerHeight
       const marginTop = 0
       innerHeight = innerHeight - this.imageHeight - marginTop
       return innerHeight // 526
+    },
+    occasionNames () {
+      if (this.clothe) {
+        const occasionId = {} 
+        for (let occasion of this.occasions) {
+          occasionId[occasion._id] = occasion.name
+        }
+        return this.clothe.occasions.map(clotheOccasionId => occasionId[clotheOccasionId])
+      }
+      return []
     }
   },
   watch: {
@@ -188,11 +203,11 @@ export default {
   },
   methods: {
     ...mapActions([
-      "getCategoryById"
+      "getCategoryById",
+      "getOccasions"
     ]),
     openDetails () {
       this.image = this.clothe.image
-      this.occasions = this.clothe.occasions
       this.seasons = this.clothe.seasons
       this.closet = this.clothe.type
 

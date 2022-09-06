@@ -201,8 +201,9 @@
               <v-chip 
                 v-for="(item, index) in occasions" 
                 :key="index"
+                class="text-capitalize"
               >
-                {{ item }}
+                {{ item.name }}
               </v-chip>
             </v-chip-group>
           </v-sheet>
@@ -313,7 +314,7 @@ export default {
       }
       if (this.selectedOccasions.length > 0) {
         for (let occasionIndex of this.selectedOccasions) {
-          occasions.push(this.occasions[occasionIndex])
+          occasions.push(this.occasions[occasionIndex]._id)
         }
       }
       if (this.selectedSeasons.length > 0) {
@@ -345,8 +346,9 @@ export default {
       const clotheOccasions = this.editClothe.occasions
       const occasionIndexes = []
 
+      const occasionIds = this.occasions.map(occasion => occasion._id)
       for (let occasion of clotheOccasions) {
-        const index = this.occasions.indexOf(occasion)
+        const index = occasionIds.indexOf(occasion)
         occasionIndexes.push(index)
       }
       this.selectedOccasions = occasionIndexes
