@@ -59,7 +59,7 @@ const occasion = {
   "_id": "4362adfgw",
   "name": "curso/faculdade",
   "type": "daily",
-  "description": "uniforme, atividades estudantis",
+  "tags": ["uniforme", "atividades estudantis"],
   "cardLookTitle": "Look para curso/faculdade"
 }
 
