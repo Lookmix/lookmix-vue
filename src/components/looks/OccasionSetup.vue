@@ -15,10 +15,11 @@
         <div 
           :class="{
             'text-body-1': true,
-            'font-weight-medium': true
+            'font-weight-medium': true,
+            'text-capitalize': true
           }"
         >
-          Look <span class="text-lowercase"> {{ occasion }} </span>
+          {{ occasion }}
         </div>
       </template>
     </v-checkbox>
@@ -155,7 +156,7 @@ export default {
   methods: {
     generatePayload () {
       const payload = {
-        occasion: this.occasion,
+        card_look_title: this.occasion,
         casual: [],
         social: []
       }
@@ -167,10 +168,10 @@ export default {
         const closetNight = this.closets[this.selectedNight]
         payload[closetNight].push("noite")
       }
-      console.log(payload)
+      this.$emit("updateOccasion", payload)
     },
     deletePayload () {
-      console.log("delete...")
+      this.$emit("removeOccasion", this.occasion)
     }
   }
 }
