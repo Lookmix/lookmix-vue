@@ -69,16 +69,7 @@
       </v-bottom-sheet>
     </template>
 
-    <v-btn 
-      v-if="isDailyLookSetupRoute" 
-      icon
-      color="primary"
-      @click="saveDailyLookSetup()"
-    >
-      <v-icon>
-        mdi-check-outline
-      </v-icon>
-    </v-btn>
+    <button-save-daily-look-setup v-if="isDailyLookSetupRoute"  />
 
     <button-add-clothe v-if="showAddClotheButton" />
   </div>
@@ -86,11 +77,13 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
-import ButtonAddClothe from './closet/ButtonAddClothe.vue';
+import ButtonSaveDailyLookSetup from "./ButtonSaveDailyLookSetup.vue";
+import ButtonAddClothe from "./closet/ButtonAddClothe.vue";
 
 export default {
   components: { 
-    ButtonAddClothe 
+    ButtonAddClothe,
+    ButtonSaveDailyLookSetup
   },
   props: [
     "value"
@@ -144,9 +137,6 @@ export default {
     },
     addClothe () {
       
-    },
-    saveDailyLookSetup () {
-      this.$router.push("/daily-look")
     },
     changeDailyLookSetup () {
       this.$router.push("/daily-look-setup")
