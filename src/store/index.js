@@ -52,7 +52,8 @@ export default new Vuex.Store({
       image_ids: []
     },
     casualLooks: [],
-    socialLooks: []
+    socialLooks: [],
+    dailyLookSetup: undefined
   },
   getters: {
     authenticated: state => state.authenticated,
@@ -89,7 +90,8 @@ export default new Vuex.Store({
       return clotheIdsLength
     },
     casualLooks: state => state.casualLooks,
-    socialLooks: state => state.socialLooks
+    socialLooks: state => state.socialLooks,
+    dailyLookSetup: state => state.dailyLookSetup
   },
   mutations: {
     setNewUser(state, data) {
@@ -214,6 +216,9 @@ export default new Vuex.Store({
     setSocialLooks (state, data) {
       state.socialLooks = data
     },
+    setDailyLookSetup (state, data) {
+      state.dailyLookSetup = data
+    }
   },
   actions: {
     verifyDuplicatedPhone ({ state }, data) { // withCredentials: false
@@ -396,6 +401,9 @@ export default new Vuex.Store({
         commit("setClotheUploadSuccess", false)
         console.log(error)
       }
+    },
+    saveDailyLookSetup ({ state }) {
+      console.log(state.dailyLookSetup)
     }
   },
   modules: {
