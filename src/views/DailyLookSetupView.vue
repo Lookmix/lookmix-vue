@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex"
+import { mapGetters, mapActions, mapMutations } from "vuex"
 import OccasionSetup from "./../components/looks/OccasionSetup.vue"
 
 export default {
@@ -83,7 +83,7 @@ export default {
         "sexta",
         "sábado",
       ],
-      payload: {}
+      payload: []
     }
   },
   computed: {
@@ -107,33 +107,47 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      "setDailyLookSetup"
+    ]),
     ...mapActions([
       "getOccasions"
     ]),
     updateOccasion (dayOfWeek, occasionId, occasion) {
       occasion["_id"] = occasionId
-      const payloadDayOfWeek = this.payload[dayOfWeek]
-      if (!payloadDayOfWeek) {
-        this.payload[dayOfWeek] = [occasion]
+      const payloadDayOfWeekIndex = this.payload.map(x => 
+        x.day_of_week
+      ).indexOf(dayOfWeek)
+      if (payloadDayOfWeekIndex === -1) {
+        this.payload.push({
+          day_of_week: dayOfWeek,
+          occasions: [
+            occasion
+          ]
+        })
+        this.setDailyLookSetup(this.payload)
         return;
       }
-      const occasionFiltered = payloadDayOfWeek.filter(o => 
-        o.card_look_title === occasion.card_look_title
-      )[0]
-      if (occasionFiltered) {
-        const index = payloadDayOfWeek.indexOf(occasionFiltered)
-        this.payload[dayOfWeek][index] = occasion
+      const occasionIndex = this.payload[payloadDayOfWeekIndex].occasions.map(x => 
+        x.card_look_title
+      ).indexOf(occasion.card_look_title)
+      if (occasionIndex !== -1) {
+        this.payload[payloadDayOfWeekIndex].occasions[occasionIndex] = occasion
+        this.setDailyLookSetup(this.payload)
         return;
       }
-      this.payload[dayOfWeek].push(occasion)
+      this.payload[payloadDayOfWeekIndex].occasions.push(occasion)
+      this.setDailyLookSetup(this.payload)
     },
     removeOccasion (dayOfWeek, card_look_title) {
-      const payloadDayOfWeek = this.payload[dayOfWeek]
-      const occasionFiltered = payloadDayOfWeek.filter(o => 
-        o.card_look_title === card_look_title
-      )[0]
-      const index = payloadDayOfWeek.indexOf(occasionFiltered)
-      this.payload[dayOfWeek].splice(index, 1)
+      const payloadDayOfWeekIndex = this.payload.map(x => 
+        x.day_of_week
+      ).indexOf(dayOfWeek)
+      const occasionIndex = this.payload[payloadDayOfWeekIndex].occasions.map(x => 
+        x.card_look_title
+      ).indexOf(card_look_title)
+      this.payload[payloadDayOfWeekIndex].occasions.splice(occasionIndex, 1)
+      this.setDailyLookSetup(this.payload)
     }
   }
 }
