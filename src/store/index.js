@@ -339,6 +339,7 @@ export default new Vuex.Store({
     },
     async getOccasions({ state }) {
       try {
+        state.occasions = []
         const url = `${DOMAIN}/occasion/find`
         const response = await axios.get(url, { withCredentials: true })
         const data = response.data
