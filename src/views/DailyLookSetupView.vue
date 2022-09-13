@@ -47,6 +47,9 @@
                 :key="index"
                 :occasion="occasion.name"
                 :social="occasion.social === false ? false : true"
+                :initialCheckbox="getCheckboxValue(dayOfWeek, occasion._id)"
+                :initialSelectedDay="getDayValue(dayOfWeek, occasion._id)"
+                :initialSelectedNight="getNightValue(dayOfWeek, occasion._id)"
                 @updateOccasion="updateOccasion(dayOfWeek, occasion._id, $event)"
                 @removeOccasion="removeOccasion(dayOfWeek, $event)"
               />
@@ -70,6 +73,33 @@ export default {
     if (this.occasions.length < 1) {
       this.getOccasions()
     }
+    this.initialValues = [
+      {
+        day_of_week: "domingo",
+        occasions: [
+          {
+            occasion_id: "6315604bdaf4e3d095035220", // prática religiosa
+            casual: [ "dia" ],
+            social: [ "noite" ]
+          },
+          {
+            occasion_id: "6315604bdaf4e3d09503521c", // atividade física
+            casual: [ "dia" ],
+            social: []
+          }
+        ]
+      },
+      {
+        day_of_week: "quinta",
+        occasions: [
+          {
+            occasion_id: "6315604bdaf4e3d09503521c", // atividade física
+            casual: [ "dia" ],
+            social: []
+          }
+        ]
+      }
+    ]
   },
   data () {
     return {
@@ -83,7 +113,16 @@ export default {
         "sexta",
         "sábado",
       ],
-      payload: []
+      payload: [],
+      initialValues: []
+    }
+  },
+  watch: {
+    initialValues: {
+      handler (newValue, oldValue) {
+        this.getOccasions()
+      },
+      deep: true
     }
   },
   computed: {
@@ -139,15 +178,76 @@ export default {
       this.payload[payloadDayOfWeekIndex].occasions.push(occasion)
       this.setDailyLookSetup(this.payload)
     },
-    removeOccasion (dayOfWeek, card_look_title) {
+    removeOccasion (dayOfWeek, cardLookTitle) {
       const payloadDayOfWeekIndex = this.payload.map(x => 
         x.day_of_week
       ).indexOf(dayOfWeek)
       const occasionIndex = this.payload[payloadDayOfWeekIndex].occasions.map(x => 
         x.card_look_title
-      ).indexOf(card_look_title)
+      ).indexOf(cardLookTitle)
       this.payload[payloadDayOfWeekIndex].occasions.splice(occasionIndex, 1)
       this.setDailyLookSetup(this.payload)
+    },
+    getCheckboxValue (dayOfWeek, occasionId) {
+      const dayOfWeekIndex = this.initialValues.map(x => 
+        x.day_of_week
+      ).indexOf(dayOfWeek)
+      if (dayOfWeekIndex === -1) {
+        return false
+      }
+      const occasion = this.initialValues[dayOfWeekIndex].occasions.filter(x => 
+        x.occasion_id === occasionId
+      )[0]
+      if (occasion) {
+        return true
+      }
+      return false
+    },
+    getDayValue (dayOfWeek, occasionId) { // casual/social
+      const dayOfWeekIndex = this.initialValues.map(x => 
+        x.day_of_week
+      ).indexOf(dayOfWeek)
+      if (dayOfWeekIndex === -1) {
+        return undefined
+      }
+      const occasion = this.initialValues[dayOfWeekIndex].occasions.filter(x => 
+        x.occasion_id === occasionId
+      )[0]
+      if (!occasion) {
+        return undefined
+      }
+      const dayValue = "dia"
+      const casualCheck = occasion.casual.includes(dayValue)
+      const socialCheck = occasion.social.includes(dayValue)
+      if (casualCheck) {
+        return "casual"
+      }
+      if (socialCheck) {
+        return "social"
+      }
+    },
+    getNightValue (dayOfWeek, occasionId) { // casual/social
+      const dayOfWeekIndex = this.initialValues.map(x => 
+        x.day_of_week
+      ).indexOf(dayOfWeek)
+      if (dayOfWeekIndex === -1) {
+        return undefined
+      }
+      const occasion = this.initialValues[dayOfWeekIndex].occasions.filter(x => 
+        x.occasion_id === occasionId
+      )[0]
+      if (!occasion) {
+        return undefined
+      }
+      const nightValue = "noite"
+      const casualCheck = occasion.casual.includes(nightValue)
+      const socialCheck = occasion.social.includes(nightValue)
+      if (casualCheck) {
+        return "casual"
+      }
+      if (socialCheck) {
+        return "social"
+      }
     }
   }
 }
