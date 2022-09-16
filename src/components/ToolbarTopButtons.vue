@@ -16,6 +16,7 @@
       <v-btn 
         icon
         color="primary"
+        :disabled="!hasDailyLookSetup"
       >
         <v-icon>
           mdi-calendar-check-outline
@@ -29,6 +30,7 @@
           <v-btn 
             icon
             color="primary"
+            :disabled="!hasDailyLookSetup"
             v-bind="attrs"
             v-on="on"
           >
@@ -98,7 +100,7 @@ export default {
       "currentRouteName",
       "disableSaveClothesButton",
       "clothes",
-      // "hasDailyLookSetup"
+      "dailyLookSetup"
     ]),
     isClosetRoute () {
       return this.currentRouteName === "closet"
@@ -118,6 +120,9 @@ export default {
     },
     isDailyLookSetupRoute () {
       return this.currentRouteName === "dailyLookSetup"
+    },
+    hasDailyLookSetup () {
+      return this.dailyLookSetup !== null && this.dailyLookSetup !== undefined
     }
   },
   methods: {
