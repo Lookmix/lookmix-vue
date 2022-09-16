@@ -70,36 +70,7 @@ export default {
     OccasionSetup
   },
   mounted () {
-    if (this.occasions.length < 1) {
-      this.getOccasions()
-    }
-    this.initialValues = [
-      {
-        day_of_week: "domingo",
-        occasions: [
-          {
-            occasion_id: "6315604bdaf4e3d095035220", // prática religiosa
-            casual: [ "dia" ],
-            social: [ "noite" ]
-          },
-          {
-            occasion_id: "6315604bdaf4e3d09503521c", // atividade física
-            casual: [ "dia" ],
-            social: []
-          }
-        ]
-      },
-      {
-        day_of_week: "quinta",
-        occasions: [
-          {
-            occasion_id: "6315604bdaf4e3d09503521c", // atividade física
-            casual: [ "dia" ],
-            social: []
-          }
-        ]
-      }
-    ]
+    this.getOccasions()
   },
   data () {
     return {
@@ -120,9 +91,44 @@ export default {
   watch: {
     initialValues: {
       handler (newValue, oldValue) {
-        this.getOccasions()
+        const initialValuesCopy = JSON.parse(JSON.stringify(newValue))
+        this.payload = initialValuesCopy
+        const idOccasions = {} 
+        for (let occasion of this.occasions){
+          idOccasions[occasion._id] = occasion.card_look_title
+        }
+        for (let [index, day] of initialValuesCopy.entries()) {
+          const result = day.occasions.map(x => {
+            const occasion = {
+              _id: x.occasion_id,
+              card_look_title: idOccasions[x.occasion_id],
+              casual: x.casual,
+              social: x.social
+            }
+            return occasion
+          })
+          this.payload[index].occasions = result
+        }
       },
       deep: true
+    },
+    occasions: {
+      handler (newValue, oldValue) {
+        if (newValue) {
+          this.getDailyLookSetup()
+            .then((response) => {
+              const data = response.data
+              if (data) {
+                this.initialValues = data.days_of_week
+                return;
+              }
+              this.initialValues = []
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+        }
+      }
     }
   },
   computed: {
@@ -150,7 +156,8 @@ export default {
       "setDailyLookSetup"
     ]),
     ...mapActions([
-      "getOccasions"
+      "getOccasions",
+      "getDailyLookSetup"
     ]),
     updateOccasion (dayOfWeek, occasionId, occasion) {
       occasion["_id"] = occasionId
