@@ -403,8 +403,28 @@ export default new Vuex.Store({
         console.log(error)
       }
     },
-    saveDailyLookSetup ({ state }) {
-      console.log(state.dailyLookSetup)
+    async saveDailyLookSetup ({ state }) {
+      try {
+        const url = `${DOMAIN}/look/save_daily_look_setup`
+        const dailyLookSetup = state.dailyLookSetup.map(item => item)
+        for (let day of dailyLookSetup) {
+          day["occasions"] = day.occasions.map(occasion => {
+            let newOccasion = {
+              casual: occasion.casual,
+              social: occasion.social,
+              occasion_id: occasion._id
+            }
+            return newOccasion
+          })
+        }
+        const response = axios.post(url, dailyLookSetup, { withCredentials: true })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    getDailyLookSetup ({state}) {
+      const url = `${DOMAIN}/look/find_daily_look_setup_by_user_id`
+      return axios.get(url, { withCredentials: true })
     }
   },
   modules: {
