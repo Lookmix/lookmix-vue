@@ -71,7 +71,7 @@
       </v-bottom-sheet>
     </template>
 
-    <button-save-daily-look-setup v-if="isDailyLookSetupRoute"  />
+    <button-update-daily-look-setup v-if="isDailyLookSetupRoute"  />
 
     <button-add-clothe v-if="showAddClotheButton" />
   </div>
@@ -79,13 +79,13 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
-import ButtonSaveDailyLookSetup from "./ButtonSaveDailyLookSetup.vue";
+import ButtonUpdateDailyLookSetup from "./ButtonUpdateDailyLookSetup.vue";
 import ButtonAddClothe from "./closet/ButtonAddClothe.vue";
 
 export default {
   components: { 
     ButtonAddClothe,
-    ButtonSaveDailyLookSetup
+    ButtonUpdateDailyLookSetup
   },
   props: [
     "value"

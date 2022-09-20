@@ -16,10 +16,10 @@ import { mapActions } from "vuex";
 export default {
   methods: {
     ...mapActions([
-      "saveDailyLookSetup"
+      "updateDailyLookSetup"
     ]),
     saveDailyLookSetupClick () {
-      this.saveDailyLookSetup()
+      this.updateDailyLookSetup()
       this.$router.push("/daily-look")
     },
   }

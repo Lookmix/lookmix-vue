@@ -403,9 +403,9 @@ export default new Vuex.Store({
         console.log(error)
       }
     },
-    async saveDailyLookSetup ({ state }) {
+    async updateDailyLookSetup ({ state }) {
       try {
-        const url = `${DOMAIN}/look/save_daily_look_setup`
+        const url = `${DOMAIN}/look/update_daily_look_setup`
         const dailyLookSetup = state.dailyLookSetup.map(item => item)
         for (let day of dailyLookSetup) {
           day["occasions"] = day.occasions.map(occasion => {
@@ -417,7 +417,7 @@ export default new Vuex.Store({
             return newOccasion
           })
         }
-        const response = axios.post(url, dailyLookSetup, { withCredentials: true })
+        const response = axios.put(url, dailyLookSetup, { withCredentials: true })
       } catch (error) {
         console.log(error)
       }
