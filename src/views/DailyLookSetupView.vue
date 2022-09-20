@@ -74,7 +74,7 @@ export default {
   },
   data () {
     return {
-      selectedPanel: 0,
+      selectedPanel: undefined,
       daysOfWeek: [
         "domingo",
         "segunda",
