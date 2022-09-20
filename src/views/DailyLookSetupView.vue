@@ -109,6 +109,7 @@ export default {
           })
           this.payload[index].occasions = result
         }
+        this.selectedPanel = 0
       },
       deep: true
     },
