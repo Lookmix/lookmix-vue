@@ -228,11 +228,12 @@ export default {
       const casualCheck = occasion.casual.includes(dayValue)
       const socialCheck = occasion.social.includes(dayValue)
       if (casualCheck) {
-        return "casual"
+        return 0 // "casual"
       }
       if (socialCheck) {
-        return "social"
+        return 1 // "social"
       }
+      return undefined
     },
     getNightValue (dayOfWeek, occasionId) { // casual/social
       const dayOfWeekIndex = this.initialValues.map(x => 
@@ -251,11 +252,12 @@ export default {
       const casualCheck = occasion.casual.includes(nightValue)
       const socialCheck = occasion.social.includes(nightValue)
       if (casualCheck) {
-        return "casual"
+        return 0 // "casual"
       }
       if (socialCheck) {
-        return "social"
+        return 1 // "social"
       }
+      return undefined
     }
   }
 }
