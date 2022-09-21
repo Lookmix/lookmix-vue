@@ -90,11 +90,11 @@ export default {
       default: undefined
     },
     initialSelectedDay: {
-      type: String,
+      type: Number,
       default: undefined
     },
     initialSelectedNight: {
-      type: String,
+      type: Number,
       default: undefined
     }
   },
@@ -103,18 +103,12 @@ export default {
       checkbox: this.initialCheckbox,
       casual: "casual",
       closets: [],
-      selectedDay: undefined,
-      selectedNight: undefined
+      selectedDay: this.initialSelectedDay,
+      selectedNight: this.initialSelectedNight
     }
   },
   mounted () {
     this.closets = [ this.casual, "social" ]
-    if (this.initialSelectedDay !== undefined) {
-      this.selectedDay = this.closets.indexOf(this.initialSelectedDay)
-    }
-    if (this.initialSelectedNight !== undefined) {
-      this.selectedNight = this.closets.indexOf(this.initialSelectedNight)
-    }
   },
   watch: {
     checkbox: {
