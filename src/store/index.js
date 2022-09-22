@@ -45,7 +45,7 @@ export default new Vuex.Store({
     categories: [],
     occasions: [],
     seasons: [],
-    clotheUploadSuccess: undefined,
+    hasBeenClotheUploadedWithSuccess: undefined,
     showToolbarSelectedClothes: false,
     selectedClothes: {
       clothe_ids: [],
@@ -81,7 +81,7 @@ export default new Vuex.Store({
     categories: state => state.categories,
     occasions: state => state.occasions,
     seasons: state => state.seasons,
-    clotheUploadSuccess: state => state.clotheUploadSuccess,
+    hasBeenClotheUploadedWithSuccess: state => state.hasBeenClotheUploadedWithSuccess,
     showToolbarSelectedClothes: state => state.showToolbarSelectedClothes,
     selectedClothes: state => state.selectedClothes,
     selectedClothesLenght (state) {
@@ -158,7 +158,7 @@ export default new Vuex.Store({
       state.clothes.splice(data, 1)
     },
     setClotheUploadSuccess(state, data) {
-      state.clotheUploadSuccess = data
+      state.hasBeenClotheUploadedWithSuccess = data
     },
     setEditClothes (state, data) {
       state.clothes = data

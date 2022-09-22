@@ -124,7 +124,7 @@
       :loadingTitle="loadingTitleDialog"
       :loadingDialog="loadingDialog"
       :totalCircularProgressParts="totalClothes"
-      :showSuccessFeedback="clotheUploadSuccess"
+      :showSuccessFeedback="hasBeenClotheUploadedWithSuccess"
       :successDescription="successDescriptionDialog"
       :successActionText="'VER CLOSET'"
       :errorDescription="errorDescriptionDialog"
@@ -209,7 +209,7 @@ export default {
     ...mapGetters([
       "clothes",
       "loadingDialog",
-      "clotheUploadSuccess",
+      "hasBeenClotheUploadedWithSuccess",
       "categories",
       "occasions",
       "seasons",
