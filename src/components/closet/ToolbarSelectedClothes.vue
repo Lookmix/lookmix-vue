@@ -65,7 +65,7 @@
       :successDescription="'Peças excluídas com sucesso'"
       :loadingDialog="loadingDialog"
       :totalCircularProgressParts="selectedClothesLenght"
-      :showSuccessFeedback="deletedWithSuccess"
+      :showSuccessFeedback="hasBeenDeletedWithSuccess"
       @success="successOkClick()"
     />
   </div>
@@ -93,7 +93,7 @@ export default {
     return {
       loadingDialog: false,
       confirmationDialog: false,
-      deletedWithSuccess: undefined
+      hasBeenDeletedWithSuccess: undefined
     }
   },
   computed: {
@@ -136,10 +136,10 @@ export default {
         this.loadingDialog = true
         this.deleteClothes(this.selectedClothes)
           .then((response) => {
-            this.deletedWithSuccess = true
+            this.hasBeenDeletedWithSuccess = true
           })
           .catch((error) => {
-            this.deletedWithSuccess = false
+            this.hasBeenDeletedWithSuccess = false
             console.log(error)
           })
       }
