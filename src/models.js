@@ -2,8 +2,10 @@ const SPRING = "primavera"
 const SUMMER = "verão"
 const FALL = "outono"
 const WINTER = "inverno"
-const DAY = "dia"
-const NIGHT = "noite"
+export const DAY = "dia"
+export const NIGHT = "noite"
+export const CASUAL = "casual"
+export const SOCIAL = "social"
 
 export const seasonIcons = [
   {
@@ -53,6 +55,10 @@ export const occasions = [
   "natureza", // trilhas, acampamentos, sítios
   "encontro/date", // 
   "entretenimento" // cinema, teatro, museu, estádio de futebol
+]
+
+export const closets = [
+  CASUAL, SOCIAL
 ]
 
 const occasion = {
