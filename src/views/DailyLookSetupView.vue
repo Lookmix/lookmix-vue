@@ -64,6 +64,7 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex"
 import OccasionSetup from "./../components/looks/OccasionSetup.vue"
+import * as models from "./../models"
 
 export default {
   components: {
@@ -224,14 +225,14 @@ export default {
       if (!occasion) {
         return undefined
       }
-      const dayValue = "dia"
+      const dayValue = models.DAY
       const casualCheck = occasion.casual.includes(dayValue)
       const socialCheck = occasion.social.includes(dayValue)
       if (casualCheck) {
-        return 0 // "casual"
+        return models.closets.indexOf(models.CASUAL) // 0 "casual"
       }
       if (socialCheck) {
-        return 1 // "social"
+        return models.closets.indexOf(models.SOCIAL) // "social"
       }
       return undefined
     },
@@ -248,14 +249,14 @@ export default {
       if (!occasion) {
         return undefined
       }
-      const nightValue = "noite"
+      const nightValue = models.NIGHT
       const casualCheck = occasion.casual.includes(nightValue)
       const socialCheck = occasion.social.includes(nightValue)
       if (casualCheck) {
-        return 0 // "casual"
+        return models.closets.indexOf(models.CASUAL) // 0 "casual"
       }
       if (socialCheck) {
-        return 1 // "social"
+        return models.closets.indexOf(models.SOCIAL) // 1 "social"
       }
       return undefined
     }
