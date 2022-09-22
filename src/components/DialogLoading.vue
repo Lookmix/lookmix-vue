@@ -8,7 +8,7 @@
       width="300"
       height="300"
     >
-      <template v-if="successFeedback === undefined">
+      <template v-if="showSuccessFeedback === undefined">
         <v-card-title>
           {{ loadingTitle }}
         </v-card-title>
@@ -36,7 +36,7 @@
         </v-card-text>
       </template>
 
-      <template v-if="successFeedback">
+      <template v-if="showSuccessFeedback">
         <v-card-title>
           Sucesso
         </v-card-title>
@@ -71,7 +71,7 @@
         </v-card-actions>
       </template>
 
-      <template v-if="successFeedback === false">
+      <template v-if="showSuccessFeedback === false">
         <v-card-title>
           Oops...
         </v-card-title>
@@ -117,7 +117,7 @@ export default {
       type: Boolean,
       default: false
     },
-    successFeedback: {
+    showSuccessFeedback: {
       default: undefined
     },
     loadingTitle: {

@@ -65,7 +65,7 @@
       :successDescription="'Peças excluídas com sucesso'"
       :loadingDialog="loadingDialog"
       :totalCircularProgressParts="selectedClothesLenght"
-      :successFeedback="deletedWithSuccess"
+      :showSuccessFeedback="deletedWithSuccess"
       @success="successOkClick()"
     />
   </div>

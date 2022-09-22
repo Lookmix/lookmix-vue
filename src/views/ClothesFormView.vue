@@ -124,7 +124,7 @@
       :loadingTitle="loadingTitleDialog"
       :loadingDialog="loadingDialog"
       :totalCircularProgressParts="totalClothes"
-      :successFeedback="clotheUploadSuccess"
+      :showSuccessFeedback="clotheUploadSuccess"
       :successDescription="successDescriptionDialog"
       :successActionText="'VER CLOSET'"
       :errorDescription="errorDescriptionDialog"
