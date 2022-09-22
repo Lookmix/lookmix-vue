@@ -113,7 +113,7 @@
 
 export default {
   props: {
-    loadingDialog: {
+    showLoadingDialog: {
       type: Boolean,
       default: false
     },
@@ -169,7 +169,7 @@ export default {
     }
   },
   watch: {
-    loadingDialog: {
+    showLoadingDialog: {
       handler: function (val, oldVal) {
         if (val) {
           this.dialog = true
@@ -190,7 +190,7 @@ export default {
       return this.progress.toFixed()
     },
     show () {
-      return this.loadingDialog && this.dialog
+      return this.showLoadingDialog && this.dialog
     }
   },
   beforeDestroy () {

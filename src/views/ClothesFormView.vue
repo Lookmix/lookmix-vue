@@ -122,7 +122,7 @@
     <dialog-loading
       :intervalInMiliseconds="edit ? 250 : 3000"
       :loadingTitle="loadingTitleDialog"
-      :loadingDialog="loadingDialog"
+      :showLoadingDialog="showLoadingDialog"
       :totalCircularProgressParts="totalClothes"
       :showSuccessFeedback="hasBeenClotheUploadedWithSuccess"
       :successDescription="successDescriptionDialog"
@@ -208,7 +208,7 @@ export default {
   computed: {
     ...mapGetters([
       "clothes",
-      "loadingDialog",
+      "showLoadingDialog",
       "hasBeenClotheUploadedWithSuccess",
       "categories",
       "occasions",

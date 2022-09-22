@@ -63,7 +63,7 @@
       :intervalInMiliseconds="1500"
       :loadingTitle="'Excluindo...'"
       :successDescription="'Peças excluídas com sucesso'"
-      :loadingDialog="loadingDialog"
+      :showLoadingDialog="showLoadingDialog"
       :totalCircularProgressParts="selectedClothesLenght"
       :showSuccessFeedback="hasBeenDeletedWithSuccess"
       @success="successOkClick()"
@@ -91,7 +91,7 @@ export default {
   },
   data () {
     return {
-      loadingDialog: false,
+      showLoadingDialog: false,
       confirmationDialog: false,
       hasBeenDeletedWithSuccess: undefined
     }
@@ -133,7 +133,7 @@ export default {
       this.confirmationDialog = false
 
       if (confirm) {
-        this.loadingDialog = true
+        this.showLoadingDialog = true
         this.deleteClothes(this.selectedClothes)
           .then((response) => {
             this.hasBeenDeletedWithSuccess = true

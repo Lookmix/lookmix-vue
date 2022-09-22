@@ -36,7 +36,7 @@ export default new Vuex.Store({
     maxHeightCurrentRoute: undefined,
     backgroundColor: "initial",
     disableSaveClothesButton: true,
-    loadingDialog: false,
+    showLoadingDialog: false,
     showAddClotheButton: true,
     clothes: [],
     updatedClothes: [],
@@ -72,7 +72,7 @@ export default new Vuex.Store({
     previousPage: state => state.previousPage,
     backgroundColor: state => state.backgroundColor,
     disableSaveClothesButton: state => state.disableSaveClothesButton,
-    loadingDialog: state => state.loadingDialog,
+    showLoadingDialog: state => state.showLoadingDialog,
     showAddClotheButton: state => state.showAddClotheButton,
     clothes: state => state.clothes,
     updatedClothes: state => state.updatedClothes,
@@ -137,7 +137,7 @@ export default new Vuex.Store({
       state.disableSaveClothesButton = data
     },
     setLoadingDialog (state, data) {
-      state.loadingDialog = data
+      state.showLoadingDialog = data
     },
     setShowAddClotheButton (state, data) {
       state.showAddClotheButton = data
