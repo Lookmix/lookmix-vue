@@ -25,7 +25,7 @@
     </v-checkbox>
 
     <template v-if="checkbox">
-      <div style="display: flex;" class="mt-3 mb-2">
+      <div style="display: flex;" class="mt-3 pl-8 mb-2">
         <span
           class="mr-5 text-body-2"
           style="margin-top: auto; margin-bottom: auto;"
@@ -48,7 +48,7 @@
         </v-chip-group>
       </div>
 
-      <div style="display: flex;">
+      <div style="display: flex;" class="pl-8">
         <span
           class="mr-5 text-body-2"
           style="margin-top: auto; margin-bottom: auto;"
