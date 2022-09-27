@@ -58,19 +58,26 @@
         </v-expansion-panel>
       </v-expansion-panels>
     </v-card>
+
+    <dialog-fetch-data-loading
+      :showDialog="showDialog"
+    />
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex"
 import OccasionSetup from "./../components/looks/OccasionSetup.vue"
+import DialogFetchDataLoading from "./../components/DialogFetchDataLoading.vue"
 import * as models from "./../models"
 
 export default {
   components: {
-    OccasionSetup
+    OccasionSetup,
+    DialogFetchDataLoading
   },
   mounted () {
+    this.showDialog = true
     this.getOccasions()
   },
   data () {
@@ -86,7 +93,8 @@ export default {
         "sábado",
       ],
       payload: [],
-      initialValues: []
+      initialValues: [],
+      showDialog: false
     }
   },
   watch: {
@@ -128,6 +136,9 @@ export default {
             })
             .catch((error) => {
               console.log(error)
+            })
+            .finally(() => {
+              this.showDialog = false
             })
         }
       }

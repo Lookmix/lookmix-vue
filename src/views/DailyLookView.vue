@@ -235,7 +235,7 @@
       />
     </template>
 
-    <template v-else>
+    <template v-if="!showDialog && !dailyLookSetup">
       <div 
         :style="{
           'height': maxHeight+'px',
@@ -277,6 +277,10 @@
       </div>
     </template>
 
+    <dialog-fetch-data-loading
+      :showDialog="showDialog"
+    />
+
     <v-snackbar
       v-model="errorSnackbar"
       color="error"
@@ -299,11 +303,13 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex"
 import Look from "./../components/looks/Look.vue"
+import DialogFetchDataLoading from "./../components/DialogFetchDataLoading.vue"
 import * as models from "./../models.js"
 
 export default {
   components: {
-    Look
+    Look,
+    DialogFetchDataLoading
   },
   data () {
     return {
@@ -352,7 +358,8 @@ export default {
       ],
       errorSnackbar: false,
       errorMessage: "",
-      dailyLookSetup: undefined
+      dailyLookSetup: undefined,
+      showDialog: false
     }
   },
   watch: {
@@ -382,10 +389,12 @@ export default {
         if (value) {
           this.generateLook()
         }
+        this.showDialog = false
       }
     }
   },
   mounted () {
+    this.showDialog = true
     if (this.categories.length < 1) {
       this.getCategories()
     }

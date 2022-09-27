@@ -50,7 +50,7 @@ export default {
     ]),
     saveDailyLookSetupClick () {
       this.showLoadingDialog = true
-      if (this.dailyLookSetup.days_of_week) { // don't update
+      if (!this.dailyLookSetup || this.dailyLookSetup.days_of_week) { // don't update
         this.hasBeenDailyLookSetupUpdatedWithSuccess = true
         return;
       }
