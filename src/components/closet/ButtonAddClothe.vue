@@ -53,49 +53,12 @@
         </template>
       </v-file-input>
 
-      <v-dialog
-        :value="showDialog"
-        width="250"
-        persistent
-      >
-        <v-card
-          width="250"
-          height="250"
-          style="display: flex; justify-content: center; flex-direction: column;"
-        >
-          <v-card-title>
-            Carregando...
-          </v-card-title>
-
-          <v-progress-circular
-            :size="65"
-            :width="10"
-            color="secondary"
-            style="margin: auto;"
-            indeterminate
-          />
-
-          <v-card-text 
-            :style="{
-              'display': 'flex',
-              'flex-direction': 'row',
-              'justify-content': 'center',
-              'padding-top': '20px',
-              'height': '68px'
-            }"
-          >
-            <v-btn 
-              v-if="showCloseButton"
-              text 
-              outlined
-              small
-              @click="showDialog = false; showCloseButton = false;" 
-            >
-              FECHAR
-            </v-btn>
-          </v-card-text>
-        </v-card>
-      </v-dialog>
+      <dialog-fetch-data-loading 
+        :showDialog="showDialog"
+        :showCloseButton="showCloseButton"
+        @showDialog="showDialogEvent($event)"
+        @showCloseButton="showCloseButtonEvent($event)"
+      />
 
       <v-snackbar
         v-model="snackbarError"
@@ -120,8 +83,12 @@
 <script>
 import { mapMutations, mapGetters } from "vuex"
 import { v4 as uuidv4 } from "uuid"
+import DialogFetchDataLoading from "../DialogFetchDataLoading.vue"
 
 export default {
+  components: {
+    DialogFetchDataLoading
+  },
   props: {
     iconButton: { 
       type: Boolean, 
@@ -188,6 +155,12 @@ export default {
         })
       }
       this.showDialog = false
+    },
+    showDialogEvent (data) {
+      this.showDialog = data
+    },
+    showCloseButtonEvent (data) {
+      this.showCloseButton = data
     }
   }
 }
