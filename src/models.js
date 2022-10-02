@@ -69,10 +69,13 @@ const occasion = {
   "cardLookTitle": "Look para curso/faculdade"
 }
 
-export function generateLook (categories, fetchClothes) {
-  const looks = []
-
+export function generateLook (categories, fetchClothes, dailyLookSetup) {
+  const looks = {}
   if (categories.length > 0 && fetchClothes.length > 0) {
+    let occasionIds = dailyLookSetup.map(day => day.occasions)
+    .map(occasionList => occasionList.map(occasion => occasion.occasion_id))
+    .reduce((previous, current) => previous.concat(current), [])
+    occasionIds = new Set(occasionIds)
     const result = []
     for (let category of categories) {
       const categoryId = category._id
@@ -80,7 +83,6 @@ export function generateLook (categories, fetchClothes) {
         clothe.category_id === categoryId
       )
       const totalClothes = clothes.length
-
       result.push({
         categoryId: categoryId,
         category: category.name,
@@ -97,111 +99,293 @@ export function generateLook (categories, fetchClothes) {
       }
       return 0;
     })
-    if (result[0].totalClothes < 1) {
+    if (result[0].totalClothes === 0) {
       return;
     }
     const categoryIds = categories.map(category => category._id)
     const lookTemplate = {}
-
     for (let categoryId of categoryIds) {
       lookTemplate[categoryId] = null
     }
-    for (let a of result[0].clothes) {
-      if (result[1].totalClothes < 1) {
-        const look = JSON.parse(JSON.stringify(lookTemplate))
-        look[result[0].categoryId] = a
-        looks.push(look)
+    for (let occasionId of occasionIds) {
+      looks[occasionId] = []
+    }
+    for (let a of result[0].clothes) { // para cada peça na categoria 0 faça
+      if (result[1].totalClothes === 0) { // se categoria 1 não tiver peças
+        for (let occasionId of occasionIds) { // para cada ocasião cadastrada na rotina semanal
+          const look = JSON.parse(JSON.stringify(lookTemplate))
+          if (a.occasions.includes(occasionId)) {
+            look[result[0].categoryId] = a
+          }
+          const looksString = JSON.stringify(looks)
+          const lookString = JSON.stringify(look)
+          if (!looksString.includes(lookString)) {
+            let keyValues = Object.entries(look)
+            keyValues = keyValues.filter(x => x[1] !== null && x[1] !== undefined)
+            if (keyValues.length > 0) {
+              looks[occasionId].push(look) 
+            }
+          }
+        }
         continue;
       }
       for (let b of result[1].clothes) {
-        if (result[2].totalClothes < 1) {
-          const look = JSON.parse(JSON.stringify(lookTemplate))
-          look[result[0].categoryId] = a
-          look[result[1].categoryId] = b
-          looks.push(look)
+        if (result[2].totalClothes === 0) {
+          for (let occasionId of occasionIds) {
+            const look = JSON.parse(JSON.stringify(lookTemplate))
+            if (a.occasions.includes(occasionId)) {
+              look[result[0].categoryId] = a
+            }
+            if (b.occasions.includes(occasionId)) {
+              look[result[1].categoryId] = b
+            }
+            const looksString = JSON.stringify(looks)
+            const lookString = JSON.stringify(look)
+            if (!looksString.includes(lookString)) {
+              let keyValues = Object.entries(look)
+              keyValues = keyValues.filter(x => x[1] !== null && x[1] !== undefined)
+              if (keyValues.length > 0) {
+                looks[occasionId].push(look) 
+              }
+            }
+          }
           continue;
         }
         for (let c of result[2].clothes) {
-          if (result[3].totalClothes < 1) {
-            const look = JSON.parse(JSON.stringify(lookTemplate))
-            look[result[0].categoryId] = a
-            look[result[1].categoryId] = b
-            look[result[2].categoryId] = c
-            looks.push(look)
+          if (result[3].totalClothes === 0) {
+            for (let occasionId of occasionIds) {
+              const look = JSON.parse(JSON.stringify(lookTemplate))
+              if (a.occasions.includes(occasionId)) {
+                look[result[0].categoryId] = a
+              }
+              if (b.occasions.includes(occasionId)) {
+                look[result[1].categoryId] = b
+              }
+              if (c.occasions.includes(occasionId)) {
+                look[result[2].categoryId] = c
+              }
+              const looksString = JSON.stringify(looks)
+              const lookString = JSON.stringify(look)
+              if (!looksString.includes(lookString)) {
+                let keyValues = Object.entries(look)
+                keyValues = keyValues.filter(x => x[1] !== null && x[1] !== undefined)
+                if (keyValues.length > 0) {
+                  looks[occasionId].push(look) 
+                }
+              }
+            }
             continue;
           }
           for (let d of result[3].clothes) {
-            if (result[4].totalClothes < 1) {
-              const look = JSON.parse(JSON.stringify(lookTemplate))
-              look[result[0].categoryId] = a
-              look[result[1].categoryId] = b
-              look[result[2].categoryId] = c
-              look[result[3].categoryId] = d
-              looks.push(look)
+            if (result[4].totalClothes === 0) {
+              for (let occasionId of occasionIds) {
+                const look = JSON.parse(JSON.stringify(lookTemplate))
+                if (a.occasions.includes(occasionId)) {
+                  look[result[0].categoryId] = a
+                }
+                if (b.occasions.includes(occasionId)) {
+                  look[result[1].categoryId] = b
+                }
+                if (c.occasions.includes(occasionId)) {
+                  look[result[2].categoryId] = c
+                }
+                if (d.occasions.includes(occasionId)) {
+                  look[result[3].categoryId] = d
+                }
+                const looksString = JSON.stringify(looks)
+                const lookString = JSON.stringify(look)
+                if (!looksString.includes(lookString)) {
+                  let keyValues = Object.entries(look)
+                  keyValues = keyValues.filter(x => x[1] !== null && x[1] !== undefined)
+                  if (keyValues.length > 0) {
+                    looks[occasionId].push(look) 
+                  } 
+                }
+              }
               continue;
             }
             for (let e of result[4].clothes) {
-              if (result[5].totalClothes < 1) {
-                const look = JSON.parse(JSON.stringify(lookTemplate))
-                look[result[0].categoryId] = a
-                look[result[1].categoryId] = b
-                look[result[2].categoryId] = c
-                look[result[3].categoryId] = d
-                look[result[4].categoryId] = e
-                looks.push(look)
+              if (result[5].totalClothes === 0) {
+                for (let occasionId of occasionIds) {
+                  const look = JSON.parse(JSON.stringify(lookTemplate))
+                  if (a.occasions.includes(occasionId)) {
+                    look[result[0].categoryId] = a
+                  }
+                  if (b.occasions.includes(occasionId)) {
+                    look[result[1].categoryId] = b
+                  }
+                  if (c.occasions.includes(occasionId)) {
+                    look[result[2].categoryId] = c
+                  }
+                  if (d.occasions.includes(occasionId)) {
+                    look[result[3].categoryId] = d
+                  }
+                  if (e.occasions.includes(occasionId)) {
+                    look[result[4].categoryId] = e
+                  }
+                  const looksString = JSON.stringify(looks)
+                  const lookString = JSON.stringify(look)
+                  if (!looksString.includes(lookString)) {
+                    let keyValues = Object.entries(look)
+                    keyValues = keyValues.filter(x => x[1] !== null && x[1] !== undefined)
+                    if (keyValues.length > 0) {
+                      looks[occasionId].push(look) 
+                    }
+                  }
+                }
                 continue;
               }
               for (let f of result[5].clothes) {
-                if (result[6].totalClothes < 1) {
-                  const look = JSON.parse(JSON.stringify(lookTemplate))
-                  look[result[0].categoryId] = a
-                  look[result[1].categoryId] = b
-                  look[result[2].categoryId] = c
-                  look[result[3].categoryId] = d
-                  look[result[4].categoryId] = e
-                  look[result[5].categoryId] = f
-                  looks.push(look)
+                if (result[6].totalClothes === 0) {
+                  for (let occasionId of occasionIds) {
+                    const look = JSON.parse(JSON.stringify(lookTemplate))
+                    if (a.occasions.includes(occasionId)) {
+                      look[result[0].categoryId] = a
+                    }
+                    if (b.occasions.includes(occasionId)) {
+                      look[result[1].categoryId] = b
+                    }
+                    if (c.occasions.includes(occasionId)) {
+                      look[result[2].categoryId] = c
+                    }
+                    if (d.occasions.includes(occasionId)) {
+                      look[result[3].categoryId] = d
+                    }
+                    if (e.occasions.includes(occasionId)) {
+                      look[result[4].categoryId] = e
+                    }
+                    if (f.occasions.includes(occasionId)) {
+                      look[result[5].categoryId] = f
+                    }
+                    const looksString = JSON.stringify(looks)
+                    const lookString = JSON.stringify(look)
+                    if (!looksString.includes(lookString)) {
+                      let keyValues = Object.entries(look)
+                      keyValues = keyValues.filter(x => x[1] !== null && x[1] !== undefined)
+                      if (keyValues.length > 0) {
+                        looks[occasionId].push(look) 
+                      } 
+                    }
+                  }
                   continue;
                 }
                 for (let g of result[6].clothes) {
-                  if (result[7].totalClothes < 1) {
-                    const look = JSON.parse(JSON.stringify(lookTemplate))
-                    look[result[0].categoryId] = a
-                    look[result[1].categoryId] = b
-                    look[result[2].categoryId] = c
-                    look[result[3].categoryId] = d
-                    look[result[4].categoryId] = e
-                    look[result[5].categoryId] = f
-                    look[result[6].categoryId] = g
-                    looks.push(look)
+                  if (result[7].totalClothes === 0) {
+                    for (let occasionId of occasionIds) {
+                      const look = JSON.parse(JSON.stringify(lookTemplate))
+                      if (a.occasions.includes(occasionId)) {
+                        look[result[0].categoryId] = a
+                      }
+                      if (b.occasions.includes(occasionId)) {
+                        look[result[1].categoryId] = b
+                      }
+                      if (c.occasions.includes(occasionId)) {
+                        look[result[2].categoryId] = c
+                      }
+                      if (d.occasions.includes(occasionId)) {
+                        look[result[3].categoryId] = d
+                      }
+                      if (e.occasions.includes(occasionId)) {
+                        look[result[4].categoryId] = e
+                      }
+                      if (f.occasions.includes(occasionId)) {
+                        look[result[5].categoryId] = f
+                      }
+                      if (g.occasions.includes(occasionId)) {
+                        look[result[6].categoryId] = g
+                      }
+                      const looksString = JSON.stringify(looks)
+                      const lookString = JSON.stringify(look)
+                      if (!looksString.includes(lookString)) {
+                        let keyValues = Object.entries(look)
+                        keyValues = keyValues.filter(x => x[1] !== null && x[1] !== undefined)
+                        if (keyValues.length > 0) {
+                          looks[occasionId].push(look) 
+                        }
+                      }
+                    }
                     continue;
                   }
                   for (let h of result[7].clothes) {
-                    if (result[8].totalClothes < 1) {
-                      const look = JSON.parse(JSON.stringify(lookTemplate))
-                      look[result[0].categoryId] = a
-                      look[result[1].categoryId] = b
-                      look[result[2].categoryId] = c
-                      look[result[3].categoryId] = d
-                      look[result[4].categoryId] = e
-                      look[result[5].categoryId] = f
-                      look[result[6].categoryId] = g
-                      look[result[7].categoryId] = h
-                      looks.push(look)
+                    if (result[8].totalClothes === 0) {
+                      for (let occasionId of occasionIds) {
+                        const look = JSON.parse(JSON.stringify(lookTemplate))
+                        if (a.occasions.includes(occasionId)) {
+                          look[result[0].categoryId] = a
+                        }
+                        if (b.occasions.includes(occasionId)) {
+                          look[result[1].categoryId] = b
+                        }
+                        if (c.occasions.includes(occasionId)) {
+                          look[result[2].categoryId] = c
+                        }
+                        if (d.occasions.includes(occasionId)) {
+                          look[result[3].categoryId] = d
+                        }
+                        if (e.occasions.includes(occasionId)) {
+                          look[result[4].categoryId] = e
+                        }
+                        if (f.occasions.includes(occasionId)) {
+                          look[result[5].categoryId] = f
+                        }
+                        if (g.occasions.includes(occasionId)) {
+                          look[result[6].categoryId] = g
+                        }
+                        if (h.occasions.includes(occasionId)) {
+                          look[result[7].categoryId] = h
+                        }
+                        const looksString = JSON.stringify(looks)
+                        const lookString = JSON.stringify(look)
+                        if (!looksString.includes(lookString)) {
+                          let keyValues = Object.entries(look)
+                          keyValues = keyValues.filter(x => x[1] !== null && x[1] !== undefined)
+                          if (keyValues.length > 0) {
+                            looks[occasionId].push(look) 
+                          }
+                        }
+                      }
                       continue;
                     }
                     for (let i of result[8].clothes) {
-                      const look = JSON.parse(JSON.stringify(lookTemplate))
-                      look[result[0].categoryId] = a
-                      look[result[1].categoryId] = b
-                      look[result[2].categoryId] = c
-                      look[result[3].categoryId] = d
-                      look[result[4].categoryId] = e
-                      look[result[5].categoryId] = f
-                      look[result[6].categoryId] = g
-                      look[result[7].categoryId] = h
-                      look[result[8].categoryId] = i
-                      looks.push(look)
+                      for (let occasionId of occasionIds) {
+                        const look = JSON.parse(JSON.stringify(lookTemplate))
+                        if (a.occasions.includes(occasionId)) {
+                          look[result[0].categoryId] = a
+                        }
+                        if (b.occasions.includes(occasionId)) {
+                          look[result[1].categoryId] = b
+                        }
+                        if (c.occasions.includes(occasionId)) {
+                          look[result[2].categoryId] = c
+                        }
+                        if (d.occasions.includes(occasionId)) {
+                          look[result[3].categoryId] = d
+                        }
+                        if (e.occasions.includes(occasionId)) {
+                          look[result[4].categoryId] = e
+                        }
+                        if (f.occasions.includes(occasionId)) {
+                          look[result[5].categoryId] = f
+                        }
+                        if (g.occasions.includes(occasionId)) {
+                          look[result[6].categoryId] = g
+                        }
+                        if (h.occasions.includes(occasionId)) {
+                          look[result[7].categoryId] = h
+                        }
+                        if (i.occasions.includes(occasionId)) {
+                          look[result[8].categoryId] = i
+                        }
+                        const looksString = JSON.stringify(looks)
+                        const lookString = JSON.stringify(look)
+                        if (!looksString.includes(lookString)) {
+                          let keyValues = Object.entries(look)
+                          keyValues = keyValues.filter(x => x[1] !== null && x[1] !== undefined)
+                          if (keyValues.length > 0) {
+                            looks[occasionId].push(look) 
+                          }
+                        }
+                      }
                     }
                   }
                 }
