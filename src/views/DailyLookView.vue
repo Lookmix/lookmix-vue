@@ -466,10 +466,18 @@ export default {
       "setDailyLookSetup"
     ]),
     generateLook () {
-      const casualLooks = models.generateLook(this.categories, this.fetchCasualClothes)
+      const casualLooks = models.generateLook(
+        this.categories, 
+        this.fetchCasualClothes,
+        this.dailyLookSetup.days_of_week
+      )
       this.setCasualLooks(casualLooks)
 
-      const socialLooks = models.generateLook(this.categories, this.fetchSocialClothes)
+      const socialLooks = models.generateLook(
+        this.categories, 
+        this.fetchSocialClothes,
+        this.dailyLookSetup.days_of_week
+      )
       this.setSocialLooks(socialLooks)
     },
     redirectToDailyLookSetup () {
