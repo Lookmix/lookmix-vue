@@ -1,5 +1,47 @@
 <template>
   <div>
+    <template v-if="!showDialog && !dailyLookSetup">
+      <div 
+        :style="{
+          'height': maxHeight+'px',
+          'display': 'flex', 
+          'flex-direction': 'column',
+        }"
+      >
+        <v-card 
+          elevation="0"
+          :min-height="maxHeight"
+          :max-height="maxHeight"
+        >  
+          <v-card-text style="text-align: center;">
+            <br/>
+
+            <span>
+              Configure sua rotina semanal <br> para visualizar os looks
+            </span>
+
+            <br/>
+
+            <div
+              style="padding: 10px 5px; display: flex; justify-content: center;"
+            >
+              <v-btn
+                color="primary"
+                :elevation="2"
+                rounded
+                large
+                @click="redirectToDailyLookSetup()"
+              >
+                <v-icon></v-icon>
+
+                configurar
+              </v-btn>
+            </div>
+          </v-card-text>
+        </v-card>
+      </div>
+    </template>
+
     <template v-if="dailyLookSetup">
       <v-toolbar
         flat
@@ -233,48 +275,6 @@
       <look 
         :look="looks[selectedDay]"
       />
-    </template>
-
-    <template v-if="!showDialog && !dailyLookSetup">
-      <div 
-        :style="{
-          'height': maxHeight+'px',
-          'display': 'flex', 
-          'flex-direction': 'column',
-        }"
-      >
-        <v-card 
-          elevation="0"
-          :min-height="maxHeight"
-          :max-height="maxHeight"
-        >  
-          <v-card-text style="text-align: center;">
-            <br/>
-
-            <span>
-              Configure sua rotina semanal <br> para visualizar os looks
-            </span>
-
-            <br/>
-
-            <div
-              style="padding: 10px 5px; display: flex; justify-content: center;"
-            >
-              <v-btn
-                color="primary"
-                :elevation="2"
-                rounded
-                large
-                @click="redirectToDailyLookSetup()"
-              >
-                <v-icon></v-icon>
-
-                configurar
-              </v-btn>
-            </div>
-          </v-card-text>
-        </v-card>
-      </div>
     </template>
 
     <dialog-fetch-data-loading
