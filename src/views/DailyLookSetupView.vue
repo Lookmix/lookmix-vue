@@ -178,11 +178,11 @@ export default {
         x.day_of_week
       ).indexOf(dayOfWeek)
       if (payloadDayOfWeekIndex === -1) {
+        const dayOfWeekIndex = this.daysOfWeek.indexOf(dayOfWeek)
         this.payload.push({
           day_of_week: dayOfWeek,
-          occasions: [
-            occasion
-          ]
+          occasions: [ occasion ],
+          sort: dayOfWeekIndex
         })
         this.setDailyLookSetup(this.payload)
         return;
