@@ -64,7 +64,7 @@
             mandatory
           >
             <v-slide-item
-              v-for="(item, index) in week"
+              v-for="(item, index) in days"
               :key="item.day+item.dayWeek+index"
               v-slot="{ active, toggle }"
             >
@@ -73,7 +73,7 @@
                 :key="item.day+item.dayWeek+index+'div'"
                 v-ripple
                 @click="toggle"
-                :style="{ 'border-right': (week.length - 1) !== index ? '1px solid #BDBDBD' : 'unset' }"
+                :style="{ 'border-right': (days.length - 1) !== index ? '1px solid #BDBDBD' : 'unset' }"
               >
                 <div
                   :style="{'border-bottom': active ? 'solid 4px #3F51B5' : 'solid 4px transparent'}"
@@ -82,7 +82,8 @@
                     :class="{ 
                       'indigo--text': active, 
                       'font-weight-bold': active,
-                      'font-weight-medium': !active
+                      'font-weight-medium': !active,
+                      'text-uppercase': true
                     }"
                     style="font-size: 14px;"
                   >
@@ -272,9 +273,14 @@
 
       <v-divider class="mx-2"> </v-divider>
 
-      <look 
-        :look="looks[selectedDay]"
-      />
+      <template
+        v-for="(value, index) of occasions"
+      >
+        <look 
+          :look="looks[selectedDay]"
+          :key="index"
+        />
+      </template>
     </template>
 
     <dialog-fetch-data-loading
@@ -315,7 +321,9 @@ export default {
     return {
       selectedCloset: 0,
       selectedPeriod: 0,
-      week: [
+      // days: [],
+      /*
+      [
         {
           dayWeek: "SEX",
           day: "27"
@@ -348,7 +356,8 @@ export default {
           dayWeek: "SEX",
           day: "03"
         },
-      ],
+      ], 
+      */
       selectedDay: null,
       expansionPanelFilters: undefined,
       closetFilters: [ "casual", "social" ],
@@ -420,24 +429,45 @@ export default {
       })
   },
   computed: {
-    ...mapGetters([
-      "fetchCasualClothes",
-      "fetchSocialClothes",
-      "categories",
-      "casualLooks",
-      "socialLooks",
-    ]),
+    ...mapGetters({
+      fetchCasualClothes: "fetchCasualClothes",
+      fetchSocialClothes: "fetchSocialClothes",
+      categories: "categories",
+      casualLooks: "casualLooks",
+      socialLooks: "socialLooks",
+      dailyLookSetupGetter: "dailyLookSetup"
+    }),
     width () {
       return window.innerWidth
     },
     looks () {
+      // const today = new Date().getDay()
+      // const days = this.daysOfWeek.map(day => day.sort)
+      // const indexOfDay = days.indexOf(today)
+      const dayOfWeek = this.getDate(this.selectedDay).getDay()
+      const occasions = this.daysOfWeek[dayOfWeek].occasions
       if (this.selectedCloset === undefined) {
-        return this.socialLooks.concat(this.casualLooks)
+        let looks = []
+        for (let occasion of occasions) {
+          looks = this.socialLooks[occasion.occasion_id].concat(this.casualLooks[occasion.occasion_id])
+        }
+        console.log(looks)
+        return looks
       }
       if (this.selectedCloset === 1) {
-        return this.socialLooks
+        let looks = []
+        for (let occasion of occasions) {
+          looks = looks.concat(this.socialLooks[occasion.occasion_id])
+        }
+        console.log(looks)
+        return looks
       }
-      return this.casualLooks
+      let looks = []
+      for (let occasion of occasions) {
+        looks = looks.concat(this.casualLooks[occasion.occasion_id])
+      }
+      console.log(looks)
+      return looks
     },
     hasSelectedFilters () {
       return this.selectedCloset !== undefined || this.selectedPeriod !== undefined
@@ -452,6 +482,56 @@ export default {
       innerHeight = innerHeight - header - footer
       return innerHeight
     },
+    daysOfWeek () {
+      return this.dailyLookSetupGetter.days_of_week
+    },
+    occasions () {
+      const today = new Date().getDay()
+      const days = this.daysOfWeek.map(day => day.sort)
+      const indexOfDay = days.indexOf(today)
+      const occasions = this.daysOfWeek[indexOfDay].occasions
+      console.log(occasions)
+      return occasions
+    },
+    days () {
+      let totalDays = 0
+      let totalLooksByDayOfWeek = []
+      for (let day of this.daysOfWeek) {
+        let dailyLookCount = 0
+        for (let occasion of day.occasions) {
+          dailyLookCount += occasion.casual.concat(occasion.social).length
+        }
+        totalLooksByDayOfWeek.push(dailyLookCount)
+        dailyLookCount = 0
+      }
+      let totalLooks = 0
+      const casualLooksList = Object.entries(this.casualLooks)
+      for (let casualLook of casualLooksList) {
+        totalLooks += casualLook[1].length
+      }
+      const socialLooksList = Object.entries(this.socialLooks)
+      for (let socialLook of socialLooksList) {
+        totalLooks += socialLook[1].length
+      }
+      while (totalLooks > 0) {
+        for (let dailyLookCount of totalLooksByDayOfWeek) {
+          totalLooks -= dailyLookCount
+          totalDays += 1
+        }
+      }
+      const days = []
+      for (let i=0; i < totalDays; i++) {
+        const date = this.getDate(i)
+        if (this.daysOfWeek[date.getDay()]) {
+          let dayOfWeek = {
+            dayWeek: this.daysOfWeek[date.getDay()].day_of_week.slice(0, 3),//"SEX",
+            day: date.getDate()+""
+          }
+          days.push(dayOfWeek)
+        }
+      }
+      return days
+    }
   },
   methods: {
     ...mapActions([
@@ -472,7 +552,6 @@ export default {
         this.dailyLookSetup.days_of_week
       )
       this.setCasualLooks(casualLooks)
-
       const socialLooks = models.generateLook(
         this.categories, 
         this.fetchSocialClothes,
@@ -482,6 +561,15 @@ export default {
     },
     redirectToDailyLookSetup () {
       this.$router.push("/daily-look-setup")
+    },
+    getDate (daysToSum) {
+      Date.prototype.addDays = function(days) {
+        const date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+      }
+      let date = new Date();
+      return date.addDays(daysToSum);
     }
   }
 }
