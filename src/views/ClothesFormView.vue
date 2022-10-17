@@ -49,34 +49,37 @@
       </v-card>
     </div>
 
-    <swiper
+    <div
       v-if="existsClothes"
       :style="{ 
         'height': swiperHeight+'px', 
         'margin-top': '10px' 
       }"
-      ref="mySwiper" 
-      :options="swiperOptions"
-      @slideChangeTransitionEnd="onSlideChange($event)"
+      class="swiper"
     >
-      <swiper-slide 
-        :style="{'width': cardWidth+'px'}"
-        v-for="(clothe, index) in clothes" 
-        :key="clothe._id"
-      >
-        <ClotheForm 
-          :id="clothe._id"
+      <!-- Additional required wrapper -->
+      <div class="swiper-wrapper">
+        <!-- Slides -->
+        <div 
+          v-for="(clothe, index) in clothes" 
           :key="clothe._id"
-          :image="clothe.image"
-          :editClothe="edit ? clothe : undefined"
-          :cardWidth="cardWidth"
-          :cardHeight="swiperHeight"
-          @payloadSave="setClothe($event, clothe._id)"
-          @payloadUpdate="setUpdatedClothe($event, clothe._id)"
-          @remove="removeClothe($event, index)"
-        />
-      </swiper-slide>
-    </swiper>
+          class="swiper-slide"
+          :style="{'width': cardWidth+'px'}"
+        >
+          <ClotheForm 
+            :id="clothe._id"
+            :key="clothe._id"
+            :image="clothe.image"
+            :editClothe="edit ? clothe : undefined"
+            :cardWidth="cardWidth"
+            :cardHeight="swiperHeight"
+            @payloadSave="setClothe($event, clothe._id)"
+            @payloadUpdate="setUpdatedClothe($event, clothe._id)"
+            @remove="removeClothe($event, index)"
+          />
+        </div>
+      </div>
+    </div>
 
     <v-toolbar
       v-if="existsClothes"
@@ -90,7 +93,7 @@
         small
         style="margin: 0px 10px;"
         icon 
-        @click="prev()" 
+        @click="previousSlide()" 
         :disabled="pageCount === 1"
       >
         <v-icon color="white">
@@ -110,7 +113,7 @@
         small
         style="margin: 0px 10px;"
         icon 
-        @click="next()" 
+        @click="nextSlide()" 
         :disabled="pageCount === clothes.length"
       >
         <v-icon color="white">
@@ -141,14 +144,11 @@ import { mapActions, mapMutations, mapGetters } from "vuex"
 import ClotheForm from "./../components/closet/ClotheForm.vue"
 import ButtonAddClothe from "./../components/closet/ButtonAddClothe.vue"
 import DialogLoading from "./../components/DialogLoading.vue"
-import { Swiper, SwiperSlide } from "vue-awesome-swiper"
-import "swiper/swiper-bundle.css"
+/*global Swiper*/
 
 export default {
   components: {
     ClotheForm,
-    Swiper,
-    SwiperSlide,
     ButtonAddClothe,
     DialogLoading
   },
@@ -157,18 +157,15 @@ export default {
   ],
   beforeDestroy () {
     this.clearUploadInterval()
-
     this.resetClothes()
-
     this.resetUpdatedClothes()
-
     if (this.edit) {
       this.setToolbarTitle("Lookmix")
     }
   },
   mounted () {
+    this.initSwiper()
     this.setPreviousPage("/closet")
-
     if (this.edit) {
       this.setToolbarTitle("Atualizar peças")
       this.updateSaveButtonState(false)
@@ -186,20 +183,19 @@ export default {
   data () {
     return {
       index: 0,
-      swiperOptions: {
-        centeredSlides: true,
-        slidesPerView: "auto",
-        spaceBetween: 10
-      },
       uploadProgress: 0,
-      uploadInterval: {}
+      uploadInterval: {},
+      swiperInstance: undefined
     }
   },
   watch: {
     totalClothes: {
       handler: function (val, oldVal) {
         if (val > oldVal) {
-          this.slideToBegin()
+          setTimeout(() => {
+            this.swiperInstance.update()
+            this.slideToBegin()
+          }, 250)
         }
       },
       deep: true
@@ -306,38 +302,36 @@ export default {
     removeClothe (event, index) {
       this.removeClotheOnIndex(index)
       this.updateSaveButtonState()
-
       if (this.index > 0) {
-        this.prev()
+        this.previousSlide()
       }
+      setTimeout(() => {
+        this.swiperInstance.update()
+      }, 250)
     },
     updateSaveButtonState () {
       let disable = false
-
       if (this.clothes.length < 1) {
         disable = true
       }
       this.setDisableSaveClothesButton(disable)
     },
     slideToBegin () {
-      const swiperRef = this.$refs.mySwiper
-      if (swiperRef) {
+      if (this.swiperElement()) {
         this.index = 0
-        swiperRef.$swiper.slideTo(this.index, 400, false)
+        this.swiperElement().slideTo(this.index, 400, false)
       }
     },
-    next () {
-      const swiperRef = this.$refs.mySwiper
-      if (swiperRef) {
+    nextSlide () {
+      if (this.swiperElement()) {
         this.index++
-        swiperRef.$swiper.slideTo(this.index, 400, false)
+        this.swiperElement().slideTo(this.index, 400, false)
       }
     },
-    prev () {
-      const swiperRef = this.$refs.mySwiper
-      if (swiperRef) {
+    previousSlide () {
+      if (this.swiperElement()) {
         this.index--
-        swiperRef.$swiper.slideTo(this.index, 400, false)
+        this.swiperElement().slideTo(this.index, 400, false)
       }
     },
     onSlideChange (event) {
@@ -351,7 +345,30 @@ export default {
       this.setClotheUploadSuccess(undefined)
       this.$router.push("/closet")
       this.resetClothes()
+    },
+    initSwiper(initialSlide=0) {
+      this.swiperInstance = new Swiper(".swiper", {
+        centeredSlides: true,
+        slidesPerView: "auto",
+        spaceBetween: 10,
+        initialSlide: initialSlide
+      });
+      const self = this
+      const eventName = "slideChangeTransitionEnd"
+      this.swiperInstance.on(eventName, function () {
+        self.index = this.activeIndex
+      })
+    },
+    swiperElement () {
+      return document.querySelector(".swiper").swiper;
     }
   }
 }
 </script>
+
+<style scoped>
+.swiper {
+  width: 100%;
+  /* height: 545px; */
+}
+</style>
