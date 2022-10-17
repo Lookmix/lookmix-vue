@@ -111,7 +111,7 @@ export default {
       snackbarErrorMsg: undefined,
       showDialog: false,
       showCloseButton: false,
-      loadingTimeoutInMiliseconds: 20_000
+      loadingTimeoutInMiliseconds: 20000
     }
   },
   methods: {
