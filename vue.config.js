@@ -1,12 +1,12 @@
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production'
-  ? '/lookmix-vue/'
-  : '/',
+  publicPath: process.env.NODE_ENV === "production"
+  ? "/lookmix-vue/"
+  : "/",
   transpileDependencies: [
-    'vuetify'
+    "vuetify"
   ],
   pwa: {
-    themeColor: '#ffb6c1ad', //#FFFFFF
-    manifestPath: 'manifest.json'
+    themeColor: "#ffb6c1ad", //#FFFFFF
+    manifestPath: "manifest.json"
   }
 }
