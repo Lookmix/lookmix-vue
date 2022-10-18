@@ -83,15 +83,6 @@ export default {
   data () {
     return {
       selectedPanel: undefined,
-      daysOfWeek: [
-        "domingo",
-        "segunda",
-        "terça",
-        "quarta",
-        "quinta",
-        "sexta",
-        "sábado",
-      ],
       payload: [],
       initialValues: [],
       showDialog: false
@@ -162,6 +153,9 @@ export default {
         }
         return result
       })
+    },
+    daysOfWeek () {
+      return models.daysOfWeek
     }
   },
   methods: {
