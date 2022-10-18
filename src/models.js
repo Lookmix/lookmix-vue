@@ -35,30 +35,18 @@ export const seasons = [
 
 export const periodOfTime = [ DAY, NIGHT ]
 
-export const occasions = [
-  DAY, // para usar de dia
-  NIGHT, // para usar de noite
-  
-  // rotina // cotidiano // daily
-  "básico/comum", 
-  "trabalho", // uniforme, dress code
-  "curso/faculdade", // uniforme, atividades estudantis
-  "atividade física", // esportes, caminhada, academia
-  "prática religiosa", // templos religiosos, ar livre
-
-  // esporádico // eventual //
-  "festa/evento", // shows de músicas, comemorações, baladas.
-  "restaurante", // barzinho, alta gastronomia
-  "shopping", // compras, 
-  "viagem", // 
-  "praia/piscina", // roupas de banho, sol
-  "natureza", // trilhas, acampamentos, sítios
-  "encontro/date", // 
-  "entretenimento" // cinema, teatro, museu, estádio de futebol
-]
-
 export const closets = [
   CASUAL, SOCIAL
+]
+
+export const daysOfWeek = [
+  "domingo",
+  "segunda",
+  "terça",
+  "quarta",
+  "quinta",
+  "sexta",
+  "sábado"
 ]
 
 const occasion = {
