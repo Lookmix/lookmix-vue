@@ -451,7 +451,6 @@ export default {
         for (let occasion of occasions) {
           looks = this.socialLooks[occasion.occasion_id].concat(this.casualLooks[occasion.occasion_id])
         }
-        console.log(looks)
         return looks
       }
       if (this.selectedCloset === 1) {
@@ -459,14 +458,12 @@ export default {
         for (let occasion of occasions) {
           looks = looks.concat(this.socialLooks[occasion.occasion_id])
         }
-        console.log(looks)
         return looks
       }
       let looks = []
       for (let occasion of occasions) {
         looks = looks.concat(this.casualLooks[occasion.occasion_id])
       }
-      console.log(looks)
       return looks
     },
     hasSelectedFilters () {
@@ -490,7 +487,6 @@ export default {
       const days = this.daysOfWeek.map(day => day.sort)
       const indexOfDay = days.indexOf(today)
       const occasions = this.daysOfWeek[indexOfDay].occasions
-      console.log(occasions)
       return occasions
     },
     days () {
@@ -524,7 +520,7 @@ export default {
         const date = this.getDate(i)
         if (this.daysOfWeek[date.getDay()]) {
           let dayOfWeek = {
-            dayWeek: this.daysOfWeek[date.getDay()].day_of_week.slice(0, 3),//"SEX",
+            dayWeek: this.daysOfWeek[date.getDay()].day_of_week.slice(0, 3), // dom, seg, ter, qua, qui, sex, sab
             day: date.getDate()+""
           }
           days.push(dayOfWeek)
