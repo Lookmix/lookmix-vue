@@ -29,6 +29,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import DialogLoading from "./DialogLoading.vue"
+import * as models from "./../models.js"
 
 export default {
   components: {
@@ -65,6 +66,19 @@ export default {
           }
           return newOccasion
         })
+      }
+      const daysOfWeek = dailyLookSetup.map(item => item.day_of_week)
+      const defaultDaysOfWeek = models.daysOfWeek
+      for (let dayOfWeek of defaultDaysOfWeek) {
+        if (!daysOfWeek.includes(dayOfWeek)) {
+          const index = models.daysOfWeek.indexOf(dayOfWeek)
+          const emptyLookSetup = {
+            day_of_week: dayOfWeek,
+            sort: index,
+            occasions: []
+          }
+          dailyLookSetup.splice(index, 0, emptyLookSetup)
+        }
       }
       if (dailyLookSetup.length > 0) {
         this.updateDailyLookSetup(dailyLookSetup)
