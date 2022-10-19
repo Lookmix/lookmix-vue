@@ -274,13 +274,15 @@
       <v-divider class="mx-2"> </v-divider>
 
       <template
-        v-for="(value, index) of occasions"
+        v-for="(occasion, index) of occasions"
       >
         <look 
-          :look="looks[selectedDay]"
+          :look="looks[index]"
+          :occasion="getOccasionCardLookTitleById(occasion.occasion_id)"
           :key="index"
         />
       </template>
+      <br/>
     </template>
 
     <dialog-fetch-data-loading
@@ -435,7 +437,8 @@ export default {
       categories: "categories",
       casualLooks: "casualLooks",
       socialLooks: "socialLooks",
-      dailyLookSetupGetter: "dailyLookSetup"
+      dailyLookSetupGetter: "dailyLookSetup",
+      occasionsGetter: "occasions"
     }),
     width () {
       return window.innerWidth
@@ -449,20 +452,23 @@ export default {
       if (this.selectedCloset === undefined) {
         let looks = []
         for (let occasion of occasions) {
-          looks = this.socialLooks[occasion.occasion_id].concat(this.casualLooks[occasion.occasion_id])
+          // TODO: use casual looks reference
+          // looks = this.socialLooks[occasion.occasion_id].concat(this.casualLooks[occasion.occasion_id])
         }
         return looks
       }
       if (this.selectedCloset === 1) {
         let looks = []
         for (let occasion of occasions) {
-          looks = looks.concat(this.socialLooks[occasion.occasion_id])
+          // TODO: use casual looks reference
+          // looks = looks.concat(this.socialLooks[occasion.occasion_id])
         }
         return looks
       }
       let looks = []
       for (let occasion of occasions) {
-        looks = looks.concat(this.casualLooks[occasion.occasion_id])
+        // looks = looks.concat(this.casualLooks[occasion.occasion_id])
+        looks.push(this.casualLooks[occasion.occasion_id][this.selectedDay])
       }
       return looks
     },
@@ -483,11 +489,13 @@ export default {
       return this.dailyLookSetupGetter.days_of_week
     },
     occasions () {
-      const today = new Date().getDay()
-      const days = this.daysOfWeek.map(day => day.sort)
-      const indexOfDay = days.indexOf(today)
-      const occasions = this.daysOfWeek[indexOfDay].occasions
-      return occasions
+      if (this.days[this.selectedDay] !== undefined && this.days[this.selectedDay] !== null) {
+        const day = this.days[this.selectedDay].dayWeekInt // new Date().getDay()
+        const days = this.daysOfWeek.map(day => day.sort)
+        const indexOfDay = days.indexOf(day)
+        const occasions = this.daysOfWeek[indexOfDay].occasions
+        return occasions
+      } return []
     },
     days () {
       let totalDays = 0
@@ -518,10 +526,12 @@ export default {
       const days = []
       for (let i=0; i < totalDays; i++) {
         const date = this.getDate(i)
-        if (this.daysOfWeek[date.getDay()]) {
+        const dayInt = date.getDay()
+        if (this.daysOfWeek[dayInt]) {
           let dayOfWeek = {
-            dayWeek: this.daysOfWeek[date.getDay()].day_of_week.slice(0, 3), // dom, seg, ter, qua, qui, sex, sab
-            day: date.getDate()+""
+            dayWeek: this.daysOfWeek[dayInt].day_of_week.slice(0, 3), // dom, seg, ter, qua, qui, sex, sab
+            day: date.getDate()+"",
+            dayWeekInt: dayInt
           }
           days.push(dayOfWeek)
         }
@@ -566,6 +576,13 @@ export default {
       }
       let date = new Date();
       return date.addDays(daysToSum);
+    },
+    getOccasionCardLookTitleById (occasionId) {
+      const occasion = this.occasionsGetter.filter(item => item._id === occasionId)[0]
+      if (occasion) {
+        const cardLookTitle = occasion.card_look_title
+        return cardLookTitle
+      } return ""
     }
   }
 }
