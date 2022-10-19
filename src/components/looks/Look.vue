@@ -45,7 +45,7 @@
               style="font-size: 18px;"
               class="pt-2 pb-4 px-4 font-weight-medium"
             >
-              Look básico/comum
+              {{ occasion }}
             </div>
           </div>
 
@@ -165,8 +165,6 @@
       </v-card>
     </div>
 
-    <br/>
-
     <clothe-details
       :showDetails="showClotheDetails" 
       :clothe="clotheDetails"
@@ -185,6 +183,9 @@ export default {
       default: function () {
         return {}
       }
+    },
+    occasion: {
+      type: String
     }
   },
   components: {
