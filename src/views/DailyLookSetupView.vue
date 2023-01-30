@@ -230,7 +230,9 @@ export default {
       if (!occasion) {
         return undefined
       }
-      const dayValue = models.DAY
+      const dayValue = this.occasions.filter(x => 
+        x.name.toLocaleLowerCase() === models.DAY
+      )[0]._id
       const casualCheck = occasion.casual.includes(dayValue)
       const socialCheck = occasion.social.includes(dayValue)
       if (casualCheck) {
@@ -254,7 +256,9 @@ export default {
       if (!occasion) {
         return undefined
       }
-      const nightValue = models.NIGHT
+      const nightValue = this.occasions.filter(x => 
+        x.name.toLocaleLowerCase() === models.NIGHT
+      )[0]._id
       const casualCheck = occasion.casual.includes(nightValue)
       const socialCheck = occasion.social.includes(nightValue)
       if (casualCheck) {

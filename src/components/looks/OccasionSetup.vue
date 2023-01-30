@@ -76,6 +76,9 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex"
+import * as models from "./../../models.js"
+
 export default {
   props: {
     occasion: {
@@ -134,6 +137,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      "occasions"
+    ]),
     enableMandatoryDay () {
       return this.selectedNight === undefined
     },
@@ -145,6 +151,18 @@ export default {
         return this.closets
       }
       return [ this.casual ]
+    },
+    nightId () {
+      const nightId = this.occasions.filter(x => 
+        x.name.toLocaleLowerCase() === models.NIGHT
+      )[0]._id
+      return nightId
+    },
+    dayId () {
+      const dayId = this.occasions.filter(x => 
+        x.name.toLocaleLowerCase() === models.DAY
+      )[0]._id
+      return dayId
     }
   },
   methods: {
@@ -156,11 +174,11 @@ export default {
       }
       if (this.selectedDay !== undefined) {
         const closetDay = this.closets[this.selectedDay]
-        payload[closetDay].push("dia")
+        payload[closetDay].push(this.dayId)
       }
       if (this.selectedNight !== undefined) {
         const closetNight = this.closets[this.selectedNight]
-        payload[closetNight].push("noite")
+        payload[closetNight].push(this.nightId)
       }
       this.$emit("updateOccasion", payload)
     },
