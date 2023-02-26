@@ -1,5 +1,6 @@
 import Vue from "vue"
 import Vuex from "vuex"
+import * as models from "./../models.js"
 
 import axiosInstance from "@/http.js"
 const axios = axiosInstance
@@ -53,7 +54,10 @@ export default new Vuex.Store({
     },
     casualLooks: [],
     socialLooks: [],
-    dailyLookSetup: undefined
+    dailyLookSetup: undefined,
+    lookset: {
+      looks: []
+    }
   },
   getters: {
     authenticated: state => state.authenticated,
@@ -91,7 +95,8 @@ export default new Vuex.Store({
     },
     casualLooks: state => state.casualLooks,
     socialLooks: state => state.socialLooks,
-    dailyLookSetup: state => state.dailyLookSetup
+    dailyLookSetup: state => state.dailyLookSetup,
+    lookset: state => state.lookset
   },
   mutations: {
     setNewUser(state, data) {
@@ -209,6 +214,9 @@ export default new Vuex.Store({
         const indexToRemove = clothes.indexOf(clothe)
         state.fetchCasualClothes.splice(indexToRemove, 1)
       }
+    },
+    setLookset (state, data) {
+      state.lookset = data
     },
     setCasualLooks (state, data) {
       state.casualLooks = data
@@ -408,8 +416,50 @@ export default new Vuex.Store({
       return axios.put(url, data, { withCredentials: true })
     },
     getDailyLookSetup ({state}) {
-      const url = `${DOMAIN}/look/find_daily_look_setup_by_user_id`
-      return axios.get(url, { withCredentials: true })
+      // const url = `${DOMAIN}/look/find_daily_look_setup_by_user_id`
+      // return axios.get(url, { withCredentials: true })
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve({
+            data: models.DAILY_LOOK_SETUP
+          });
+        }, 1000);
+      });
+    },
+    getLookset({state}) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve({
+            data: models.LOOKSET
+          });
+        }, 1000);
+      });
+    },
+    getCasualLooks() {
+      // const url = `${DOMAIN}/look/casual`
+      // return axios.get(url, { withCredentials: true })
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve({
+            data: models.LOOKSET
+          });
+        }, 1000);
+      });
+    },
+    getSocialLooks() {
+      // const url = `${DOMAIN}/look/social`
+      // return axios.get(url, { withCredentials: true })
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve({
+            data: []
+          });
+        }, 1000);
+      });
+    },
+    getAllLooks({ state }, type) {
+      const url = `${DOMAIN}/look/${type}`
+      return axios.get(url)
     }
   },
   modules: {
