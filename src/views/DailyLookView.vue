@@ -274,11 +274,10 @@
       <v-divider class="mx-2"> </v-divider>
 
       <template
-        v-for="(occasion, index) of occasions"
+        v-for="(look, index) of looks"
       >
         <look 
-          :look="looks[index]"
-          :occasion="getOccasionCardLookTitleById(occasion.occasion_id)"
+          :look="look"
           :key="index"
         />
       </template>
@@ -312,7 +311,7 @@
 import { mapActions, mapGetters, mapMutations } from "vuex"
 import Look from "./../components/looks/Look.vue"
 import DialogFetchDataLoading from "./../components/DialogFetchDataLoading.vue"
-import * as models from "./../models.js"
+import * as utils from "./../utils.js"
 
 export default {
   components: {
@@ -323,43 +322,6 @@ export default {
     return {
       selectedCloset: 0,
       selectedPeriod: 0,
-      // days: [],
-      /*
-      [
-        {
-          dayWeek: "SEX",
-          day: "27"
-        },
-        {
-          dayWeek: "SAB",
-          day: "28"
-        },
-        {
-          dayWeek: "DOM",
-          day: "29"
-        },
-        {
-          dayWeek: "SEG",
-          day: "30"
-        },
-        {
-          dayWeek: "TER",
-          day: "31"
-        },
-        {
-          dayWeek: "QUA",
-          day: "01"
-        },
-        {
-          dayWeek: "QUI",
-          day: "02"
-        },
-        {
-          dayWeek: "SEX",
-          day: "03"
-        },
-      ], 
-      */
       selectedDay: null,
       expansionPanelFilters: undefined,
       closetFilters: [ "casual", "social" ],
@@ -377,28 +339,28 @@ export default {
     categories: {
       handler (value, oldValue) {
         if (this.dailyLookSetup) {
-          this.generateLook()
+          // this.generateLook()
         }
       }
     },
     fetchCasualClothes: {
       handler (value, oldValue) {
         if (this.dailyLookSetup) {
-          this.generateLook()
+          // this.generateLook()
         }
       }
     },
     fetchSocialClothes: {
       handler (value, oldValue) {
         if (this.dailyLookSetup) {
-          this.generateLook()
+          // this.generateLook()
         }
       }
     },
     dailyLookSetup: {
       handler (value, oldValue) {
         if (value) {
-          this.generateLook()
+          // this.generateLook()
         }
         this.showDialog = false
       }
@@ -423,6 +385,14 @@ export default {
         }
         this.setDailyLookSetup(data)
         this.dailyLookSetup = data
+        this.getLookset()
+          .then((response) => {
+            const data = response.data
+            this.setLookset(data)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
       })
       .catch((error) => {
         this.errorSnackbar = true
@@ -438,38 +408,13 @@ export default {
       casualLooks: "casualLooks",
       socialLooks: "socialLooks",
       dailyLookSetupGetter: "dailyLookSetup",
-      occasionsGetter: "occasions"
+      lookset: "lookset"
     }),
     width () {
       return window.innerWidth
     },
     looks () {
-      // const today = new Date().getDay()
-      // const days = this.daysOfWeek.map(day => day.sort)
-      // const indexOfDay = days.indexOf(today)
-      const dayOfWeek = this.getDate(this.selectedDay).getDay()
-      const occasions = this.daysOfWeek[dayOfWeek].occasions
-      if (this.selectedCloset === undefined) {
-        let looks = []
-        for (let occasion of occasions) {
-          // TODO: use casual looks reference
-          // looks = this.socialLooks[occasion.occasion_id].concat(this.casualLooks[occasion.occasion_id])
-        }
-        return looks
-      }
-      if (this.selectedCloset === 1) {
-        let looks = []
-        for (let occasion of occasions) {
-          // TODO: use casual looks reference
-          // looks = looks.concat(this.socialLooks[occasion.occasion_id])
-        }
-        return looks
-      }
-      let looks = []
-      for (let occasion of occasions) {
-        // looks = looks.concat(this.casualLooks[occasion.occasion_id])
-        looks.push(this.casualLooks[occasion.occasion_id][this.selectedDay])
-      }
+      const looks = this.lookset.looks.filter(look => look.sort === this.selectedDay)
       return looks
     },
     hasSelectedFilters () {
@@ -498,34 +443,10 @@ export default {
       } return []
     },
     days () {
-      let totalDays = 0
-      let totalLooksByDayOfWeek = []
-      for (let day of this.daysOfWeek) {
-        let dailyLookCount = 0
-        for (let occasion of day.occasions) {
-          dailyLookCount += occasion.casual.concat(occasion.social).length
-        }
-        totalLooksByDayOfWeek.push(dailyLookCount)
-        dailyLookCount = 0
-      }
-      let totalLooks = 0
-      const casualLooksList = Object.entries(this.casualLooks)
-      for (let casualLook of casualLooksList) {
-        totalLooks += casualLook[1].length
-      }
-      const socialLooksList = Object.entries(this.socialLooks)
-      for (let socialLook of socialLooksList) {
-        totalLooks += socialLook[1].length
-      }
-      while (totalLooks > 0) {
-        for (let dailyLookCount of totalLooksByDayOfWeek) {
-          totalLooks -= dailyLookCount
-          totalDays += 1
-        }
-      }
+      const totalDays = this.lookset.total_days
       const days = []
       for (let i=0; i < totalDays; i++) {
-        const date = this.getDate(i)
+        const date = utils.sumDaysAndGetDate(i)
         const dayInt = date.getDay()
         if (this.daysOfWeek[dayInt]) {
           let dayOfWeek = {
@@ -543,47 +464,39 @@ export default {
     ...mapActions([
       "getClothes",
       "getCategories",
-      "getDailyLookSetup"
+      "getDailyLookSetup",
+      // "getCasualLooks",
+      // "getSocialLooks",
+      "getLookset"
     ]),
     ...mapMutations([
       "setCasualLooks",
       "setSocialLooks",
       "setToolbarTitle",
-      "setDailyLookSetup"
+      "setDailyLookSetup",
+      "setLookset"
     ]),
     generateLook () {
-      const casualLooks = models.generateLook(
-        this.categories, 
-        this.fetchCasualClothes,
-        this.dailyLookSetup.days_of_week
-      )
-      this.setCasualLooks(casualLooks)
-      const socialLooks = models.generateLook(
-        this.categories, 
-        this.fetchSocialClothes,
-        this.dailyLookSetup.days_of_week
-      )
-      this.setSocialLooks(socialLooks)
+      // this.getCasualLooks()
+      //   .then((response) => {
+      //     const data = response.data
+      //     this.setCasualLooks(data)
+      //   })
+      //   .catch((error) => {
+      //     console.log(error)
+      //   })
+      // this.getSocialLooks()
+      //   .then((response) => {
+      //     const data = response.data
+      //     this.setSocialLooks(data)
+      //   })
+      //   .catch((error) => {
+      //     console.log(error)
+      //   })
     },
     redirectToDailyLookSetup () {
       this.$router.push("/daily-look-setup")
     },
-    getDate (daysToSum) {
-      Date.prototype.addDays = function(days) {
-        const date = new Date(this.valueOf());
-        date.setDate(date.getDate() + days);
-        return date;
-      }
-      let date = new Date();
-      return date.addDays(daysToSum);
-    },
-    getOccasionCardLookTitleById (occasionId) {
-      const occasion = this.occasionsGetter.filter(item => item._id === occasionId)[0]
-      if (occasion) {
-        const cardLookTitle = occasion.card_look_title
-        return cardLookTitle
-      } return ""
-    }
   }
 }
 </script>

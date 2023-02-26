@@ -45,7 +45,7 @@
               style="font-size: 18px;"
               class="pt-2 pb-4 px-4 font-weight-medium"
             >
-              {{ occasion }}
+              {{ getOccasionCardLookTitleById(look.occasion) }}
             </div>
           </div>
 
@@ -126,7 +126,7 @@
         <v-card-text class="mt-n4">
           <v-row no-gutters>
             <v-col
-              v-for="(value, key) in look"
+              v-for="(value, key) in look.data"
               :key="key"
               :cols="3"
               class="child-flex"
@@ -166,6 +166,7 @@
     </div>
 
     <clothe-details
+      v-if="!lazy"
       :showDetails="showClotheDetails" 
       :clothe="clotheDetails"
       @closeDialog="showClotheDetails = false; clotheDetails = undefined;"
@@ -174,6 +175,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex"
 import ClotheDetails from "./../closet/ClotheDetails.vue"
 
 export default {
@@ -184,8 +186,9 @@ export default {
         return {}
       }
     },
-    occasion: {
-      type: String
+    lazy: {
+      type: Boolean,
+      default: false
     }
   },
   components: {
@@ -198,11 +201,23 @@ export default {
       showLookOptions: false
     }
   },
+  computed: {
+    ...mapGetters({
+      occasionsGetter: "occasions"
+    })
+  },
   methods: {
     openDetails (clothe) {
       this.clotheDetails = clothe
       this.showClotheDetails = true
-    }
+    },
+    getOccasionCardLookTitleById (occasionId) {
+      const occasion = this.occasionsGetter.filter(item => item._id === occasionId)[0]
+      if (occasion) {
+        const cardLookTitle = occasion.card_look_title
+        return cardLookTitle
+      } return ""
+    },
   }
 }
 </script>
