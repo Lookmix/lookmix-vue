@@ -427,13 +427,15 @@ export default new Vuex.Store({
       });
     },
     getLookset({state}) {
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve({
-            data: models.LOOKSET
-          });
-        }, 1000);
-      });
+      // return new Promise((resolve, reject) => {
+      //   setTimeout(() => {
+      //     resolve({
+      //       data: models.LOOKSET
+      //     });
+      //   }, 1000);
+      // });
+      const url = `${DOMAIN}/look/list`
+      return axios.get(url, { withCredentials: true })
     },
     getCasualLooks() {
       // const url = `${DOMAIN}/look/casual`
