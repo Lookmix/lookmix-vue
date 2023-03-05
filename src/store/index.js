@@ -416,15 +416,15 @@ export default new Vuex.Store({
       return axios.put(url, data, { withCredentials: true })
     },
     getDailyLookSetup ({state}) {
-      // const url = `${DOMAIN}/look/find_daily_look_setup_by_user_id`
-      // return axios.get(url, { withCredentials: true })
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve({
-            data: models.DAILY_LOOK_SETUP
-          });
-        }, 1000);
-      });
+      const url = `${DOMAIN}/look/find_daily_look_setup_by_user_id`
+      return axios.get(url, { withCredentials: true })
+      // return new Promise((resolve, reject) => {
+      //   setTimeout(() => {
+      //     resolve({
+      //       data: models.DAILY_LOOK_SETUP
+      //     });
+      //   }, 1000);
+      // });
     },
     getLookset({state}) {
       // return new Promise((resolve, reject) => {
