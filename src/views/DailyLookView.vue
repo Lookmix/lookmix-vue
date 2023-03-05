@@ -444,9 +444,15 @@ export default {
       } return []
     },
     days () {
-      const totalDays = this.lookset.total_days
+      const daysCount = this.lookset.days_count
+      let totalDays = this.lookset.total_days
+      let index = 0
+      if (daysCount > 0) {
+        totalDays -= daysCount
+        index -= daysCount
+      }
       const days = []
-      for (let i=0; i < totalDays; i++) {
+      for (let i=index; i < totalDays; i++) {
         const date = utils.sumDaysAndGetDate(i)
         const dayInt = date.getDay()
         if (this.daysOfWeek[dayInt]) {
