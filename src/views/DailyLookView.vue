@@ -285,7 +285,7 @@
     </template>
 
     <dialog-fetch-data-loading
-      :showDialog="showDialog"
+      :showDialog="showDialog && selectedDay != undefined"
     />
 
     <v-snackbar
@@ -322,7 +322,7 @@ export default {
     return {
       selectedCloset: 0,
       selectedPeriod: 0,
-      selectedDay: null,
+      selectedDay: undefined,
       expansionPanelFilters: undefined,
       closetFilters: [ "casual", "social" ],
       periodFilters: [ 
@@ -369,13 +369,13 @@ export default {
   mounted () {
     this.showDialog = true
     if (this.categories.length < 1) {
-      this.getCategories()
+      // this.getCategories()
     }
     if (this.fetchCasualClothes.length < 1) {
-      this.getClothes("casual")
+      // this.getClothes("casual")
     }
     if (this.fetchSocialClothes.length < 1) {
-      this.getClothes("social")
+      // this.getClothes("social")
     }
     this.getDailyLookSetup()
       .then((response) => {
@@ -388,6 +388,7 @@ export default {
         this.getLookset()
           .then((response) => {
             const data = response.data
+            this.selectedDay = data.days_count
             this.setLookset(data)
           })
           .catch((error) => {
@@ -462,7 +463,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      "getClothes",
+      // "getClothes",
       "getCategories",
       "getDailyLookSetup",
       // "getCasualLooks",
