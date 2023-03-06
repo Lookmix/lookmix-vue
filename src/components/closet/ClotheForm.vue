@@ -162,6 +162,7 @@
               <v-chip 
                 v-for="(season, index) in seasons"
                 :key="index"
+                class="text-capitalize"
               >
                 <v-icon left>
                   {{ getSeasonIcon(season) }}
