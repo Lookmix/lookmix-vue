@@ -12,31 +12,34 @@
                 class="d-flex" 
                 style="flex-wrap: wrap; margin-left: -2px;"
               >
+                <!-- period -->
                 <v-chip 
                   small
                   :color="'grey lighten-3'"
                   :text-color="'grey darken-2'"
                   class="mr-1 mb-1 mt-1 font-weight-medium text-uppercase"
                 >
-                  dia
+                  {{ lookPeriod }}
                 </v-chip>
 
+                <!-- type -->
                 <v-chip 
                   small
                   :color="'grey lighten-3'"
                   :text-color="'grey darken-2'"
                   class="mr-1 mb-1 mt-1 font-weight-medium text-uppercase"
                 >
-                  casual
+                  {{ look.type }}
                 </v-chip>
 
+                <!-- season -->
                 <v-chip 
                   small
                   :color="'grey lighten-3'"
                   :text-color="'grey darken-2'"
                   class="mr-1 mb-1 mt-1 font-weight-medium text-uppercase"
                 >
-                  inverno
+                  {{ look.season[0] }}
                 </v-chip>
               </div>
             </v-card-subtitle>
@@ -45,7 +48,7 @@
               style="font-size: 18px;"
               class="pt-2 pb-4 px-4 font-weight-medium"
             >
-              {{ getOccasionCardLookTitleById(look.occasion) }}
+              {{ cardLookTitle }}
             </div>
           </div>
 
@@ -204,19 +207,25 @@ export default {
   computed: {
     ...mapGetters({
       occasionsGetter: "occasions"
-    })
+    }),
+    lookPeriod () {
+      const periodId = this.look.period
+      const period = this.occasionsGetter.filter(item => item._id === periodId)[0]
+      return period.name
+    },
+    cardLookTitle () {
+      const occasionId = this.look.occasion
+      const occasion = this.occasionsGetter.filter(item => item._id === occasionId)[0]
+      if (!occasion) {
+        return ""
+      } 
+      return occasion.card_look_title
+    }
   },
   methods: {
     openDetails (clothe) {
       this.clotheDetails = clothe
       this.showClotheDetails = true
-    },
-    getOccasionCardLookTitleById (occasionId) {
-      const occasion = this.occasionsGetter.filter(item => item._id === occasionId)[0]
-      if (occasion) {
-        const cardLookTitle = occasion.card_look_title
-        return cardLookTitle
-      } return ""
     },
   }
 }
