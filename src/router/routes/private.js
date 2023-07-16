@@ -7,6 +7,7 @@ import DailyLookView from '@/views/DailyLookView.vue'
 import ClosetView from '@/views/ClosetView.vue'
 import ClothesFormView from "@/views/ClothesFormView.vue"
 import DailyLookSetupView from "@/views/DailyLookSetupView.vue"
+import AllLooksView from "@/views/AllLooksView.vue"
 
 const routes = [
   {
@@ -66,6 +67,16 @@ const routes = [
     component: DailyLookSetupView,
     meta: { 
       pageTitle: "Rotina semanal", 
+      maxHeight: true,
+      backgroundColor: "initial"
+    }
+  },
+  {
+    path: '/lookset',
+    name: 'lookset',
+    component: AllLooksView,
+    meta: { 
+      pageTitle: "Todos os looks", 
       maxHeight: true,
       backgroundColor: "initial"
     }

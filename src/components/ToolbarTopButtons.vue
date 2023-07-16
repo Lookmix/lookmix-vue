@@ -62,7 +62,10 @@
             </v-list-item-title>
           </v-list-item>
 
-          <v-list-item link>
+          <v-list-item 
+            link
+            @click="showDailyLookOptions=false; showAllLooks()"
+          >
             <v-list-item-title>
               TODOS OS LOOKS
             </v-list-item-title>
@@ -145,6 +148,9 @@ export default {
     },
     changeDailyLookSetup () {
       this.$router.push("/daily-look-setup")
+    },
+    showAllLooks () {
+      this.$router.push("/lookset")
     }
   }
 }
