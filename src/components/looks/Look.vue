@@ -229,6 +229,7 @@ export default {
     openDetails (clothe) {
       this.clotheDetails = clothe
       this.showClotheDetails = true
+      this.$emit("clotheClick", clothe)
     },
   }
 }
