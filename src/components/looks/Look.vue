@@ -211,6 +211,9 @@ export default {
     lookPeriod () {
       const periodId = this.look.period
       const period = this.occasionsGetter.filter(item => item._id === periodId)[0]
+      if (!period) {
+        return ""
+      } 
       return period.name
     },
     cardLookTitle () {
