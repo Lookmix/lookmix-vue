@@ -120,7 +120,7 @@
                   <v-icon left>
                     mdi-menu-down
                   </v-icon>
-                  18°  /  23°
+                  {{ minTemperature }}  /  {{ maxTemperature }}
                   <v-icon right>
                     mdi-menu-up
                   </v-icon>
@@ -367,6 +367,12 @@ export default {
     }
   },
   mounted () {
+    // navigator.geolocation.getCurrentPosition((position) => {
+    //   let lat = position.coords.latitude
+    //   let long = position.coords.longitude
+    //   console.log("lat", lat)
+    //   console.log("long", long)
+    // })
     this.showDialog = true
     if (this.categories.length < 1) {
       // this.getCategories()
@@ -377,6 +383,7 @@ export default {
     if (this.fetchSocialClothes.length < 1) {
       // this.getClothes("social")
     }
+    this.getDailyMinMaxTemperatures()
     this.getDailyLookSetup()
       .then((response) => {
         const data = response.data
@@ -409,7 +416,8 @@ export default {
       casualLooks: "casualLooks",
       socialLooks: "socialLooks",
       dailyLookSetupGetter: "dailyLookSetup",
-      lookset: "lookset"
+      lookset: "lookset",
+      dailyMinMaxTemperatures: "dailyMinMaxTemperatures"
     }),
     width () {
       return window.innerWidth
@@ -465,6 +473,16 @@ export default {
         }
       }
       return days
+    },
+    minTemperature () {
+      if (this.dailyMinMaxTemperatures) {
+        return `${this.dailyMinMaxTemperatures.min}°`
+      } return "-"
+    },
+    maxTemperature () {
+      if (this.dailyMinMaxTemperatures) {
+        return `${this.dailyMinMaxTemperatures.max}°`
+      } return "-"
     }
   },
   methods: {
@@ -474,7 +492,8 @@ export default {
       "getDailyLookSetup",
       // "getCasualLooks",
       // "getSocialLooks",
-      "getLookset"
+      "getLookset",
+      "getDailyMinMaxTemperatures"
     ]),
     ...mapMutations([
       "setCasualLooks",
