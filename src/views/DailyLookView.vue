@@ -118,11 +118,11 @@
                   class="my-0 py-0 font-weight-medium"
                 >
                   <v-icon left>
-                    mdi-menu-down
+                    mdi-white-balance-sunny
                   </v-icon>
-                  {{ minTemperature }}  /  {{ maxTemperature }}
+                  {{ dayTemperature }}  /  {{ eveningTemperature }}
                   <v-icon right>
-                    mdi-menu-up
+                    mdi-weather-night
                   </v-icon>
                 </v-chip>
               </v-chip-group>
@@ -383,7 +383,7 @@ export default {
     if (this.fetchSocialClothes.length < 1) {
       // this.getClothes("social")
     }
-    this.getDailyMinMaxTemperatures()
+    this.getTodayTemperatures()
     this.getDailyLookSetup()
       .then((response) => {
         const data = response.data
@@ -417,7 +417,7 @@ export default {
       socialLooks: "socialLooks",
       dailyLookSetupGetter: "dailyLookSetup",
       lookset: "lookset",
-      dailyMinMaxTemperatures: "dailyMinMaxTemperatures"
+      todayTemperatures: "todayTemperatures"
     }),
     width () {
       return window.innerWidth
@@ -474,14 +474,14 @@ export default {
       }
       return days
     },
-    minTemperature () {
-      if (this.dailyMinMaxTemperatures) {
-        return `${this.dailyMinMaxTemperatures.min}°`
+    dayTemperature () {
+      if (this.todayTemperatures) {
+        return `${this.todayTemperatures.day}°`
       } return "-"
     },
-    maxTemperature () {
-      if (this.dailyMinMaxTemperatures) {
-        return `${this.dailyMinMaxTemperatures.max}°`
+    eveningTemperature () {
+      if (this.todayTemperatures) {
+        return `${this.todayTemperatures.eve}°`
       } return "-"
     }
   },
@@ -493,7 +493,7 @@ export default {
       // "getCasualLooks",
       // "getSocialLooks",
       "getLookset",
-      "getDailyMinMaxTemperatures"
+      "getTodayTemperatures"
     ]),
     ...mapMutations([
       "setCasualLooks",

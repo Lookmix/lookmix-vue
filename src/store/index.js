@@ -58,7 +58,7 @@ export default new Vuex.Store({
     lookset: {
       looks: []
     },
-    dailyMinMaxTemperatures: undefined
+    todayTemperatures: undefined
   },
   getters: {
     authenticated: state => state.authenticated,
@@ -98,7 +98,7 @@ export default new Vuex.Store({
     socialLooks: state => state.socialLooks,
     dailyLookSetup: state => state.dailyLookSetup,
     lookset: state => state.lookset,
-    dailyMinMaxTemperatures: state => state.dailyMinMaxTemperatures
+    todayTemperatures: state => state.todayTemperatures
   },
   mutations: {
     setNewUser(state, data) {
@@ -468,11 +468,11 @@ export default new Vuex.Store({
       const url = `${DOMAIN}/look/${type}`
       return axios.get(url)
     },
-    async getDailyMinMaxTemperatures({state}) {
-      const url = `${DOMAIN}/season/current_weather`
+    async getTodayTemperatures({state}) {
+      const url = `${DOMAIN}/season/today_weather`
       const response = await axios.get(url, { withCredentials: true })
       const data = response.data
-      state.dailyMinMaxTemperatures = data
+      state.todayTemperatures = data
     }
   },
   modules: {
