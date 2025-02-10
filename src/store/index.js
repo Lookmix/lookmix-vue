@@ -7,10 +7,10 @@ const axios = axiosInstance
 
 Vue.use(Vuex)
 
-const HTTP_PROTOCOL = process.env.VUE_APP_HTTP_PROTOCOL
-const HOST_API = process.env.VUE_APP_HOST_API
-const PORT_API = process.env.VUE_APP_PORT_API
-const PORT_API_OTP = process.env.VUE_APP_PORT_API_OTP
+const HTTP_PROTOCOL = import.meta.env.VITE_HTTP_PROTOCOL
+const HOST_API = import.meta.env.VITE_HOST_API
+const PORT_API = import.meta.env.VITE_PORT_API
+const PORT_API_OTP = import.meta.env.VITE_PORT_API_OTP
 const DOMAIN = `${HTTP_PROTOCOL}://${HOST_API}:${PORT_API}`
 const DOMAIN_OTP = `${HTTP_PROTOCOL}://${HOST_API}:${PORT_API_OTP}`
 
