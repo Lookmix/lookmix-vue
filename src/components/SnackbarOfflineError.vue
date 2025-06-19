@@ -1,5 +1,11 @@
 <template>
   <div>
+    <!-- 
+      TODO: use a computed property to set snackbar value -> 
+      this.connectionOffline && this.showSnackbar, 
+      instead change directly the value of connectionOffline 
+      via mutation 
+    -->
     <v-snackbar
       :value="connectionOffline"
       color="error"
@@ -25,7 +31,7 @@ import { mapState, mapMutations } from "vuex"
 export default {
   computed: {
     ...mapState([
-      "connectionOffline"
+      "connectionOffline" // TODO: must be a getter
     ]),
   },
   methods: {
@@ -33,7 +39,8 @@ export default {
       "setConnectionOffline"
     ]),
     closeSnackbar () {
-      this.setConnectionOffline(false)
+      // TODO: this.showSnackbar = false
+      this.setConnectionOffline(false) // TODO: remove
     }
   }
 }
