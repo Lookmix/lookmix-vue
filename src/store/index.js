@@ -58,6 +58,9 @@ export default new Vuex.Store({
     lookset: {
       looks: []
     },
+    lookset2: {
+      looks: []
+    },
     todayTemperatures: undefined
   },
   getters: {
@@ -98,6 +101,7 @@ export default new Vuex.Store({
     socialLooks: state => state.socialLooks,
     dailyLookSetup: state => state.dailyLookSetup,
     lookset: state => state.lookset,
+    lookset2: state => state.lookset2,
     todayTemperatures: state => state.todayTemperatures
   },
   mutations: {
@@ -218,6 +222,7 @@ export default new Vuex.Store({
       }
     },
     setLookset (state, data) {
+      // state.lookset = models.LOOKSET
       state.lookset = data
     },
     setLookset2 (state, data) {
