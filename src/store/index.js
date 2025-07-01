@@ -248,12 +248,28 @@ export default new Vuex.Store({
         }
       })
     },
+    verifyDuplicatedEmail ({ state}, data) { // withCredentials: false
+      const url = `${DOMAIN}/users/is_email_unique`
+      return axios.get(`${url}`, {
+        params: {
+          email: data
+        }
+      })
+    },
     getOTPData ({ state }, data) { // withCredentials: false
       const url = `${DOMAIN_OTP}/auth/get_otp`
 
       return axios.get(`${url}`, {
         params: {
           phone: data
+        }
+      })      
+    },
+    getOTPData2 ({ state }, data) { // withCredentials: false
+      const url = `${DOMAIN_OTP}/auth/get_otp2`
+      return axios.get(`${url}`, {
+        params: {
+          email: data
         }
       })      
     },
@@ -274,6 +290,11 @@ export default new Vuex.Store({
 
       const user = state.newUser
 
+      return axios.post(url, user, { withCredentials: true })
+    },
+    saveUser2({ state }, data) {
+      const url = `${DOMAIN}/users/save2`
+      const user = state.newUser
       return axios.post(url, user, { withCredentials: true })
     },
     signin ({ state }, data) { // withCredentials: false
