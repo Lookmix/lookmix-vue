@@ -23,7 +23,8 @@ function handleRedirect (to, next, isPublicRoute) {
     store.commit("setIsLoginRoute", true)
 
     return next({
-      path: '/login',
+      // path: '/login',
+      path: '/login2',
     })
   }
   // logged try to access public route
@@ -55,7 +56,8 @@ router.beforeEach((to, from, next) => {
           store.commit("setAuthenticated", false)
 
           return next({
-            path: '/login',
+            // path: '/login',
+            path: '/login2',
           })
         }
       })
