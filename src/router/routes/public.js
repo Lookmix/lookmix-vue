@@ -8,6 +8,7 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginView,
+    redirect: "/login2",
     meta: {
       backgroundColor: "#ffb6c1ad"
     }
@@ -24,6 +25,7 @@ const routes = [
     path: '/new-user',
     name: 'newUser',
     component: NewUserView,
+    redirect: "/new-user2",
     meta: {
       backgroundColor: "#8341a1d4"
     }

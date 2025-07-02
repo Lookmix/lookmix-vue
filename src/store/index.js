@@ -302,6 +302,10 @@ export default new Vuex.Store({
 
       return axios.post(`${url}`, data)
     },
+     signin2 ({ state }, data) { // withCredentials: false
+      const url = `${DOMAIN}/auth/login2`
+      return axios.post(`${url}`, data)
+    },
     checkTokenValidity ({ state }, data) {
       const url = `${DOMAIN}/auth/verify_access`
 

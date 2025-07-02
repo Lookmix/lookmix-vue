@@ -138,7 +138,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      "signin",
+      "signin2",
       "checkTokenValidity"
     ]),
     ...mapMutations([
@@ -155,7 +155,7 @@ export default {
         "email": this.email,
         "password": this.password
       }
-      this.signin(payload)
+      this.signin2(payload)
         .then((response) => {
           this.checkTokenValidity()
             .then((response) => {
