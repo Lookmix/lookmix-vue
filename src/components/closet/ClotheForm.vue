@@ -168,7 +168,7 @@
                   {{ getSeasonIcon(season) }}
                 </v-icon>
 
-                {{ season }}
+                {{ season["name"] }}
               </v-chip>
             </v-chip-group>
           </v-sheet>
@@ -320,7 +320,7 @@ export default {
       }
       if (this.selectedSeasons.length > 0) {
         for (let seasonIndex of this.selectedSeasons) {
-          seasons.push(this.seasons[seasonIndex])
+          seasons.push(this.seasons[seasonIndex]["name"])
         }
       }
       const payload = {
@@ -356,9 +356,10 @@ export default {
       
       const clotheSeasons = this.editClothe.seasons
       const seasonIndexes = []
-
+      // TODO: remove this when update clothe's season key in db 
+      const seasonNames = this.seasons.map(season => season.name.toLocaleLowerCase())
       for (let season of clotheSeasons) {
-        const index = this.seasons.indexOf(season)
+        const index = seasonNames.indexOf(season)
         seasonIndexes.push(index)
       }
       this.selectedSeasons = seasonIndexes
@@ -398,10 +399,10 @@ export default {
       }
     },
     getSeasonIcon (season) {
-      season = season.toLocaleLowerCase()
+      season["name"] = season["name"].toLocaleLowerCase()
       const seasonIcons = models.seasonIcons
       for (let item of seasonIcons) {
-        if (item.name === season) {
+        if (item.name === season["name"]) {
           return item.icon
         }
       }
