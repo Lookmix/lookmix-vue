@@ -36,7 +36,7 @@
         <v-chip-group
           v-model="selectedDay"
           :mandatory="enableMandatoryDay"
-          active-class="pink accent-2 white--text"
+          active-class="pink-accent-2 text-white"
         >
           <v-chip
             class="font-weight-medium text-uppercase"
@@ -59,7 +59,7 @@
         <v-chip-group
           v-model="selectedNight"
           :mandatory="enableMandatoryNight"
-          active-class="pink accent-2 white--text"
+          active-class="pink-accent-2 text-white"
         >
           <v-chip
             class="font-weight-medium text-uppercase"

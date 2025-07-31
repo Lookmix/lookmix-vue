@@ -60,7 +60,7 @@
         v-model="expansionPanelFilters"
       >
         <v-expansion-panel>
-          <v-expansion-panel-header 
+          <v-expansion-panel-title 
             class="px-4"
             style="overflow-x: auto;"
             :hide-actions="selectedOccasions.length > 0"
@@ -89,7 +89,7 @@
                 <v-chip
                   class="my-0 py-0 font-weight-medium text-uppercase"
                 >
-                  <v-icon left>
+                  <v-icon start>
                     {{ periodFilters[selectedPeriod].icon }}
                   </v-icon>
                   {{ periodFilters[selectedPeriod].name }}
@@ -149,9 +149,9 @@
                 Nenhum filtro selecionado
               </template>
             </div>
-          </v-expansion-panel-header>
+          </v-expansion-panel-title>
 
-          <v-expansion-panel-content>
+          <v-expansion-panel-text>
             <v-divider></v-divider>
             <v-chip-group
               color="primary"
@@ -167,7 +167,7 @@
                 {{ occasion.name }}
               </v-chip>
             </v-chip-group>
-          </v-expansion-panel-content>
+          </v-expansion-panel-text>
         </v-expansion-panel>
       </v-expansion-panels>
     </v-card>

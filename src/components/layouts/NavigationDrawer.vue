@@ -1,24 +1,25 @@
 <template>
   <div>
     <v-navigation-drawer
-      app
-      :value="showNavDrawer"
+      :model-value="showNavDrawer"
       temporary
       width="250"
-      @input="updateDrawerState($event)"
+      @update:model-value="updateDrawerState($event)"
     >
       <v-list-item 
         :style="{
           'height': currentAppBarHeight+'px'
         }"
       >
-        <v-list-item-avatar>
-          <v-img src="../../assets/icon-512x512.png"></v-img>
-        </v-list-item-avatar>
+        <!-- <v-list-item-avatar> -->
+        <template v-slot:prepend>
+          <v-avatar image="../../assets/icon-512x512.png"></v-avatar>
+        </template>
+        <!-- </v-list-item-avatar> -->
 
-        <v-list-item-content>
+        <!-- <v-list-item-content> -->
           <v-list-item-title>John Leider</v-list-item-title>
-        </v-list-item-content>
+        <!-- </v-list-item-content> -->
       </v-list-item>
 
       <v-divider></v-divider>
@@ -29,23 +30,27 @@
           :key="item.title"
           link
         >
-          <v-list-item-icon>
+          <!-- <v-list-item-icon> -->
+          <template v-slot:prepend>
             <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+          </template>
+          <!-- </v-list-item-icon> -->
 
-          <v-list-item-content>
+          <!-- <v-list-item-content> -->
             <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
+          <!-- </v-list-item-content> -->
         </v-list-item>
 
         <v-list-item link @click="doLogout()">
-          <v-list-item-icon>
+          <!-- <v-list-item-icon> -->
+          <template v-slot:prepend>
             <v-icon>mdi-logout</v-icon>
-          </v-list-item-icon>
+          </template>
+          <!-- </v-list-item-icon> -->
 
-          <v-list-item-content>
+          <!-- <v-list-item-content> -->
             <v-list-item-title>SAIR</v-list-item-title>
-          </v-list-item-content>
+          <!-- </v-list-item-content> -->
         </v-list-item>
 
       </v-list>
@@ -57,9 +62,9 @@
     >
       {{ errorMessage }}
 
-      <template v-slot:action="{ attrs }">
+      <template v-slot:actions="{ attrs }">
         <v-btn
-          text
+          variant="text"
           v-bind="attrs"
           @click="errorSnackbar = false"
         >

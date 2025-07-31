@@ -1,6 +1,6 @@
 <template>
   <v-dialog
-    :value="show"
+    :model-value="show"
     width="250"
     persistent
   >
@@ -19,9 +19,8 @@
 
       <v-card-actions>
         <v-btn
-          text
-          small
-          outlined
+          size="small"
+          variant="outlined text"
           @click="cancel()"
         >
           Cancelar
@@ -29,8 +28,8 @@
         <v-spacer></v-spacer>
         <v-btn
           color="secondary"
-          text
-          small
+          variant="text"
+          size="small"
           @click="confirm()"
         >
           Continuar

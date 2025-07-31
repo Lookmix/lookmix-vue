@@ -15,12 +15,12 @@
         :src="image"
         :style="{ 'background-image': `url(${image})` }"
         class="backdrop-image"
-        contain
         eager
       >
         <v-btn 
-          fab 
-          x-small
+          icon
+          rounded-circle 
+          size="x-small"
           style="margin: 10px; float: right;"
           @click="closeDialog()"
         >
@@ -63,18 +63,22 @@
             outlined
           >
             <v-list
-              dense
-              three-line
+              density="compact"
+              lines="three"
               :color="'#FAFAFA'"
+
+              mandatory
             >
+              <!-- 
               <v-list-item-group
                 color="primary"
                 mandatory
-              >
+              > 
+              -->
                 <v-list-item
                   style="min-height: unset !important;"
                 >
-                  <v-list-item-content>
+                  <!-- <v-list-item-content> -->
                     <v-list-item-title>
                       {{ category ? category.name : "" }}
                     </v-list-item-title>
@@ -82,9 +86,9 @@
                     <v-list-item-subtitle>
                       {{ category ? category.description : "" }}
                     </v-list-item-subtitle>
-                  </v-list-item-content>
+                  <!-- </v-list-item-content> -->
                 </v-list-item>
-              </v-list-item-group>
+              <!-- </v-list-item-group> -->
             </v-list>
           </v-sheet>
         </div>
@@ -107,7 +111,7 @@
               color="primaryLight" 
               text-color="primary"
             >
-              <v-icon left>
+              <v-icon start>
                 {{ getSeasonIcon(season) }}
               </v-icon>
 
@@ -250,7 +254,8 @@ export default {
 </script>
 
 <style scoped>
-::v-deep div.v-image__image--contain {
+/* TODO: Some components have structural changes in their markup */
+:deep(div.v-image__image--contain) {
   backdrop-filter: blur(7px) grayscale(65%);
 }
 </style>

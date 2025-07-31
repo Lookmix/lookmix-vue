@@ -1,11 +1,12 @@
-import Vue from "vue"
-import Vuex from "vuex"
+// import Vue from "vue"
+// import Vuex from "vuex"
+import { createStore } from "vuex"
 import * as models from "./../models.js"
 
 import axiosInstance from "@/http.js"
 const axios = axiosInstance
 
-Vue.use(Vuex)
+// Vue.use(Vuex)
 
 const HTTP_PROTOCOL = import.meta.env.VITE_HTTP_PROTOCOL
 const HOST_API = import.meta.env.VITE_HOST_API
@@ -14,7 +15,7 @@ const PORT_API_OTP = import.meta.env.VITE_PORT_API_OTP
 const DOMAIN = `${HTTP_PROTOCOL}://${HOST_API}:${PORT_API}`
 const DOMAIN_OTP = `${HTTP_PROTOCOL}://${HOST_API}:${PORT_API_OTP}`
 
-export default new Vuex.Store({
+export const store = createStore({
   state: {
     ongoingRequest: null,
     newUser: {

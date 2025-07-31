@@ -32,9 +32,9 @@
               'display': showCheckbox ? 'block' : 'none',
               'width': '24px'
             }"
-            off-icon="mdi-checkbox-blank"
+            false-icon="mdi-checkbox-blank"
             hide-details
-            dense
+            density="compact"
             readonly
             :ripple="false"
           >
@@ -146,10 +146,12 @@ export default {
 </script>
 
 <style scoped>
-::v-deep .image-selected div.v-responsive__content {
+/* TODO: Some components have structural changes in their markup */
+:deep(.image-selected div.v-responsive__content) {
   background-color: #1110108c;
 }
-::v-deep i.mdi-checkbox-blank::before {
+/* TODO: Some components have structural changes in their markup */
+:deep(i.mdi-checkbox-blank::before) {
   color: white;
 }
 </style>

@@ -18,7 +18,7 @@
 
         <v-form autocomplete="off" v-model="isFormValid">
           <v-text-field
-            filled
+            variant="filled"
             :append-icon="isPhoneUnique ? 'mdi-emoticon-cool-outline' : isPhoneUnique === undefined ? 'mdi-emoticon-neutral-outline' : 'mdi-emoticon-sad-outline'"
             color="secondary"
             v-model="phone"
@@ -36,7 +36,7 @@
 
           <v-text-field
             style="margin-top: 10px"
-            filled
+            variant="filled"
             color="secondary"
             v-model="password"
             required
@@ -50,7 +50,7 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-btn text rounded @click="redirectToLogin">
+        <v-btn variant="text" rounded @click="redirectToLogin">
           VOLTAR
         </v-btn>
 
@@ -103,7 +103,7 @@ export default {
   },
   computed: {
     width () {
-      switch (this.$vuetify.breakpoint.name) {
+      switch (this.$vuetify.display.name) {
         case 'xs': return 290
         default: return 326
       }

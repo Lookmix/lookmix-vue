@@ -1,9 +1,7 @@
 <template>
   <v-app-bar 
-    app
-    absolute
+    position="absolute"
     color="backgroundBase"
-    :dark="false"
     elevate-on-scroll
     scroll-target="#sheet-main"
   >

@@ -1,4 +1,4 @@
-import store from '@/store/index.js'
+import { store } from "./store/index.js"
 
 // https://vuetifyjs.com/en/components/grids/#usage
 

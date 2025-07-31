@@ -1,6 +1,6 @@
 <template>
   <v-dialog
-    :value="showDialog"
+    :model-value="showDialog"
     width="250"
     persistent
   >
@@ -32,9 +32,8 @@
       >
         <v-btn 
           v-if="showCloseButton"
-          text 
-          outlined
-          small
+          variant="outlined text"
+          size="small"
           @click="closeButtonClick()" 
         >
           FECHAR

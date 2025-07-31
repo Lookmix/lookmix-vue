@@ -1,3 +1,4 @@
+/**
 import Vue from "vue"
 import App from "./App.vue"
 import "./registerServiceWorker"
@@ -16,3 +17,22 @@ new Vue({
   vuetify,
   render: h => h(App)
 }).$mount("#app")
+
+*/
+
+
+import { createApp } from 'vue'
+import "./registerServiceWorker"
+import { store } from './store'
+import { router } from "./router"
+import vuetify from "./plugins/vuetify"
+import "@mdi/font/css/materialdesignicons.css"
+import "./styles/main.css";
+import App from './App.vue'
+
+const app = createApp(App)
+app.use(store)
+app.use(router)
+app.use(vuetify)
+app.config.productionTip = false
+router.isReady().then(() => app.mount('#app'))

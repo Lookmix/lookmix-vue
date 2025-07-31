@@ -2,14 +2,14 @@
   <div>
     <v-toolbar
       :height="56"
-      dense
+      density="compact"
       bottom
       flat
       color="primary"
       elevation="0"
     >
       <v-btn 
-        text
+        variant="text"
         :ripple="false"
         color="backgroundBase"
         elevation="0"
@@ -22,7 +22,7 @@
       <v-spacer/>
 
       <v-btn 
-        text
+        variant="text"
         :disabled="!existsSelectedClothes"
         :ripple="false"
         color="backgroundBase"
@@ -38,7 +38,7 @@
       <v-spacer/>
 
       <v-btn 
-        text
+        variant="text"
         :disabled="!existsSelectedClothes"
         :ripple="false"
         color="backgroundBase"

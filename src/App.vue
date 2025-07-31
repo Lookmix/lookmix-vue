@@ -5,7 +5,7 @@
       <NavigationDrawer/>
     </template>
 
-    <v-main :dark="false" class="overflow-hidden">
+    <v-main class="overflow-hidden">
       <v-sheet
         :color="backgroundColor"
         :max-height="maxHeight"

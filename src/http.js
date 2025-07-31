@@ -1,7 +1,7 @@
-import axios from 'axios'
-import axiosRetry from 'axios-retry';
-import store from '@/store/index.js'
-import router from "@/router/index.js"
+import axios from "axios"
+import axiosRetry from "axios-retry";
+import { store } from "./store/index.js"
+import { router } from "./router/index.js"
 
 const axiosInstance = axios.create()
 

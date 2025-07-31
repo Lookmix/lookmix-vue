@@ -15,7 +15,7 @@
 
         <form autocomplete="off">
           <v-text-field
-            filled
+            variant="filled"
             v-model="email"
             color="secondary"
             :rules="[ rules.required ]"
@@ -28,7 +28,7 @@
 
           <v-text-field
             style="margin-top: 10px;"
-            filled
+            variant="filled"
             color="secondary"
             v-model="password"
             required
@@ -45,7 +45,7 @@
               color="secondary"
               elevation="2"
               rounded
-              x-large
+              size="x-large"
               @click="login()"
             >
               ENTRAR
@@ -59,9 +59,9 @@
             <v-btn
               style="width: 140px; margin: auto;"
               color="primary"
-              text
+              variant="text"
               rounded
-              small
+              size="small"
               @click="redirectToNewAccount()"
             >
               Criar uma conta
@@ -86,9 +86,9 @@
     >
       {{ errorMessage }}
 
-      <template v-slot:action="{ attrs }">
+      <template v-slot:actions="{ attrs }">
         <v-btn
-          text
+          variant="text"
           v-bind="attrs"
           @click="errorSnackbar = false"
         >
@@ -130,7 +130,7 @@ export default {
   },
   computed: {
     width () {
-      switch (this.$vuetify.breakpoint.name) {
+      switch (this.$vuetify.display.name) {
         case 'xs': return 290
         default: return 326
       }

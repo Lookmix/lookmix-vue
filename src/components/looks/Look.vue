@@ -14,9 +14,9 @@
               >
                 <!-- period -->
                 <v-chip 
-                  small
+                  size="small"
                   :color="'grey lighten-3'"
-                  :text-color="'grey darken-2'"
+                  :text-color="'grey-darken-2'"
                   class="mr-1 mb-1 mt-1 font-weight-medium text-uppercase"
                 >
                   {{ lookPeriod }}
@@ -24,9 +24,9 @@
 
                 <!-- type -->
                 <v-chip 
-                  small
+                  size="small"
                   :color="'grey lighten-3'"
-                  :text-color="'grey darken-2'"
+                  :text-color="'grey-darken-2'"
                   class="mr-1 mb-1 mt-1 font-weight-medium text-uppercase"
                 >
                   {{ look.type }}
@@ -34,9 +34,9 @@
 
                 <!-- season -->
                 <v-chip 
-                  small
-                  :color="'grey lighten-3'"
-                  :text-color="'grey darken-2'"
+                  size="small"
+                  :color="'grey-lighten-3'"
+                  :text-color="'grey-darken-2'"
                   class="mr-1 mb-1 mt-1 font-weight-medium text-uppercase"
                 >
                   {{ look.season[0] }}
@@ -55,14 +55,14 @@
           <v-bottom-sheet 
             v-model="showLookOptions"
           >
-            <template v-slot:activator="{ on, attrs }">
+            <template v-slot:activator="{ props }">
               <v-btn 
                 class="ma-4"
                 elevation="0"
-                fab
-                small
-                v-bind="attrs"
-                v-on="on"
+                icon
+                rounded-circle
+                size="small"
+                v-bind="props"
               >
                 <v-icon
                 >
@@ -76,51 +76,57 @@
                 link
                 @click="showLookOptions = false"
               >
-                <v-list-item-icon>
+                <!-- <v-list-item-icon> -->
+                <template v-slot:prepend>
                   <v-icon>
                     mdi-heart-outline
                   </v-icon>
-                </v-list-item-icon>
+                </template>
+                <!-- </v-list-item-icon> -->
 
-                <v-list-item-content>
+                <!-- <v-list-item-content> -->
                   <v-list-item-title>
                     FAVORITAR LOOK
                   </v-list-item-title>
-                </v-list-item-content>
+                <!-- </v-list-item-content> -->
               </v-list-item>
 
               <v-list-item 
                 link
                 @click="showLookOptions = false"
               >
-                <v-list-item-icon>
+                <!-- <v-list-item-icon> -->
+                <template v-slot:prepend>
                   <v-icon>
                     mdi-swap-horizontal
                   </v-icon>
-                </v-list-item-icon>
+                </template>
+                <!-- </v-list-item-icon> -->
 
-                <v-list-item-content>
+                <!-- <v-list-item-content> -->
                   <v-list-item-title>
                     TROCAR LOOK
                   </v-list-item-title>
-                </v-list-item-content>
+                <!-- </v-list-item-content> -->
               </v-list-item>
 
               <v-list-item 
                 link
                 @click="showLookOptions = false"
               >
-                <v-list-item-icon>
+                <!-- <v-list-item-icon> -->
+                <template v-slot:prepend>
                   <v-icon>
                     mdi-delete-outline
                   </v-icon>
-                </v-list-item-icon>
+                </template>
+                <!-- </v-list-item-icon> -->
 
-                <v-list-item-content>
+                <!-- <v-list-item-content> -->
                   <v-list-item-title>
                     DESCARTAR LOOK
                   </v-list-item-title>
-                </v-list-item-content>
+                <!-- </v-list-item-content> -->
               </v-list-item>
             </v-list>
           </v-bottom-sheet>

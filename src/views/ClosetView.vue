@@ -4,7 +4,7 @@
       v-model="selectedTab"
       color="black"
       fixed-tabs
-      background-color="transparent"
+      bg-color="transparent"
     >
       <v-tab>
         CASUAL
@@ -23,7 +23,7 @@
         'overflow-y': 'auto'
       }"
     >
-      <v-tab-item :style="{'height': gridHeight+'px'}">
+      <v-window-item :style="{'height': gridHeight+'px'}">
         <div 
           v-ripple
           @click="selectCasualClothesClick"
@@ -71,9 +71,9 @@
             :showCheckbox="enableCasualClotheSelect"
           />
         </div>
-      </v-tab-item>
+      </v-window-item>
 
-      <v-tab-item :style="{'height': gridHeight+'px'}">
+      <v-window-item :style="{'height': gridHeight+'px'}">
         <div 
           v-ripple
           @click="selectSocialClothesClick"
@@ -121,7 +121,7 @@
             :showCheckbox="enableSocialClotheSelect"
           />
         </div>
-      </v-tab-item>
+      </v-window-item>
     </v-tabs-items>
 
   </div>

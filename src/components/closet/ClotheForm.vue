@@ -17,13 +17,13 @@
         :src="imageReadable"
         :style="{ 'background-image': `url(${imageReadable})` }"
         class="backdrop-image"
-        contain
         eager
       >
         <v-btn 
           v-if="editClothe === undefined"
-          fab 
-          x-small 
+          rounded-circle
+          icon
+          size="x-small" 
           style="margin: 10px; float: right;"
           @click="remove()"
         >
@@ -70,14 +70,14 @@
           <v-btn-toggle
             v-model="selectedCloset"
             @change="emitPayload()"
-            mandatory
+            mandatory="force"
             borderless
             color="primary"
           >
             <v-btn 
               v-for="closet in closets"
               :key="closet.id"
-              small
+              size="small"
               @click="goTo('#category' + id)"
               :value="closet.value" 
             >
@@ -103,23 +103,29 @@
             outlined
           >
             <v-list
-              dense
-              three-line
+              density="compact"
+              lines="three"
               :color="'#FAFAFA'"
+
+              v-model="selectedCategoryIndex"
+              @change="emitPayload()"
+              mandatory
             >
+              <!--
               <v-list-item-group
                 v-model="selectedCategoryIndex"
                 @change="emitPayload()"
                 mandatory
                 color="primary"
               >
+                -->
                 <v-list-item
                   @click="goTo('#season' + id)"
                   style="min-height: unset !important;"
                   v-for="(category, index) in categories"
                   :key="index"
                 >
-                  <v-list-item-content>
+                  <!-- <v-list-item-content> -->
                     <v-list-item-title>
                       {{ category.name }}
                     </v-list-item-title>
@@ -127,9 +133,9 @@
                     <v-list-item-subtitle>
                       {{ category.description }}
                     </v-list-item-subtitle>
-                  </v-list-item-content>
+                  <!-- </v-list-item-content> -->
                 </v-list-item>
-              </v-list-item-group>
+              <!-- </v-list-item-group> -->
             </v-list>
           </v-sheet>
         </div>
@@ -164,7 +170,7 @@
                 :key="index"
                 class="text-capitalize"
               >
-                <v-icon left>
+                <v-icon start>
                   {{ getSeasonIcon(season) }}
                 </v-icon>
 
@@ -412,7 +418,8 @@ export default {
 </script>
 
 <style scoped>
-::v-deep div.v-image__image--contain {
+/* TODO: Some components have structural changes in their markup */
+:deep(div.v-image__image--contain) {
   backdrop-filter: blur(7px) grayscale(65%);
 }
 </style>

@@ -29,7 +29,7 @@
                 color="primary"
                 :elevation="2"
                 rounded
-                large
+                size="large"
                 @click="redirectToDailyLookSetup()"
               >
                 <v-icon></v-icon>
@@ -80,7 +80,7 @@
                 >
                   <span 
                     :class="{ 
-                      'indigo--text': active, 
+                      'text-indigo': active, 
                       'font-weight-bold': active,
                       'font-weight-medium': !active,
                       'text-uppercase': true
@@ -102,7 +102,7 @@
             <div style="display:flex;">
               <span 
                 style="margin: auto; flex: 1;" 
-                class="font-weight-medium text-body-1 grey--text text--darken-2"
+                class="font-weight-medium text-body-1 text-grey-darken-2"
               > 
                 Temperatura hoje
               </span>
@@ -111,17 +111,17 @@
                 class="my-0 py-0"
                 mandatory
                 column
-                active-class="indigo white--text"
+                active-class="indigo text-white"
               >
                 <v-chip
                   :color="'secondary'" 
                   class="my-0 py-0 font-weight-medium"
                 >
-                  <v-icon left>
+                  <v-icon start>
                     mdi-white-balance-sunny
                   </v-icon>
                   {{ dayTemperature }}  /  {{ eveningTemperature }}
-                  <v-icon right>
+                  <v-icon end>
                     mdi-weather-night
                   </v-icon>
                 </v-chip>
@@ -138,11 +138,11 @@
             v-model="expansionPanelFilters"
           >
             <v-expansion-panel>
-              <v-expansion-panel-header 
+              <v-expansion-panel-title 
                 class="px-4"
               >
                 <span
-                  class="font-weight-medium text-body-1 grey--text text--darken-2"
+                  class="font-weight-medium text-body-1 text-grey-darken-2"
                 >
                   {{ !hasSelectedAllFilters && hasSelectedFilters && expansionPanelFilters === undefined ? 'Filtros selecionados' : 'Filtros' }}
                 </span>
@@ -157,14 +157,14 @@
                   <v-chip-group
                     v-if="selectedPeriod !== undefined"
                     class="my-0 py-0"
-                    active-class="indigo white--text"
+                    active-class="indigo text-white"
                     mandatory
                     column
                   >
                     <v-chip
                       class="my-0 py-0 font-weight-medium text-uppercase"
                     >
-                      <v-icon left>
+                      <v-icon start>
                         {{ periodFilters[selectedPeriod].icon }}
                       </v-icon>
                       {{ periodFilters[selectedPeriod].name }}
@@ -174,7 +174,7 @@
                   <v-chip-group
                     v-if="selectedCloset !== undefined"
                     class="my-0 py-0"
-                    active-class="indigo white--text"
+                    active-class="indigo text-white"
                     mandatory
                     column
                   >
@@ -188,7 +188,7 @@
                   <span 
                     v-if="!hasSelectedFilters"
                     style="height: 40px; line-height: 40px;"
-                    class="text-body-2 grey--text text--darken-2"
+                    class="text-body-2 text-grey-darken-2"
                   >
                     Nenhum filtro selecionado
                   </span>
@@ -203,18 +203,18 @@
                 >
                   <span 
                     style="width: 204px; text-align: end; height: 40px; line-height: 40px;"
-                    class="text-body-2 grey--text text--darken-2"
+                    class="text-body-2 text-grey-darken-2"
                   >
                     Toque para aplicar/remover
                   </span>
                 </div>
-              </v-expansion-panel-header>
+              </v-expansion-panel-title>
 
-              <v-expansion-panel-content class="mx-n2">
+              <v-expansion-panel-text class="mx-n2">
                 <div class="d-flex mt-3" style="justify-content: space-between;">
                   <span
                     style="margin: auto 0;" 
-                    class="text-body-1 grey--text text--darken-2"
+                    class="text-body-1 text-grey-darken-2"
                   >
                     Período
                   </span>
@@ -223,7 +223,7 @@
                     <v-chip-group
                       class="my-0 py-0"
                       v-model="selectedPeriod"
-                      active-class="indigo white--text"
+                      active-class="indigo text-white"
                       column
                     >
                       <v-chip
@@ -231,7 +231,7 @@
                         :key="index"
                         class="my-0 py-0 font-weight-medium text-uppercase"
                       >
-                        <v-icon left>
+                        <v-icon start>
                           {{ period.icon }}
                         </v-icon>
                         {{ period.name }}
@@ -243,7 +243,7 @@
                 <div class="mt-6" style="display:flex; justify-content: space-between;">
                   <span 
                     style="margin: auto 0;" 
-                    class="text-body-1 grey--text text--darken-2"
+                    class="text-body-1 text-grey-darken-2"
                   > 
                     Guarda-roupa
                   </span>
@@ -253,7 +253,7 @@
                       class="my-0 py-0"
                       v-model="selectedCloset"
                       column
-                      active-class="indigo white--text"
+                      active-class="indigo text-white"
                     >
                       <v-chip
                         v-for="(closet, index) in closetFilters"
@@ -265,7 +265,7 @@
                     </v-chip-group>
                   </div>
                 </div>
-              </v-expansion-panel-content>
+              </v-expansion-panel-text>
             </v-expansion-panel>
           </v-expansion-panels>
         </v-card>
@@ -273,13 +273,16 @@
 
       <v-divider class="mx-2"> </v-divider>
 
+      <!-- TODO: '<template v-for>' cannot be keyed. Place the key on real elements instead. -->
       <template
         v-for="(look, index) of looks"
+        :key="`${index}`"
       >
+        <!-- TODO: <template v-for> key should be placed on the <template> tag.vue(33) -->
         <look 
           :look="look"
-          :key="index"
         />
+          <!-- :key="`${index}-look`" -->
       </template>
       <br/>
     </template>
@@ -294,9 +297,9 @@
     >
       {{ errorMessage }}
 
-      <template v-slot:action="{ attrs }">
+      <template v-slot:actions="{ attrs }">
         <v-btn
-          text
+          variant="text"
           v-bind="attrs"
           @click="errorSnackbar = false"
         >

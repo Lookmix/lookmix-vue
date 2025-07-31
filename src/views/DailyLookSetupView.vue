@@ -12,7 +12,7 @@
         <div class="text-no-wrap">
           botão
 
-          <v-icon class="ml-1" small>
+          <v-icon class="ml-1" size="small">
             mdi-check-outline
           </v-icon>
         </div>
@@ -29,7 +29,7 @@
           v-for="(dayOfWeek, index) in daysOfWeek"
           :key="index"
         >
-          <v-expansion-panel-header class="d-flex">
+          <v-expansion-panel-title class="d-flex">
             <span style="flex: unset;" class="text-capitalize text-subtitle-1 font-weight-bold">
               {{ dayOfWeek }}
             </span>
@@ -38,9 +38,9 @@
                 dayOfWeek !== "sábado" && dayOfWeek !== "domingo" ? "-feira" : "" 
               }}
             </span>
-          </v-expansion-panel-header>
+          </v-expansion-panel-title>
 
-          <v-expansion-panel-content>
+          <v-expansion-panel-text>
             <div class="week-panel">
               <occasion-setup 
                 v-for="(occasion, index) in filteredOccasions" 
@@ -54,7 +54,7 @@
                 @removeOccasion="removeOccasion(dayOfWeek, $event)"
               />
             </div>
-          </v-expansion-panel-content>
+          </v-expansion-panel-text>
         </v-expansion-panel>
       </v-expansion-panels>
     </v-card>
@@ -274,7 +274,8 @@ export default {
 </script>
 
 <style scoped>
-/* ::v-deep .v-expansion-panel-content__wrap {
+/* TODO: Some components have structural changes in their markup */
+/* :deep(.v-expansion-panel-content__wrap) {
   flex-wrap: wrap !important; 
   justify-content: space-between !important;
   padding-top: 4px !important; 

@@ -1,6 +1,6 @@
 <template>
   <v-dialog
-    :value="show" 
+    :model-value="show" 
     width="300"
     persistent
   >
@@ -22,7 +22,7 @@
               :width="20"
               color="secondary"
               style="margin: auto;"
-              :value="progress"
+              :model-value="progress"
               :rotate="360"
             > 
               <span class="font-weight-bold" v-if="progress < 100">
@@ -43,7 +43,6 @@
 
         <v-card-text class="mt-n3">
           <v-img 
-            contain
             height="134"
             width="194"
             style="margin: auto;"
@@ -63,7 +62,7 @@
           <v-btn 
             :elevation="0"
             color="primary"
-            text
+            variant="text"
             @click="successActionClick()" 
           >
             {{ successActionText }}
@@ -78,7 +77,6 @@
 
         <v-card-text class="mt-n3">
           <v-img 
-            contain
             src="../assets/hanger-error.svg"
             height="134"
             width="194"
@@ -98,7 +96,7 @@
           <v-btn 
             :elevation="0"
             color="primary"
-            text
+            variant="text"
             @click="errorActionClick();" 
           >
             {{ errorActionText }}

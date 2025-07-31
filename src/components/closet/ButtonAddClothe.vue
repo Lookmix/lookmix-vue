@@ -14,7 +14,7 @@
         v-model="images"
         @change="readImages()"
       >
-        <template v-slot:append-outer>
+        <template v-slot:append>
           <v-btn 
             icon
             color="primary"
@@ -38,12 +38,12 @@
         v-model="images"
         @change="readImages()"
       >
-        <template v-slot:append-outer>
+        <template v-slot:append>
           <v-btn
             color="primary"
             :elevation="2"
             rounded
-            large
+            size="large"
             @click="addClotheClick()"
           >
             <v-icon>mdi-plus</v-icon>
@@ -66,9 +66,9 @@
       >
         {{ snackbarErrorMsg }}
 
-        <template v-slot:action="{ attrs }">
+        <template v-slot:actions="{ attrs }">
           <v-btn
-            text
+            variant="text"
             v-bind="attrs"
             @click="snackbarError = false"
           >
@@ -167,7 +167,8 @@ export default {
 </script>
 
 <style scoped>
-::v-deep .v-input__append-outer {
+/* TODO: Some components have structural changes in their markup */
+:deep(.v-input__append-outer) { 
   margin-bottom: 0px;
   margin-top: 0px;
 }

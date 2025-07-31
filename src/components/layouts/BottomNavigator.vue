@@ -11,7 +11,7 @@
       v-for="(item, index) in options" 
       :key="index" 
       :ripple="false"
-      plain
+      variant="plain"
       :to="item.to"
     >
       <span> {{ item.text }} </span>

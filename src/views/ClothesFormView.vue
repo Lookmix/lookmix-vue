@@ -37,7 +37,7 @@
               color="primary"
               :elevation="2"
               rounded
-              large
+              size="large"
               @click="redirectToCloset()"
             >
               <v-icon></v-icon>
@@ -83,14 +83,14 @@
 
     <v-toolbar
       v-if="existsClothes"
-      dense
+      density="compact"
       bottom
       flat
       color="primary"
       elevation="0"
     >
       <v-btn 
-        small
+        size="small"
         style="margin: 0px 10px;"
         icon 
         @click="previousSlide()" 
@@ -110,7 +110,7 @@
       <v-spacer/>
 
       <v-btn 
-        small
+        size="small"
         style="margin: 0px 10px;"
         icon 
         @click="nextSlide()" 
@@ -229,7 +229,7 @@ export default {
       return innerHeight
     },
     cardWidth () {
-      switch (this.$vuetify.breakpoint.name) {
+      switch (this.$vuetify.display.name) {
         case "xs": return 319
         case "sm": return 319
         case "md": return 500

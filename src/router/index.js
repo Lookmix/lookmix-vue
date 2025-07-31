@@ -1,13 +1,14 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import publicPrivateRoutes from '@/router/routes/publicPrivateRoutes.js'
-import store from '@/store/index.js'
+// import Vue from 'vue'
+// import VueRouter from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router"
+import publicPrivateRoutes from "@/router/routes/publicPrivateRoutes.js"
+import { store } from "@/store/index.js"
 import * as resize from "./../resize.js"
 
-Vue.use(VueRouter)
+// Vue.use(VueRouter)
 
-const router = new VueRouter({
-  mode: "history",
+export const router = new createRouter({
+  history: createWebHistory(),
   routes: [].concat(publicPrivateRoutes)
 })
 
@@ -35,6 +36,7 @@ function handleRedirect (to, next, isPublicRoute) {
   }
   return next()
 }
+
 router.beforeEach((to, from, next) => {
   const authenticated = store.getters.authenticated
   const isPublicRoute = to.matched.some(record => record.meta.public)
@@ -73,5 +75,3 @@ router.afterEach((to, from) => {
   store.commit("setBackgroundColor", to.meta.backgroundColor)
   resize.onResize()
 })
-
-export default router

@@ -26,13 +26,12 @@
       <v-bottom-sheet
         v-model="showDailyLookOptions"
       >
-        <template v-slot:activator="{ on, attrs }">
+        <template v-slot:activator="{ props }">
           <v-btn 
             icon
             color="primary"
             :disabled="!hasDailyLookSetup"
-            v-bind="attrs"
-            v-on="on"
+            v-bind="props"
           >
             <v-icon>
               mdi-cog-outline

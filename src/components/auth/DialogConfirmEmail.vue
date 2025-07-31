@@ -4,9 +4,9 @@
       :disabled="disabled"
       :style="{'margin-left': resetPassword ? '-3px' : 'unset' }"
       :text="resetPassword"
-      small
+      size="small"
       rounded
-      :outlined="!resetPassword"
+      :variant="!resetPassword ? 'outlined' : 'default'"
       :color="resetPassword ? '' : 'secondary'"
       :ripple="!resetPassword"
       @click.stop="dialog = true; email = userEmailComponentParam; !resetPassword ? onOpenDialog() : false"
@@ -104,7 +104,7 @@
                   style="padding-bottom: 30px; max-height: 116px;"
                 >
                   <v-text-field
-                    filled
+                    variant="filled"
                     v-model="email"
                     required
                     autocomple="off"
@@ -125,8 +125,8 @@
 
               <div style="display: flex; margin-top: 50px;">
                 <v-btn 
-                  text
-                  small
+                  variant="text"
+                  size="small"
                   rounded
                   @click="closeDialog()"
                 >
@@ -136,10 +136,10 @@
                 <v-spacer/>
 
                 <v-btn
-                  outlined
+                  variant="outlined"
                   rounded
                   color="secondary"
-                  small
+                  size="small"
                   :disabled="!formValid"
                   :loading="validatingEmail"
                   @click="getOTP()"
@@ -174,11 +174,11 @@
                     v-model="validationCode"
                     required
                     length="6"
-                    plain
+                    variant="plain"
                     color="secondary"
                     type="number"
                     :disabled="disableOTPInput || sendingOTP"
-                    @input="rulesOTPValidation.codeError = true"
+                    @update:model-value="rulesOTPValidation.codeError = true"
                     :rules="[
                       rulesOTPValidation.required, 
                       rulesOTPValidation.codeLength,
@@ -187,7 +187,7 @@
                   />
 
                   <div 
-                    class="red--text"
+                    class="text-red"
                     :style="{
                       'min-height': '36px',
                       'font-size': '12px',
@@ -206,11 +206,10 @@
                     </span>
 
                     <v-btn 
-                      outlined 
+                      variant="outlined text" 
                       rounded 
-                      x-small 
+                      size="x-small" 
                       :ripple="false" 
-                      text 
                       color="#651FFF"
                       :disabled="sendingOTP || (timer > 0 && !attempsExceed)"
                       @click="currentStep = 1; clearTimer(); clearOTPInput(); attempsExceed = false;"
@@ -227,10 +226,10 @@
                 <v-spacer/>
 
                 <v-btn
-                  outlined
+                  variant="outlined"
                   rounded
                   color="secondary"
-                  small
+                  size="small"
                   :loading="sendingOTP"
                   :disabled="!formValid2 || timer === 0 || attempsExceed"
                   @click="sendOTPCode();"
@@ -258,7 +257,7 @@
                 >
                   <v-text-field
                     style="margin-top: 10px"
-                    filled
+                    variant="filled"
                     color="secondary"
                     v-model="newPassword"
                     required
@@ -281,10 +280,10 @@
                 <v-spacer/>
 
                 <v-btn
-                  outlined
+                  variant="outlined"
                   rounded
                   color="secondary"
-                  small
+                  size="small"
                   :loading="sendingNewPassword"
                   @click="saveNewPassword()"
                 >
@@ -324,11 +323,11 @@
                 <v-spacer/>
 
                 <v-btn
-                  small
+                  size="small"
                   color="secondary"
                   @click="resetPassword ? closeDialog() : redirectToHome()"
                   rounded
-                  outlined
+                  variant="outlined"
                 >
                   Entrar
                 </v-btn>
@@ -345,9 +344,9 @@
     >
       {{ errorMessage }}
 
-      <template v-slot:action="{ attrs }">
+      <template v-slot:actions="{ attrs }">
         <v-btn
-          text
+          variant="text"
           v-bind="attrs"
           @click="errorSnackbar = false"
         >

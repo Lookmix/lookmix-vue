@@ -7,14 +7,14 @@
       via mutation 
     -->
     <v-snackbar
-      :value="connectionOffline"
+      :model-value="connectionOffline"
       color="error"
     >
       Você está offline, verifique sua conexão e tente novamente
 
-      <template v-slot:action="{ attrs }">
+      <template v-slot:actions="{ attrs }">
         <v-btn
-          text
+          variant="text"
           v-bind="attrs"
           @click="closeSnackbar()"
         >
