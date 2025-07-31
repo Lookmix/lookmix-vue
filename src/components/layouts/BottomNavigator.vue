@@ -4,7 +4,7 @@
     v-model="value"
     color="primary"
     style="border-top: solid 1px lightgray;"
-    shift
+    mode="shift"
     grow
   >
     <v-btn 
@@ -14,9 +14,9 @@
       variant="plain"
       :to="item.to"
     >
-      <span> {{ item.text }} </span>
-
       <v-icon> {{ item.icon }} </v-icon>
+      
+      <span> {{ item.text }} </span>
     </v-btn>
   </v-bottom-navigation>
 </template>
@@ -28,8 +28,8 @@
         value: undefined,
         options: [
           { text: "Feed", icon: "mdi-home-outline", to: "/home" },
-          { text: "Look diário", icon: "mdi-calendar-outline", to: "/daily-look" },
-          { text: "Look aleatório", icon: "mdi-shuffle", to: "/shuffle-look" },
+          { text: "Diário", icon: "mdi-calendar-outline", to: "/daily-look" },
+          { text: "Aleatório", icon: "mdi-shuffle", to: "/shuffle-look" },
           { text: "Closet", icon: "mdi-hanger", to: "/closet" }
         ]
       }

@@ -142,6 +142,7 @@
               :style="{ 'display': value ? 'flex' : 'none' }"
             >
               <v-img
+                cover
                 v-if="value"
                 style="border: 1px solid transparent; border-radius: 16px;"
                 v-ripple
@@ -162,7 +163,7 @@
                   >
                     <v-progress-circular
                       indeterminate
-                      color="grey lighten-5"
+                      color="bg-grey-lighten-5"
                     >
                     </v-progress-circular>
                   </v-row>

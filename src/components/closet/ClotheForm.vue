@@ -418,8 +418,7 @@ export default {
 </script>
 
 <style scoped>
-/* TODO: Some components have structural changes in their markup */
-:deep(div.v-image__image--contain) {
+:deep(div.v-img.backdrop-image > img) {
   backdrop-filter: blur(7px) grayscale(65%);
 }
 </style>

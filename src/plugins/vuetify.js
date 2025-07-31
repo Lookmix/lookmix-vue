@@ -24,6 +24,7 @@ export default createVuetify({
     variations: { 
       colors: [
         "grey",
+        "red",
         "primary", 
         "primaryLight", 
         "secondary",

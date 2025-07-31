@@ -12,6 +12,7 @@
         cols="4"
       >
         <v-img
+          cover
           style="border: 1px solid transparent;"
           v-ripple
           :src="clothe.image"
@@ -48,7 +49,7 @@
             >
               <v-progress-circular
                 indeterminate
-                color="grey lighten-5"
+                color="bg-grey-lighten-5"
               >
               </v-progress-circular>
             </v-row>

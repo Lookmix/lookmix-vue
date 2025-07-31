@@ -63,7 +63,7 @@
             center-active
             mandatory
           >
-            <v-slide-item
+            <v-slide-group-item
               v-for="(item, index) in days"
               :key="item.day+item.dayWeek+index"
               v-slot="{ active, toggle }"
@@ -91,7 +91,7 @@
                   </span>
                 </div>
               </div>
-            </v-slide-item>
+            </v-slide-group-item>
           </v-slide-group>
         </v-sheet>
       </v-toolbar>

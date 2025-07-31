@@ -4,7 +4,7 @@
       Promoções
     </div>
 
-    <v-card ripple rounded="lg" color="red lighten-4" height="120" width="100%">
+    <v-card ripple rounded="lg" color="red-lighten-4" height="120" width="100%">
     </v-card>
 
     <br/>

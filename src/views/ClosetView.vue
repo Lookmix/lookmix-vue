@@ -15,7 +15,7 @@
       </v-tab>
     </v-tabs>
 
-    <v-tabs-items 
+    <v-tabs-window 
       v-model="selectedTab"
       class="mx-1" 
       :style="{
@@ -23,11 +23,11 @@
         'overflow-y': 'auto'
       }"
     >
-      <v-window-item :style="{'height': gridHeight+'px'}">
+      <v-tabs-window-item :style="{'height': gridHeight+'px'}">
         <div 
           v-ripple
           @click="selectCasualClothesClick"
-          class="py-3 ml-n1 red lighten-5"
+          class="py-3 ml-n1 bg-red-lighten-5"
           :style="{
             'position': 'fixed', 
             'z-index': '2', 
@@ -71,13 +71,13 @@
             :showCheckbox="enableCasualClotheSelect"
           />
         </div>
-      </v-window-item>
+      </v-tabs-window-item>
 
-      <v-window-item :style="{'height': gridHeight+'px'}">
+      <v-tabs-window-item :style="{'height': gridHeight+'px'}">
         <div 
           v-ripple
           @click="selectSocialClothesClick"
-          class="py-3 ml-n1 red lighten-5"
+          class="py-3 ml-n1 bg-red-lighten-5"
           :style="{
             'position': 'fixed', 
             'z-index': '2', 
@@ -121,8 +121,8 @@
             :showCheckbox="enableSocialClotheSelect"
           />
         </div>
-      </v-window-item>
-    </v-tabs-items>
+      </v-tabs-window-item>
+    </v-tabs-window>
 
   </div>
 </template>

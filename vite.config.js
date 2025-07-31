@@ -8,13 +8,20 @@ import vuetify, { transformAssetUrls } from "vite-plugin-vuetify"
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  css: {
+    preprocessorOptions: {
+      sass: {
+        api: "modern-compiler"
+      }
+    }
+  },
   plugins: [
     vue({
       template: { transformAssetUrls }
     }),
     vuetify({
       autoImport: true,
-      // styles: { configFile: "src/styles/variables.scss" }
+      styles: { configFile: "src/styles/variables.scss" }
     }),
     // Components({
       // resolvers: [
