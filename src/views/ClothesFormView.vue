@@ -66,7 +66,7 @@
           class="swiper-slide"
           :style="{'width': cardWidth+'px'}"
         >
-          <ClotheForm 
+          <ClotheForm2
             :id="clothe._id"
             :key="clothe._id"
             :image="clothe.image"
@@ -83,18 +83,18 @@
 
     <v-toolbar
       v-if="existsClothes"
-      density="compact"
       bottom
       flat
       color="primary"
       elevation="0"
+      height="40"
     >
       <v-btn 
-        size="small"
-        style="margin: 0px 10px;"
         icon 
         @click="previousSlide()" 
         :disabled="pageCount === 1"
+        height="32"
+        width="32"
       >
         <v-icon color="white">
           mdi-chevron-left
@@ -110,11 +110,11 @@
       <v-spacer/>
 
       <v-btn 
-        size="small"
-        style="margin: 0px 10px;"
         icon 
         @click="nextSlide()" 
         :disabled="pageCount === clothes.length"
+        height="32"
+        width="32"
       >
         <v-icon color="white">
           mdi-chevron-right
@@ -141,14 +141,14 @@
 
 <script>
 import { mapActions, mapMutations, mapGetters } from "vuex"
-import ClotheForm from "./../components/closet/ClotheForm.vue"
+import ClotheForm2 from "./../components/closet/ClotheForm2.vue"
 import ButtonAddClothe from "./../components/closet/ButtonAddClothe.vue"
 import DialogLoading from "./../components/DialogLoading.vue"
 /*global Swiper*/
 
 export default {
   components: {
-    ClotheForm,
+    ClotheForm2,
     ButtonAddClothe,
     DialogLoading
   },

@@ -4,6 +4,7 @@
       v-if="edit === undefined"
     >
       <v-file-input
+        class="mr-1"
         id="fileInput"
         v-if="iconButton"
         hide-input

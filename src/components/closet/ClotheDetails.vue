@@ -44,9 +44,7 @@
         <div class="py-4">
           <v-chip
             label
-            color="primaryLight"
-            text-color="primary"
-            class="text-capitalize font-weight-medium"
+            class="text-capitalize font-weight-medium bg-primaryLight text-primary"
           >
             {{ closet }}
           </v-chip>
@@ -60,14 +58,14 @@
           <v-sheet
             elevation="0" 
             rounded 
-            outlined
+            border="sm"
           >
             <v-list
               density="compact"
-              lines="three"
+              lines="two"
               :color="'#FAFAFA'"
-
               mandatory
+              active-class="text-primary"
             >
               <!-- 
               <v-list-item-group
@@ -76,6 +74,8 @@
               > 
               -->
                 <v-list-item
+                  :active="true"
+                  active-class="text-primary"
                   style="min-height: unset !important;"
                 >
                   <!-- <v-list-item-content> -->
@@ -83,7 +83,7 @@
                       {{ category ? category.name : "" }}
                     </v-list-item-title>
 
-                    <v-list-item-subtitle>
+                    <v-list-item-subtitle class="text-high-emphasis">
                       {{ category ? category.description : "" }}
                     </v-list-item-subtitle>
                   <!-- </v-list-item-content> -->
@@ -102,14 +102,12 @@
             elevation="0" 
             rounded 
             style="display: flex; flex-wrap: wrap; padding: 10px;" 
-            outlined
+            border="sm"
           >
             <v-chip 
               v-for="(season, index) in seasons"
               :key="index"
-              class="mr-1 mb-1 mt-1 font-weight-medium"
-              color="primaryLight" 
-              text-color="primary"
+              class="mr-1 mb-1 mt-1 font-weight-medium bg-primaryLight text-primary"
             >
               <v-icon start>
                 {{ getSeasonIcon(season) }}
@@ -129,14 +127,12 @@
             elevation="0" 
             rounded 
             style="display: flex; flex-wrap: wrap; padding: 10px;" 
-            outlined
+            border="sm"
           >
             <v-chip 
-              class="mr-1 mb-1 mt-1 font-weight-medium text-capitalize"
+              class="mr-1 mb-1 mt-1 font-weight-medium text-capitalize bg-primaryLight text-primary"
               v-for="(item, index) in occasionNames" 
               :key="index"
-              color="primaryLight"
-              text-color="primary"
             >
               {{ item }}
             </v-chip>

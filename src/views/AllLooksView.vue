@@ -42,13 +42,13 @@
   </div>
   -->
   <div class="d-flex flex-column">
-    <v-card rounded="lg" class="ma-2" elevation="0" outlined>
+    <v-card rounded="lg" class="ma-2" elevation="0" border="sm">
       <!--
       <v-sheet
         elevation="0" 
         rounded 
         class="d-flex flex-wrap pa-3"
-        outlined
+        border="sm"
       >
 
       </v-sheet>

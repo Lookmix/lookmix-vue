@@ -1,6 +1,7 @@
 <template>
   <div style="display: flex;">
     <v-btn 
+      class="mr-n3"
       v-if="isClothesFormRoute" 
       icon
       color="primary"
@@ -73,7 +74,7 @@
       </v-bottom-sheet>
     </template>
 
-    <button-update-daily-look-setup v-if="isDailyLookSetupRoute"  />
+    <button-update-daily-look-setup v-if="isDailyLookSetupRoute"/>
 
     <button-add-clothe v-if="showAddClotheButton" />
   </div>

@@ -5,38 +5,38 @@
         rounded="lg" 
         :elevation="3"
       >
-        <div class="d-flex">
-          <div style="flex: 1;">
-            <v-card-subtitle class="pb-0">
+        <div class="d-flex pl-4">
+          <div style="flex: 1;" class="pt-4">
+            <v-card-subtitle class="pa-0">
               <div 
                 class="d-flex" 
-                style="flex-wrap: wrap; margin-left: -2px;"
+                style="flex-wrap: wrap;"
               >
                 <!-- period -->
+                <!-- :color="'grey-lighten-3'"
+                :text-color="'grey-darken-2'" -->
                 <v-chip 
                   size="small"
-                  :color="'grey lighten-3'"
-                  :text-color="'grey-darken-2'"
                   class="mr-1 mb-1 mt-1 font-weight-medium text-uppercase"
                 >
                   {{ lookPeriod }}
                 </v-chip>
 
                 <!-- type -->
+                <!-- :color="'grey-lighten-3'"
+                :text-color="'grey-darken-2'" -->
                 <v-chip 
                   size="small"
-                  :color="'grey lighten-3'"
-                  :text-color="'grey-darken-2'"
                   class="mr-1 mb-1 mt-1 font-weight-medium text-uppercase"
                 >
                   {{ look.type }}
                 </v-chip>
 
                 <!-- season -->
+                <!-- :color="'grey-lighten-3'"
+                :text-color="'grey-darken-2'" -->
                 <v-chip 
                   size="small"
-                  :color="'grey-lighten-3'"
-                  :text-color="'grey-darken-2'"
                   class="mr-1 mb-1 mt-1 font-weight-medium text-uppercase"
                 >
                   {{ look.season[0] }}
@@ -46,7 +46,7 @@
 
             <div 
               style="font-size: 18px;"
-              class="pt-2 pb-4 px-4 font-weight-medium"
+              class="pt-2 pb-4 px-0 font-weight-medium"
             >
               {{ cardLookTitle }}
             </div>
@@ -57,11 +57,11 @@
           >
             <template v-slot:activator="{ props }">
               <v-btn 
-                class="ma-4"
+                class="ma-4 ml-2"
                 elevation="0"
                 icon
                 rounded-circle
-                size="small"
+                size="x-small"
                 v-bind="props"
               >
                 <v-icon

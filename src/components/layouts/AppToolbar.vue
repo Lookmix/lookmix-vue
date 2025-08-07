@@ -4,6 +4,7 @@
     color="backgroundBase"
     elevate-on-scroll
     scroll-target="#sheet-main"
+    :elevation="0"
   >
     <v-app-bar-nav-icon 
       @click="leftArrowFunction ? redirectToPrevious() : setShowNavDrawer(true)"
@@ -17,7 +18,6 @@
       {{ toolbarTitle }} 
     </v-toolbar-title>
 
-    <v-spacer></v-spacer>
 
     <toolbar-top-buttons/>
   </v-app-bar>

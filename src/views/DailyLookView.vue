@@ -47,7 +47,7 @@
         flat
         elevation="0"
         color="backgroundLighten3"
-        class="my-4 py-0 px-2"
+        class="my-4 py-0 px-0"
         style="display: flex; justify-content: center;"
         :width="width"
         :max-width="width"
@@ -66,7 +66,7 @@
             <v-slide-group-item
               v-for="(item, index) in days"
               :key="item.day+item.dayWeek+index"
-              v-slot="{ active, toggle }"
+              v-slot="{ isSelected, toggle }"
             >
               <div
                 class="px-5 text-center d-flex rounded-sm"
@@ -76,13 +76,13 @@
                 :style="{ 'border-right': (days.length - 1) !== index ? '1px solid #BDBDBD' : 'unset' }"
               >
                 <div
-                  :style="{'border-bottom': active ? 'solid 4px #3F51B5' : 'solid 4px transparent'}"
+                  :style="{'border-bottom': isSelected ? 'solid 4px #3F51B5' : 'solid 4px transparent'}"
                 >
                   <span 
                     :class="{ 
-                      'text-indigo': active, 
-                      'font-weight-bold': active,
-                      'font-weight-medium': !active,
+                      'text-indigo': isSelected, 
+                      'font-weight-bold': isSelected,
+                      'font-weight-medium': !isSelected,
                       'text-uppercase': true
                     }"
                     style="font-size: 14px;"
@@ -100,22 +100,20 @@
         <v-card rounded="lg" elevation="3">
           <v-card-text>
             <div style="display:flex;">
-              <span 
+              <div 
                 style="margin: auto; flex: 1;" 
                 class="font-weight-medium text-body-1 text-grey-darken-2"
               > 
                 Temperatura hoje
-              </span>
+              </div>
 
               <v-chip-group
                 class="my-0 py-0"
                 mandatory
                 column
-                active-class="indigo text-white"
               >
                 <v-chip
-                  :color="'secondary'" 
-                  class="my-0 py-0 font-weight-medium"
+                  class="my-0 mx-0 py-0 font-weight-medium bg-indigo text-white"
                 >
                   <v-icon start>
                     mdi-white-balance-sunny
@@ -146,7 +144,7 @@
                 >
                   {{ !hasSelectedAllFilters && hasSelectedFilters && expansionPanelFilters === undefined ? 'Filtros selecionados' : 'Filtros' }}
                 </span>
-
+                <v-spacer></v-spacer>
                 <div
                   v-if="expansionPanelFilters === undefined"
                   class="d-flex" 
@@ -157,7 +155,6 @@
                   <v-chip-group
                     v-if="selectedPeriod !== undefined"
                     class="my-0 py-0"
-                    active-class="indigo text-white"
                     mandatory
                     column
                   >
@@ -174,7 +171,7 @@
                   <v-chip-group
                     v-if="selectedCloset !== undefined"
                     class="my-0 py-0"
-                    active-class="indigo text-white"
+                    selected-class="bg-indigo text-white"
                     mandatory
                     column
                   >
@@ -223,7 +220,7 @@
                     <v-chip-group
                       class="my-0 py-0"
                       v-model="selectedPeriod"
-                      active-class="indigo text-white"
+                      selected-class="bg-indigo text-white"
                       column
                     >
                       <v-chip
@@ -253,12 +250,13 @@
                       class="my-0 py-0"
                       v-model="selectedCloset"
                       column
-                      active-class="indigo text-white"
+                      selected-class="bg-indigo text-white"
                     >
                       <v-chip
                         v-for="(closet, index) in closetFilters"
                         :key="index"
                         class="my-0 py-0 font-weight-medium text-uppercase"
+                        :class="{'mr-1': index === 0, 'mr-0': index === 1}"
                       >
                         {{ closet }}
                       </v-chip>
