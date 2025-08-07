@@ -43,59 +43,6 @@
     </template>
 
     <template v-if="dailyLookSetup">
-      <v-toolbar
-        flat
-        elevation="0"
-        color="backgroundLighten3"
-        class="my-4 py-0 px-0"
-        style="display: flex; justify-content: center;"
-        :width="width"
-        :max-width="width"
-      >
-        <v-sheet
-          color="backgroundLighten3"
-          class="mx-auto"
-          elevation="0"
-          :max-width="width"
-        >
-          <v-slide-group
-            v-model="selectedDay"
-            center-active
-            mandatory
-          >
-            <v-slide-group-item
-              v-for="(item, index) in days"
-              :key="item.day+item.dayWeek+index"
-              v-slot="{ isSelected, toggle }"
-            >
-              <div
-                class="px-5 text-center d-flex rounded-sm"
-                :key="item.day+item.dayWeek+index+'div'"
-                v-ripple
-                @click="toggle"
-                :style="{ 'border-right': (days.length - 1) !== index ? '1px solid #BDBDBD' : 'unset' }"
-              >
-                <div
-                  :style="{'border-bottom': isSelected ? 'solid 4px #3F51B5' : 'solid 4px transparent'}"
-                >
-                  <span 
-                    :class="{ 
-                      'text-indigo': isSelected, 
-                      'font-weight-bold': isSelected,
-                      'font-weight-medium': !isSelected,
-                      'text-uppercase': true
-                    }"
-                    style="font-size: 14px;"
-                  >
-                    {{ item.dayWeek }} <br/> {{ item.day }}
-                  </span>
-                </div>
-              </div>
-            </v-slide-group-item>
-          </v-slide-group>
-        </v-sheet>
-      </v-toolbar>
-
       <div class="my-4 mx-2">
         <v-card rounded="lg" elevation="3">
           <v-card-text>
@@ -269,7 +216,60 @@
         </v-card>
       </div>
 
-      <v-divider class="mx-2"> </v-divider>
+      <v-toolbar
+        flat
+        elevation="0"
+        color="backgroundLighten3"
+        class="my-4 py-0 px-0"
+        style="display: flex; justify-content: center;"
+        :width="width"
+        :max-width="width"
+      >
+        <v-sheet
+          color="backgroundLighten3"
+          class="mx-auto"
+          elevation="0"
+          :max-width="width"
+        >
+          <v-slide-group
+            v-model="selectedDay"
+            center-active
+            mandatory
+          >
+            <v-slide-group-item
+              v-for="(item, index) in days"
+              :key="item.day+item.dayWeek+index"
+              v-slot="{ isSelected, toggle }"
+            >
+              <div
+                class="px-5 text-center d-flex rounded-sm"
+                :key="item.day+item.dayWeek+index+'div'"
+                v-ripple
+                @click="toggle"
+                :style="{ 'border-right': (days.length - 1) !== index ? '1px solid #BDBDBD' : 'unset' }"
+              >
+                <div
+                  :style="{'border-bottom': isSelected ? 'solid 4px #3F51B5' : 'solid 4px transparent'}"
+                >
+                  <span 
+                    :class="{ 
+                      'text-indigo': isSelected, 
+                      'font-weight-bold': isSelected,
+                      'font-weight-medium': !isSelected,
+                      'text-uppercase': true
+                    }"
+                    style="font-size: 14px;"
+                  >
+                    {{ item.dayWeek }} <br/> {{ item.day }}
+                  </span>
+                </div>
+              </div>
+            </v-slide-group-item>
+          </v-slide-group>
+        </v-sheet>
+      </v-toolbar>
+
+      <!-- <v-divider class="mx-2"> </v-divider> -->
 
       <!-- TODO: '<template v-for>' cannot be keyed. Place the key on real elements instead. -->
       <template
