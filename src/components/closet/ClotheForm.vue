@@ -9,7 +9,7 @@
       :min-width="cardWidth+'px'"
       :max-width="cardWidth+'px'"
       :ref="'card-' + id"
-      outlined
+      variant="outlined"
       :rounded="'lg'"
     >
       <v-img

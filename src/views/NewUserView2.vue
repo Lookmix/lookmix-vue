@@ -5,7 +5,7 @@
     <v-card
       style="margin: auto;"
       elevation="3"
-      shaped
+      rounded="shaped"
       :width="width"
     >
       <v-card-text>
