@@ -6,7 +6,7 @@
       :text="resetPassword"
       size="small"
       rounded
-      :variant="!resetPassword ? 'outlined' : 'default'"
+      :variant="!resetPassword ? 'outlined' : 'text'"
       :color="resetPassword ? '' : 'secondary'"
       :ripple="!resetPassword"
       @click.stop="dialog = true; email = userEmailComponentParam; !resetPassword ? onOpenDialog() : false"
@@ -33,51 +33,55 @@
           elevation="0"
           flat 
           height="400"
+          mobile
         >
           <v-stepper-header
             style="box-shadow: unset; display: none;"
           >
-            <v-stepper-step
+            <v-stepper-item
               color="primary"
-              :complete="currentStep > 1"
-              step="1"
+              :complete="Number(currentStep) > 1"
+              value="1"
             >
-              E-mail
-            </v-stepper-step>
+              <!-- E-mail -->
+            </v-stepper-item>
 
             <v-divider></v-divider>
 
-            <v-stepper-step
-              :complete="currentStep > 2"
-              step="2"
+            <v-stepper-item
+              :complete="Number(currentStep) > 2"
+              value="2"
               color="primary"
             >
-              Código de confirmação
-            </v-stepper-step>
+              <!-- Código de confirmação -->
+            </v-stepper-item>
 
             <v-divider></v-divider>
 
-            <v-stepper-step 
-              :complete="currentStep > 3"
-              step="3"
+            <v-stepper-item 
+              :complete="Number(currentStep) > 3"
+              value="3"
               color="primary"
             >
-              Redefinição de senha
-            </v-stepper-step>
+              <!-- Redefinição de senha -->
+            </v-stepper-item>
 
             <v-divider></v-divider>
 
-            <v-stepper-step
-              :complete="currentStep > 4"
-              step="3"
+            <v-stepper-item
+              :complete="Number(currentStep) > 4"
+              value="4"
               color="primary"
             >
-              Confirmação de e-mail
-            </v-stepper-step>
+              <!-- Sucesso -->
+            </v-stepper-item>
+
+            <!-- TODO: Add a error step here -->
+
           </v-stepper-header>
 
-          <v-stepper-items>
-            <v-stepper-content step="1">
+          <v-stepper-window>
+            <v-stepper-window-item value="1">
               <div style="display: flex; flex-direction: column; height: 280px;">
                 <span>
                   <template v-if="!resetPassword">
@@ -147,9 +151,9 @@
                   ENVIAR
                 </v-btn>
               </div>
-            </v-stepper-content>
+            </v-stepper-window-item>
 
-            <v-stepper-content step="2">
+            <v-stepper-window-item value="2">
               <div style="display: flex; flex-direction: column; height: 280px;">
                 <span>
                   Informe o código de seis dígitos abaixo, antes que o tempo acabe
@@ -169,6 +173,7 @@
                   autocomplete="off" 
                   style="padding-bottom: 30px; max-height: 116px;"
                 >
+                  <!--
                   <v-otp-input
                     ref="otpInput"
                     v-model="validationCode"
@@ -185,7 +190,24 @@
                       rulesOTPValidation.codeError
                     ]"
                   />
+                  -->
 
+                  <!-- TODO: add vuetify rules -->
+                  <v-otp-input
+                    v-model="validationCode"
+                    class="mt-3 ms-n2"
+                    length="6"
+                    placeholder="0"
+                    variant="underlined"
+                    required
+                    color="secondary"
+                    type="number"
+                    :disabled="disableOTPInput || sendingOTP"
+                    @update:model-value="rulesOTPValidation.codeError = true"
+                  >
+                  </v-otp-input>
+
+                  <!-- 
                   <div 
                     class="text-red"
                     :style="{
@@ -196,7 +218,8 @@
                     }"
                   >
                     {{ $refs.otpInput ? $refs.otpInput.messagesToDisplay[0] : '' }}
-                  </div>
+                  </div> 
+                  -->
 
                   <div>
                     <br>
@@ -212,7 +235,7 @@
                       :ripple="false" 
                       color="#651FFF"
                       :disabled="sendingOTP || (timer > 0 && !attempsExceed)"
-                      @click="currentStep = 1; clearTimer(); clearOTPInput(); attempsExceed = false;"
+                      @click="currentStep = '1'; clearTimer(); clearOTPInput(); attempsExceed = false;"
                     >
                       REENVIAR
                     </v-btn>
@@ -237,9 +260,9 @@
                   AVANÇAR
                 </v-btn>
               </div>
-            </v-stepper-content>
+            </v-stepper-window-item>
 
-            <v-stepper-content step="3">
+            <v-stepper-window-item value="3">
               <div
                 style="display: flex; flex-direction: column; height: 280px;"
               >
@@ -290,9 +313,9 @@
                   AVANÇAR
                 </v-btn>
               </div>
-            </v-stepper-content>
+            </v-stepper-window-item>
 
-            <v-stepper-content step="4">
+            <v-stepper-window-item value="4">
               <div
                 style="display: flex; flex-direction: column; height: 280px;"
               >
@@ -332,8 +355,8 @@
                   Entrar
                 </v-btn>
               </div>
-            </v-stepper-content>
-          </v-stepper-items>
+            </v-stepper-window-item>
+          </v-stepper-window>
         </v-stepper>
       </v-card>
     </v-dialog>
@@ -374,7 +397,7 @@ export default {
       formValid: false,
       formValid2: false,
       formValid3: false,
-      currentStep: 1,
+      currentStep: "1",
       dialog: false,
       rules: {
         required: value => !!value || 'O e-mail deve ser preenchido',
@@ -499,12 +522,12 @@ export default {
 
           if (data.valid) {
             if (this.resetPassword) {
-              this.currentStep = 3
+              this.currentStep = "3"
               return;
             }
             return this.saveUser2()
               .then((response) => {
-                this.currentStep = 4
+                this.currentStep = "4"
                 return;
               })
               .catch((exception) => {
@@ -539,7 +562,7 @@ export default {
     goToStep2 () {
       this.disableOTPInput = false
 
-      this.currentStep = 2
+      this.currentStep = "2"
 
       this.setTimer()
     },
@@ -618,8 +641,9 @@ export default {
       errorHandlerFunction(self)
     },
     clearOTPInput () {
-      this.$refs.otpInput.otp = []
-      this.$refs.otpInput.errorBucket = []
+      // this.$refs.otpInput.otp = []
+      // this.$refs.otpInput.errorBucket = []
+      this.validationCode = undefined
       this.formValid2 = false
     },
     onOpenDialog () {
@@ -628,12 +652,12 @@ export default {
     redirectToLogin () {
       this.closeDialog()
       this.$router.push('/login')
-      this.currentStep = 1
+      this.currentStep = "1"
     },
     redirectToHome () {
       this.closeDialog()
       this.$router.push('/home')
-      this.currentStep = 1
+      this.currentStep = "1"
     },
     saveNewPassword () {
       this.sendingNewPassword = true
@@ -643,7 +667,7 @@ export default {
       }
       this.updatePassword(payload)
         .then((response) => {
-          this.currentStep = 4
+          this.currentStep = "4"
         })
         .catch((exception) => {
           const response = exception.response

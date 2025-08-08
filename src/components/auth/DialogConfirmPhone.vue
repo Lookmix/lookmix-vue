@@ -37,46 +37,46 @@
           <v-stepper-header
             style="box-shadow: unset; display: none;"
           >
-            <v-stepper-step
+            <v-stepper-item
               color="primary"
               :complete="currentStep > 1"
               step="1"
             >
               Número telefonico
-            </v-stepper-step>
+            </v-stepper-item>
 
             <v-divider></v-divider>
 
-            <v-stepper-step
+            <v-stepper-item
               :complete="currentStep > 2"
               step="2"
               color="primary"
             >
               Código de confirmação
-            </v-stepper-step>
+            </v-stepper-item>
 
             <v-divider></v-divider>
 
-            <v-stepper-step 
+            <v-stepper-item 
               :complete="currentStep > 3"
               step="3"
               color="primary"
             >
               Redefinição de senha
-            </v-stepper-step>
+            </v-stepper-item>
 
             <v-divider></v-divider>
 
-            <v-stepper-step
+            <v-stepper-item
               :complete="currentStep > 4"
               step="3"
               color="primary"
             >
               Confirmação de número
-            </v-stepper-step>
+            </v-stepper-item>
           </v-stepper-header>
 
-          <v-stepper-items>
+          <v-stepper-item>
             <v-stepper-content step="1">
               <div style="display: flex; flex-direction: column; height: 280px;">
                 <span>
@@ -335,7 +335,7 @@
                 </v-btn>
               </div>
             </v-stepper-content>
-          </v-stepper-items>
+          </v-stepper-item>
         </v-stepper>
       </v-card>
     </v-dialog>
