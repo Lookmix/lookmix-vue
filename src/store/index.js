@@ -286,6 +286,12 @@ export const store = createStore({
         withCredentials: true
       })
     },
+    updatePassword2({ state }, data) {
+      const url = `${DOMAIN}/users/update_password2`
+      return axios.put(url, data, {
+        withCredentials: true
+      })
+    },
     saveUser({ state }, data) {
       const url = `${DOMAIN}/users/save`
 
@@ -303,7 +309,7 @@ export const store = createStore({
 
       return axios.post(`${url}`, data)
     },
-     signin2 ({ state }, data) { // withCredentials: false
+    signin2 ({ state }, data) { // withCredentials: false
       const url = `${DOMAIN}/auth/login2`
       return axios.post(`${url}`, data)
     },

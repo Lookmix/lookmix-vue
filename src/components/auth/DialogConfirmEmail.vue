@@ -11,7 +11,7 @@
       :ripple="!resetPassword"
       @click.stop="dialog = true; email = userEmailComponentParam; !resetPassword ? onOpenDialog() : false"
     >
-      {{ resetPassword ? 'Recuperar senha' : 'CRIAR' }}
+      {{ resetPassword ? 'REDEFINIR SENHA' : 'CRIAR' }}
     </v-btn>
 
     <v-dialog
@@ -24,7 +24,7 @@
         v-if="dialog"
       >
         <v-card-title style="word-break: normal;">
-          {{ resetPassword ? 'Recuperação de senha' : 'Confirmação de e-mail' }}
+          {{ resetPassword ? 'Redefinição de senha' : 'Confirmação de e-mail' }}
         </v-card-title>
 
         <v-stepper 
@@ -80,7 +80,7 @@
 
           </v-stepper-header>
 
-          <v-stepper-window>
+          <v-stepper-window class="mt-2">
             <v-stepper-window-item value="1">
               <div style="display: flex; flex-direction: column; height: 280px;">
                 <span>
@@ -165,83 +165,77 @@
                   tempo restante: <strong> {{ timer }} </strong> segundos
                 </span>
 
-                <br>
+                <!-- <br> -->
+                <!--
+                <v-otp-input
+                  ref="otpInput"
+                  v-model="validationCode"
+                  required
+                  length="6"
+                  variant="plain"
+                  color="secondary"
+                  type="number"
+                  :disabled="disableOTPInput || sendingOTP"
+                  @update:model-value="rulesOTPValidation.codeError = true"
+                  :rules="[
+                    rulesOTPValidation.required, 
+                    rulesOTPValidation.codeLength,
+                    rulesOTPValidation.codeError
+                  ]"
+                />
+                -->
 
-                <v-form 
-                  v-model="formValid2"
-                  @submit="$event.preventDefault()"
-                  autocomplete="off" 
-                  style="padding-bottom: 30px; max-height: 116px;"
+                <!-- TODO: add vuetify rules -->
+                 <!-- pb-10 -->
+                <div
+                  style="max-height: 132px; min-height: 132px;"
                 >
-                  <!--
-                  <v-otp-input
-                    ref="otpInput"
-                    v-model="validationCode"
-                    required
-                    length="6"
-                    variant="plain"
-                    color="secondary"
-                    type="number"
-                    :disabled="disableOTPInput || sendingOTP"
-                    @update:model-value="rulesOTPValidation.codeError = true"
-                    :rules="[
-                      rulesOTPValidation.required, 
-                      rulesOTPValidation.codeLength,
-                      rulesOTPValidation.codeError
-                    ]"
-                  />
-                  -->
-
-                  <!-- TODO: add vuetify rules -->
                   <v-otp-input
                     v-model="validationCode"
-                    class="mt-3 ms-n2"
+                    class="ms-n2 mt-1"
                     length="6"
                     placeholder="0"
                     variant="underlined"
-                    required
-                    color="secondary"
-                    type="number"
                     :disabled="disableOTPInput || sendingOTP"
-                    @update:model-value="rulesOTPValidation.codeError = true"
+                    :error="otpInvalid"
+                    @update:model-value="otpInvalid = false; otpErrorMessage = undefined"
                   >
                   </v-otp-input>
-
-                  <!-- 
+                  
                   <div 
+                    v-if="otpInvalid"
                     class="text-red"
                     :style="{
-                      'min-height': '36px',
+                      // 'min-height': '36px',
                       'font-size': '12px',
-                      'padding': $refs.otpInput && $refs.otpInput.messagesToDisplay[0] ? '0px' : '18px',
-                      'color': $refs.otpInput ? 'unset' : 'transparent'
+                      // 'padding': otpInvalid ? '0px' : '18px'
+                      // 'color': $refs.otpInput ? 'unset' : 'transparent'
                     }"
                   >
-                    {{ $refs.otpInput ? $refs.otpInput.messagesToDisplay[0] : '' }}
-                  </div> 
-                  -->
+                    {{ otpErrorMessage }}
+                    <!-- {{ $refs.otpInput ? $refs.otpInput.messagesToDisplay[0] : '' }} -->
+                  </div>                
+                </div>
 
-                  <div>
-                    <br>
+                <div>
+                  <br>
 
-                    <span>
-                      Não recebeu o código ou o tempo / tentativas acabaram? 
-                    </span>
+                  <span>
+                    Não recebeu o código ou o tempo / tentativas acabaram? 
+                  </span>
 
-                    <v-btn 
-                      variant="outlined text" 
-                      rounded 
-                      size="x-small" 
-                      :ripple="false" 
-                      color="#651FFF"
-                      :disabled="sendingOTP || (timer > 0 && !attempsExceed)"
-                      @click="currentStep = '1'; clearTimer(); clearOTPInput(); attempsExceed = false;"
-                    >
-                      REENVIAR
-                    </v-btn>
-                  </div>
-                </v-form>
-
+                  <v-btn 
+                    variant="text" 
+                    rounded 
+                    size="x-small" 
+                    :ripple="false" 
+                    color="#651FFF"
+                    :disabled="sendingOTP || (timer > 0 && !attempsExceed)"
+                    @click="resetStepper()"
+                  >
+                    REENVIAR
+                  </v-btn>
+                </div>
                 <br>
               </div>
 
@@ -254,7 +248,7 @@
                   color="secondary"
                   size="small"
                   :loading="sendingOTP"
-                  :disabled="!formValid2 || timer === 0 || attempsExceed"
+                  :disabled="timer === 0 || attempsExceed"
                   @click="sendOTPCode();"
                 >
                   AVANÇAR
@@ -276,10 +270,12 @@
                   v-model="formValid3"
                   @submit="$event.preventDefault()"
                   autocomplete="off" 
-                  style="padding-bottom: 30px; max-height: 116px;"
+                  class="pb-7"
+                  style="max-height: 116px;"
                 >
                   <v-text-field
-                    style="margin-top: 10px"
+                    class="mt-3"
+                    ref="passwordField"
                     variant="filled"
                     color="secondary"
                     v-model="newPassword"
@@ -289,12 +285,12 @@
                       rules.passwordLength,
                       rules.exists
                     ]"
-                    :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-                    :type="showPassword ? 'text' : 'password'"
+                    :append-inner-icon="showPasswordClicked ? 'mdi-eye-off' : 'mdi-eye'"
+                    :type="showPasswordClicked ? 'text' : 'password'"
                     label="Nova senha *"
                     :disabled="sendingNewPassword"
                     @keyup="rules.exists = true"
-                    @click:append="showPassword = !showPassword"
+                    @click:append-inner="showPassword()"
                   />
                 </v-form>
               </div>
@@ -309,6 +305,7 @@
                   size="small"
                   :loading="sendingNewPassword"
                   @click="saveNewPassword()"
+                  :disabled="!formValid3"
                 >
                   AVANÇAR
                 </v-btn>
@@ -317,11 +314,13 @@
 
             <v-stepper-window-item value="4">
               <div
-                style="display: flex; flex-direction: column; height: 280px;"
+                class="d-flex flex-column"
+                style="height: 280px;"
               >
                 <v-icon
                   size="145"
                   color="green"
+                  class="ma-auto"
                 >
                   mdi-check-circle
                 </v-icon>
@@ -395,7 +394,7 @@ export default {
   data () {
     return {
       formValid: false,
-      formValid2: false,
+      // formValid2: false,
       formValid3: false,
       currentStep: "1",
       dialog: false,
@@ -406,8 +405,8 @@ export default {
         passwordLength: value => value && value.length < 8 ? 'A senha deve ter pelo menos 8 dígitos' : true,
       },
       rulesOTPValidation: {
-        required: value => !!value || 'Preencha os 6 dígitos',
-        codeLength: value => value && value.length < 6 ? 'O código está incompleto' : true,
+        // required: value => !!value || 'Preencha os 6 dígitos',
+        // codeLength: value => value && value.length < 6 ? 'O código está incompleto' : true,
         codeError: true
       },
       validatingEmail: false,
@@ -417,16 +416,18 @@ export default {
       timer: 80,
       interval: undefined,
       OTPData: undefined,
-      errorMessage: undefined,
+      errorMessage: undefined, // TODO: rename to errorMessageSnackbar
       errorSnackbar: false,
       sendingOTP: false,
       disableOTPInput: false,
       attempsExceed: false,
       newPassword: undefined,
-      showPassword: false,
+      showPasswordClicked: false,
       sendingNewPassword: false,
       duplicatedEmailMsg: "Esse e-mail já existe no Lookmix, não é possível criar outra conta com este e-mail",
-      emailNotFoundMsg: "Não encontramos seu e-mail na base de dados"
+      emailNotFoundMsg: "Não encontramos seu e-mail na base de dados",
+      otpErrorMessage: undefined,
+      otpInvalid: false
     }
   },
   methods: {
@@ -434,7 +435,7 @@ export default {
       "verifyDuplicatedEmail",
       "getOTPData2",
       "sendOTP",
-      "updatePassword",
+      "updatePassword2",
       "saveUser2"
     ]),
     validateEmailDuplication (getOTP=false) {
@@ -509,6 +510,10 @@ export default {
       this.clearOTPInput()
     },
     sendOTPCode () { // saveUser2 too
+      this.checkOTPEmptyAndLength()
+      if (this.otpInvalid) {
+        return;
+      }
       this.sendingOTP = true
 
       let data = {
@@ -643,8 +648,10 @@ export default {
     clearOTPInput () {
       // this.$refs.otpInput.otp = []
       // this.$refs.otpInput.errorBucket = []
+      this.otpInvalid = false
+      this.otpErrorMessage = undefined
       this.validationCode = undefined
-      this.formValid2 = false
+      // this.formValid2 = false
     },
     onOpenDialog () {
       this.$emit("opened", true)
@@ -665,7 +672,7 @@ export default {
         email: this.email,
         password: this.newPassword
       }
-      this.updatePassword(payload)
+      this.updatePassword2(payload)
         .then((response) => {
           this.currentStep = "4"
         })
@@ -676,13 +683,38 @@ export default {
             const error = response.data.error
   
             this.handleResetPasswordErrors(error)
-  
+            this.newPassword = undefined
+            this.sendingNewPassword = false
+            this.resetStepper()
             console.log(exception)
           }
         }) 
-        .finally(() => {
-          this.newPassword = undefined
-        })
+        .finally(() => {})
+    },
+    checkOTPEmptyAndLength () {
+      if (!this.validationCode || this.validationCode.length < 6) {
+        this.otpInvalid = true
+        this.otpErrorMessage = "Preencha os 6 dígitos"
+      }
+    },
+    showPassword () {
+      // workaround for the issue #16109 from vuetify
+      // https://github.com/vuetifyjs/vuetify/issues/16109#issuecomment-3124750075
+      const $input = this.$refs.passwordField?.$el.querySelector("input")
+      let { selectionStart, selectionEnd } = $input
+      if (document.activeElement !== $input) {
+        selectionStart = selectionEnd = $input.value.length
+      }
+      this.showPasswordClicked = !this.showPasswordClicked
+      setTimeout(() => {
+        $input.setSelectionRange(selectionStart, selectionEnd)
+      })
+    },
+    resetStepper () {
+      this.currentStep = "1"
+      this.clearTimer()
+      this.clearOTPInput()
+      this.attempsExceed = false
     }
   }
 }
