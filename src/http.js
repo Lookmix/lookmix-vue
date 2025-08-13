@@ -38,6 +38,7 @@ axiosInstance.interceptors.request.use(
     if (config.withCredentials) {
       config.xsrfCookieName = xsrfCookieName
       config.xsrfHeaderName = "X-CSRF-TOKEN"
+      config.withXSRFToken = true
     }
     return config;
   },
