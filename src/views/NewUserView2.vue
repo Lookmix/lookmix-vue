@@ -21,7 +21,7 @@
         <v-form autocomplete="off" v-model="isFormValid">
           <v-text-field
             variant="filled"
-            :append-icon="isEmailUnique ? 'mdi-emoticon-cool-outline' : isEmailUnique === undefined ? 'mdi-emoticon-neutral-outline' : 'mdi-emoticon-sad-outline'"
+            :append-inner-icon="isEmailUnique ? 'mdi-emoticon-cool-outline' : isEmailUnique === undefined ? 'mdi-emoticon-neutral-outline' : 'mdi-emoticon-sad-outline'"
             color="secondary"
             v-model="email"
             :rules="[rules.required, rules.unique]"
@@ -41,10 +41,11 @@
             v-model="password"
             required
             :rules="[rules.requiredPassword, rules.passwordLength]"
-            :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-            :type="showPassword ? 'text' : 'password'"
+            :append-inner-icon="showPasswordClicked ? 'mdi-eye-off' : 'mdi-eye'"
+            :type="showPasswordClicked ? 'text' : 'password'"
             label="Senha *"
-            @click:append="showPassword = !showPassword"
+            @click:append-inner="showPassword()"
+            ref="passwordField"
           />
         </v-form>
       </v-card-text>
@@ -85,7 +86,7 @@ export default {
     return {
       email: "",
       password: "",
-      showPassword: false,
+      showPasswordClicked: false,
       rules: {
         required: value => !!value || 'O número do celular deve ser preenchido',
         requiredPassword: value => !!value || 'A senha deve ser preenchida',
@@ -146,6 +147,19 @@ export default {
         }
         this.setNewUser(user)
       }
+    },
+    showPassword () {
+      // workaround for the issue #16109 from vuetify
+      // https://github.com/vuetifyjs/vuetify/issues/16109#issuecomment-3124750075
+      const $input = this.$refs.passwordField?.$el.querySelector("input")
+      let { selectionStart, selectionEnd } = $input
+      if (document.activeElement !== $input) {
+        selectionStart = selectionEnd = $input.value.length
+      }
+      this.showPasswordClicked = !this.showPasswordClicked
+      setTimeout(() => {
+        $input.setSelectionRange(selectionStart, selectionEnd)
+      })
     }
   }
 };

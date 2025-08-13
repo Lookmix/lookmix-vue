@@ -33,10 +33,11 @@
             v-model="password"
             required
             :rules="[rules.requiredPassword]"
-            :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-            :type="showPassword ? 'text' : 'password'"
+            :append-inner-icon="showPasswordClicked ? 'mdi-eye-off' : 'mdi-eye'"
+            :type="showPasswordClicked ? 'text' : 'password'"
             label="Senha *"
-            @click:append="showPassword = !showPassword"
+            @click:append-inner="showPassword()"
+            ref="passwordField"
           />
 
           <div style="display: flex; flex-direction: column; margin-top: 10px;">
@@ -118,7 +119,7 @@ export default {
     return {
       email: "",
       password: "",
-      showPassword: false,
+      showPasswordClicked: false,
       rules: {
         required: value => !!value || 'O e-mail deve ser preenchido',
         requiredPassword: value => !!value || 'A senha deve ser preenchida',
@@ -196,6 +197,19 @@ export default {
       const errorHandlerFunction = errors[error]
       const self = this
       errorHandlerFunction(self)
+    },
+    showPassword () {
+      // workaround for the issue #16109 from vuetify
+      // https://github.com/vuetifyjs/vuetify/issues/16109#issuecomment-3124750075
+      const $input = this.$refs.passwordField?.$el.querySelector("input")
+      let { selectionStart, selectionEnd } = $input
+      if (document.activeElement !== $input) {
+        selectionStart = selectionEnd = $input.value.length
+      }
+      this.showPasswordClicked = !this.showPasswordClicked
+      setTimeout(() => {
+        $input.setSelectionRange(selectionStart, selectionEnd)
+      })
     }
   }
 }
