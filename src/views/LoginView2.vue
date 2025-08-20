@@ -5,7 +5,18 @@
       elevation="3"
       rounded="shaped"
       :width="width"
+      :disabled="loadingLogin"
+      :loading="loadingLogin"
     >
+      <template v-slot:loader="{ isActive }">
+        <v-progress-linear
+          :active="isActive"
+          color="secondary"
+          height="4"
+          indeterminate
+        >
+        </v-progress-linear>
+      </template>
       <v-card-text>
         <div class="div-logo">
           <img src="../assets/hanger-light-clean.svg" class="hide-select-drag-effect logo" />
@@ -13,7 +24,7 @@
         
         <h3 class="login-title"> Entre na sua conta </h3>
 
-        <form autocomplete="off">
+        <v-form autocomplete="off" v-model="isFormValid">
           <v-text-field
             variant="filled"
             v-model="email"
@@ -45,9 +56,10 @@
               style="margin: auto; width: 160px;"
               color="secondary"
               elevation="2"
-              rounded
+              :rounded="'pill'"
               size="x-large"
               @click="login()"
+              :loading="loadingLogin"
             >
               ENTRAR
             </v-btn>
@@ -77,7 +89,7 @@
               />
             </div>
           </div>
-        </form>
+        </v-form>
       </v-card-text>
     </v-card>
 
@@ -91,7 +103,7 @@
         <v-btn
           variant="text"
           v-bind="attrs"
-          @click="errorSnackbar = false"
+          @click="errorSnackbar = false; errorMessage = undefined"
         >
           OK
         </v-btn>
@@ -132,7 +144,9 @@ export default {
       showPasswordClicked: false,
       errorSnackbar: false,
       errorMessage: undefined,
-      badCredentialsError: "badCredentials"
+      badCredentialsError: "badCredentials",
+      isFormValid: false,
+      loadingLogin: false
     }
   },
   computed: {
@@ -158,6 +172,12 @@ export default {
       this.$router.push("/home")
     },
     login () {
+      if (!this.isFormValid) {
+        this.errorMessage = "Preencha o e-mail e a senha."
+        this.errorSnackbar = true
+        return 
+      }
+      this.loadingLogin = true
       const payload = {
         "email": this.email,
         "password": this.password
@@ -185,6 +205,7 @@ export default {
             this.handleLoginErrors(error)
             console.log(exception)
           }
+          this.loadingLogin = false
         })
     },
     handleLoginErrors (error) {
