@@ -20,18 +20,21 @@
 
         <v-form autocomplete="off" v-model="isFormValid">
           <v-text-field
+            id="email-field"
             variant="filled"
-            :append-inner-icon="isEmailUnique ? 'mdi-emoticon-cool-outline' : isEmailUnique === undefined ? 'mdi-emoticon-neutral-outline' : 'mdi-emoticon-sad-outline'"
+            :append-inner-icon="isEmailUnique===true ? 'mdi-emoticon-cool-outline' : isEmailUnique === '' ? 'mdi-emoticon-neutral-outline' : 'mdi-emoticon-sad-outline'"
             color="secondary"
             v-model="email"
-            :rules="[rules.required, rules.unique]"
+            :rules="emailRules"
             required
             label="E-mail *"
             type="email"
             placeholder="exemplo@dominio.com"
             autocomple="off"
-            @keyup="validateEmailDuplication()"
+            @input="validateEmailDuplication()"
             :loading="validatingEmail"
+            ref="emailField"
+            :error-messages="emailErrorMessages"
           />
 
           <v-text-field
@@ -40,12 +43,13 @@
             color="secondary"
             v-model="password"
             required
-            :rules="[rules.requiredPassword, rules.passwordLength]"
+            :rules="passwordRules"
             :append-inner-icon="showPasswordClicked ? 'mdi-eye-off' : 'mdi-eye'"
             :type="showPasswordClicked ? 'text' : 'password'"
             label="Senha *"
             @click:append-inner="showPassword()"
             ref="passwordField"
+            id="password-field"
           />
         </v-form>
       </v-card-text>
@@ -60,8 +64,8 @@
         <DialogConfirmEmail
           @opened="setNewUserState()"
           :disabled="!isFormValid || validatingEmail"
-          :userEmailComponentParam="email"
-          :resetPassword="false"
+          :userEmailProp="email"
+          :passwordReset="false"
         />
       </v-card-actions>
     </v-card>
@@ -69,17 +73,36 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex';
-import * as utils from './../utils.js'
-import DialogConfirmEmail from './../components/auth/DialogConfirmEmail.vue'
+import { mapActions, mapMutations } from "vuex"
+import * as utils from "./../utils.js"
+import DialogConfirmEmail from "./../components/auth/DialogConfirmEmail.vue"
+import { useRules } from "vuetify/labs/rules"
 
 export default {
+  setup () {
+    return {
+      // https://github.com/vuetifyjs/vuetify/issues/21552#issuecomment-2962825752
+      // https://github.com/vuetifyjs/vuetify/issues/21477#issuecomment-3056764552
+      emailRules: useRules(() => [
+        // https://vuetifyjs.com/en/components/text-fields/#validation
+        // https://vuejs.org/guide/essentials/reactivity-fundamentals
+        // ["unique", isEmailUnique.value === false ? "Alguém já usa esse, você digitou correto?" : ""],
+        // ["unique", "Alguém já usa esse, você digitou correto?"],
+        ["required", "Informe o e-mail"],
+        ["email", "E-mail inválido"]
+      ]),
+      passwordRules: useRules(() => [
+        ["required", "Informe a senha"],
+        ["minLength", 8, "Use 8 ou mais caracteres"],
+        ["maxLength", 40, "Use até 40 caracteres"]
+      ])
+    }
+  },
   components: {
     DialogConfirmEmail
   },
   mounted() {
     const darkTheme = this.$vuetify.theme.dark;
-
     utils.updateMetaTagTheme(darkTheme, "#8341a1d4");
   },
   data () {
@@ -87,16 +110,11 @@ export default {
       email: "",
       password: "",
       showPasswordClicked: false,
-      rules: {
-        required: value => !!value || 'O número do celular deve ser preenchido',
-        requiredPassword: value => !!value || 'A senha deve ser preenchida',
-        passwordLength: value => value && value.length < 8 ? 'A senha deve ter pelo menos 8 dígitos' : true,
-        unique: true
-      },
       ongoingRequest: null,
-      isEmailUnique: undefined,
       validatingEmail: false,
-      isFormValid: false
+      isFormValid: false,
+      isEmailUnique: "",
+      emailErrorMessages: []
     }
   },
   computed: {
@@ -118,16 +136,21 @@ export default {
       this.$router.push('/login2')
     },
     validateEmailDuplication () {
-      this.validatingEmail = true
-      this.isEmailUnique = undefined
-      this.rules.unique = true
+      this.isEmailUnique = ""
+      this.emailErrorMessages = []
+      if (!this.$refs.emailField?.isValid) {
+        return
+      }
       clearTimeout(this.ongoingRequest);
+      this.validatingEmail = true
       this.ongoingRequest = setTimeout(() => {
         this.verifyDuplicatedEmail(this.email)
           .then((response) => {
             this.isEmailUnique = response.data.is_unique
             if (!this.isEmailUnique) {
-              this.rules.unique = "Alguém já usa esse, você digitou correto?"
+              this.emailErrorMessages = [ 
+                "Este e-mail já está em uso."
+              ]
             }
           })
           .catch((error)=> {

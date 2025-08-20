@@ -18,7 +18,7 @@
             variant="filled"
             v-model="email"
             color="secondary"
-            :rules="[ rules.required ]"
+            :rules="emailRules"
             required
             label="E-mail *"
             type="email"
@@ -32,7 +32,7 @@
             color="secondary"
             v-model="password"
             required
-            :rules="[rules.requiredPassword]"
+            :rules="passwordRules"
             :append-inner-icon="showPasswordClicked ? 'mdi-eye-off' : 'mdi-eye'"
             :type="showPasswordClicked ? 'text' : 'password'"
             label="Senha *"
@@ -72,8 +72,8 @@
               style="width: 150px; margin: 15px auto auto auto;"
             >
               <DialogConfirmEmail
-                :userEmailComponentParam="email" 
-                :resetPassword="true"
+                :userEmailProp="email" 
+                :passwordReset="true"
               />
             </div>
           </div>
@@ -101,16 +101,26 @@
 </template>
 
 <script>
-import { mask } from 'vue-the-mask'
 import * as utils from './../utils.js'
 import DialogConfirmEmail from './../components/auth/DialogConfirmEmail.vue'
 import { mapActions, mapMutations } from "vuex"
+import { useRules } from "vuetify/labs/rules"
 
 export default {
+  setup () {
+    return {
+      emailRules: useRules(() => [
+        ["required", "Informe o e-mail"],
+        ["email", "E-mail inválido"]
+      ]),
+      passwordRules: useRules(() => [
+        ["required", "Informe a senha"]
+      ])
+    }
+  },
   components: {
     DialogConfirmEmail
   },
-  directives: { mask },
   mounted () {
     const darkTheme = this.$vuetify.theme.dark
     utils.updateMetaTagTheme(darkTheme, '#ffb6c1ad')
@@ -120,10 +130,6 @@ export default {
       email: "",
       password: "",
       showPasswordClicked: false,
-      rules: {
-        required: value => !!value || 'O e-mail deve ser preenchido',
-        requiredPassword: value => !!value || 'A senha deve ser preenchida',
-      },
       errorSnackbar: false,
       errorMessage: undefined,
       badCredentialsError: "badCredentials"

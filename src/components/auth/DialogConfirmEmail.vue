@@ -2,16 +2,16 @@
   <div>
     <v-btn
       :disabled="disabled"
-      :style="{'margin-left': resetPassword ? '-3px' : 'unset' }"
-      :text="resetPassword"
+      :style="{'margin-left': passwordReset ? '-3px' : 'unset' }"
+      :text="passwordReset"
       size="small"
       rounded
-      :variant="!resetPassword ? 'outlined' : 'text'"
-      :color="resetPassword ? '' : 'secondary'"
-      :ripple="!resetPassword"
-      @click.stop="dialog = true; email = userEmailComponentParam; !resetPassword ? onOpenDialog() : false"
+      :variant="!passwordReset ? 'outlined' : 'text'"
+      :color="passwordReset ? '' : 'secondary'"
+      :ripple="!passwordReset"
+      @click.stop="dialog = true; email = userEmailProp; !passwordReset ? onOpenDialog() : false"
     >
-      {{ resetPassword ? 'REDEFINIR SENHA' : 'CRIAR' }}
+      {{ passwordReset ? 'REDEFINIR SENHA' : 'CRIAR' }}
     </v-btn>
 
     <v-dialog
@@ -24,7 +24,7 @@
         v-if="dialog"
       >
         <v-card-title style="word-break: normal;">
-          {{ resetPassword ? 'Redefinição de senha' : 'Confirmação de e-mail' }}
+          {{ passwordReset ? 'Redefinição de senha' : 'Confirmação de e-mail' }}
         </v-card-title>
 
         <v-stepper 
@@ -84,17 +84,17 @@
             <v-stepper-window-item value="1">
               <div style="display: flex; flex-direction: column; height: 280px;">
                 <span>
-                  <template v-if="!resetPassword">
+                  <template v-if="!passwordReset">
                     Confira se o endereço de e-mail abaixo está correto e corrija se necessário.  
                     Vamos te enviar um código através dele.
                   </template>
 
-                  <template v-if="resetPassword && userEmailComponentParam">
+                  <template v-if="passwordReset && userEmailProp">
                     Confira se o endereço de e-mail abaixo está correto e corrija se necessário.  
                     Vamos te enviar um código através dele.
                   </template>
 
-                  <template v-if="resetPassword && !userEmailComponentParam">
+                  <template v-if="passwordReset && !userEmailProp">
                     Informe seu e-mail abaixo. Vamos te enviar um código através dele.
                   </template>
                 </span>
@@ -113,16 +113,14 @@
                     required
                     autocomple="off"
                     color="secondary"
-                    :rules="[
-                      rules.required, 
-                      rules.exists
-                    ]"
+                    :rules="emailRules"
                     label="E-mail *"
                     type="email"
                     placeholder="exemplo@dominio.com"
                     :loading="validatingEmail"
                     persistent-hint
-                    @keyup="rules.exists = true"
+                    :error-messages="emailErrorMessages"
+                    @input="emailErrorMessages = []"
                   />
                 </v-form>
               </div>
@@ -214,7 +212,7 @@
                   >
                     {{ otpErrorMessage }}
                     <!-- {{ $refs.otpInput ? $refs.otpInput.messagesToDisplay[0] : '' }} -->
-                  </div>                
+                  </div>
                 </div>
 
                 <div>
@@ -280,17 +278,14 @@
                     color="secondary"
                     v-model="newPassword"
                     required
-                    :rules="[
-                      rules.requiredPassword, 
-                      rules.passwordLength,
-                      rules.exists
-                    ]"
+                    :rules="passwordRules"
                     :append-inner-icon="showPasswordClicked ? 'mdi-eye-off' : 'mdi-eye'"
                     :type="showPasswordClicked ? 'text' : 'password'"
                     label="Nova senha *"
                     :disabled="sendingNewPassword"
-                    @keyup="rules.exists = true"
                     @click:append-inner="showPassword()"
+                    :error-messages="emailErrorMessages"
+                    @input="emailErrorMessages=[]"
                   />
                 </v-form>
               </div>
@@ -328,7 +323,7 @@
                 <br>
 
                 <span>
-                  {{ resetPassword ?  
+                  {{ passwordReset ?  
                     "Senha atualizada com sucesso!" :
                     "Concluímos a verificação do seu e-mail!"
                   }}
@@ -347,7 +342,7 @@
                 <v-btn
                   size="small"
                   color="secondary"
-                  @click="resetPassword ? closeDialog() : redirectToHome()"
+                  @click="passwordReset ? closeDialog() : redirectToHome()"
                   rounded
                   variant="outlined"
                 >
@@ -382,13 +377,30 @@
 <script>
 import { mask } from 'vue-the-mask'
 import { mapActions } from 'vuex';
-import * as utils from './../../utils.js'
+import { useRules } from "vuetify/labs/rules"
 
 export default {
+  setup () {
+    return {
+      // https://github.com/vuetifyjs/vuetify/issues/21552#issuecomment-2962825752
+      // https://github.com/vuetifyjs/vuetify/issues/21477#issuecomment-3056764552
+      emailRules: useRules(() => [
+        // https://vuetifyjs.com/en/components/text-fields/#validation
+        // https://vuejs.org/guide/essentials/reactivity-fundamentals
+        ["required", "Informe o e-mail"],
+        ["email", "E-mail inválido"]
+      ]),
+      passwordRules: useRules(() => [
+        ["required", "Informe a senha"],
+        ["minLength", 8, "Use 8 ou mais caracteres"],
+        ["maxLength", 40, "Use até 40 caracteres"]
+      ])
+    }
+  },
   directives: { mask },
   props: [
-    "resetPassword",
-    "userEmailComponentParam",
+    "passwordReset",
+    "userEmailProp",
     "disabled"
   ],
   data () {
@@ -398,12 +410,6 @@ export default {
       formValid3: false,
       currentStep: "1",
       dialog: false,
-      rules: {
-        required: value => !!value || 'O e-mail deve ser preenchido',
-        exists: true,
-        requiredPassword: value => !!value || 'A senha deve ser preenchida',
-        passwordLength: value => value && value.length < 8 ? 'A senha deve ter pelo menos 8 dígitos' : true,
-      },
       rulesOTPValidation: {
         // required: value => !!value || 'Preencha os 6 dígitos',
         // codeLength: value => value && value.length < 6 ? 'O código está incompleto' : true,
@@ -425,9 +431,10 @@ export default {
       showPasswordClicked: false,
       sendingNewPassword: false,
       duplicatedEmailMsg: "Esse e-mail já existe no Lookmix, não é possível criar outra conta com este e-mail",
-      emailNotFoundMsg: "Não encontramos seu e-mail na base de dados",
+      emailNotFoundMsg: "Este e-mail não está cadastrado",
       otpErrorMessage: undefined,
-      otpInvalid: false
+      otpInvalid: false,
+      emailErrorMessages: []
     }
   },
   methods: {
@@ -440,25 +447,27 @@ export default {
     ]),
     validateEmailDuplication (getOTP=false) {
       this.validatingEmail = true
-      this.rules.exists = true
       clearTimeout(this.ongoingRequest);
       const email = encodeURI(this.email)
       return this.verifyDuplicatedEmail(email)
         .then((response) => {
           const isUnique = response.data.is_unique
           // if reset password, email must exists
-          if (isUnique && this.resetPassword) {
-            this.rules.exists = this.emailNotFoundMsg
+          if (isUnique && this.passwordReset) {
+            this.emailErrorMessages = [this.emailNotFoundMsg]
             return;
           } 
           // if creating new account, email should not exists
-          else if (!isUnique && !this.resetPassword) {
-            this.rules.exists = this.duplicatedEmailMsg
+          else if (!isUnique && !this.passwordReset) {
+            this.emailErrorMessages = [this.duplicatedEmailMsg]
             return;
           }
           if (getOTP) {
-            const email = encodeURI(this.email)
-            return this.getOTPData2(email)
+            const payload = {
+              email: email,
+              isPasswordReset: this.passwordReset ? 1 : 0
+            }
+            return this.getOTPData2(payload)
               .then((response) => {
                 const data = response.data
                 this.OTPData = data
@@ -526,7 +535,7 @@ export default {
           const data = response.data
 
           if (data.valid) {
-            if (this.resetPassword) {
+            if (this.passwordReset) {
               this.currentStep = "3"
               return;
             }
@@ -583,26 +592,28 @@ export default {
           self.clearOTPInput()
           self.OTPData.id = null
           self.OTPData.token = null
-          self.rulesOTPValidation.codeError = "Suas tentativas esgoratam. Toque em reenviar para receber um novo código."
+          self.otpErrorMessage = "Suas tentativas esgoratam. Toque em reenviar para receber um novo código."
+          self.otpInvalid = true
           self.disableOTPInput = true
           self.attempsExceed = true
           return;
         },
         invalidOTP (self) {
           self.clearOTPInput()
-          self.rulesOTPValidation.codeError = "Código inválido, tente novamente."
-          return;       
+          self.otpErrorMessage = "Código inválido, tente novamente."
+          self.otpInvalid = true
+          return
         },
         expired (self) {
           self.clearOTPInput()
-          self.rulesOTPValidation.codeError = "Código expirado. Toque em reenviar para receber um novo código."
+          self.otpErrorMessage = "Código expirado. Toque em reenviar para receber um novo código."
+          self.otpInvalid = true
           self.disableOTPInput = true
           return;
         }
       }
       const errorHandlerFunction = errors[error]
       const self = this
-
       errorHandlerFunction(self)
     },
     handleSaveUserErrors (error) {
@@ -631,7 +642,7 @@ export default {
     handleResetPasswordErrors (error) {
       const errors = {
         emailNotFound (self) {
-          self.rules.exists = this.emailNotFoundMsg
+          self.emailErrorMessages = [self.emailNotFoundMsg]
           return;
         },
         unknow (self) {

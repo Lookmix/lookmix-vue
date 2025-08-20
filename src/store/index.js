@@ -270,7 +270,8 @@ export const store = createStore({
       const url = `${DOMAIN_OTP}/auth/get_otp2`
       return axios.get(`${url}`, {
         params: {
-          email: data
+          email: data.email,
+          is_pass_reset: data.isPasswordReset
         }
       })      
     },

@@ -4,6 +4,7 @@ import colors from "vuetify/util/colors"
 // import Ripple from "vuetify/lib/directives/ripple"
 import "vuetify/styles"
 import { createVuetify } from "vuetify"
+import { createRulesPlugin } from "vuetify/labs/rules"
 import * as components from "vuetify/components"
 import * as directives from "vuetify/directives"
 
@@ -16,7 +17,7 @@ import * as directives from "vuetify/directives"
     // Vue.use(Vuetify);
     
 // export default new Vuetify({
-export default createVuetify({
+export const vuetify = createVuetify({
   components,
   directives,
   theme: {
@@ -58,3 +59,13 @@ export default createVuetify({
     },
   },
 });
+
+export const vuetifyCustomRules = createRulesPlugin({ 
+  aliases: {
+    // unique: (isUnique, error) => {
+    // unique: error => {
+      // return value => (/^[\d]{4}$/.test(value)) || error || "Field must contain a 4-digit PIN"
+      // return value => false || error || "This value is not unique"
+    // }
+  }
+}, vuetify.locale)
