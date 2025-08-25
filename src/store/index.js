@@ -312,7 +312,7 @@ export const store = createStore({
     },
     signin2 ({ state }, data) { // withCredentials: false
       const url = `${DOMAIN}/auth/login2`
-      return axios.post(`${url}`, data)
+      return axios.post(`${url}`, data, { withCredentials: true })
     },
     checkTokenValidity ({ state }, data) {
       const url = `${DOMAIN}/auth/verify_access`
