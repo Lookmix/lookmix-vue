@@ -275,10 +275,10 @@ export const store = createStore({
         }
       })      
     },
-    sendOTP ({ state }, data) { // withCredentials: false
+    sendOTP ({ state }, data) {
       const url = `${DOMAIN}/auth/verify_otp`
 
-      return axios.post(`${url}`, data)
+      return axios.post(`${url}`, data, { withCredentials: true })
     },
     updatePassword({ state }, data) {
       const url = `${DOMAIN}/users/update_password`
@@ -310,7 +310,7 @@ export const store = createStore({
 
       return axios.post(`${url}`, data)
     },
-    signin2 ({ state }, data) { // withCredentials: false
+    signin2 ({ state }, data) {
       const url = `${DOMAIN}/auth/login2`
       return axios.post(`${url}`, data, { withCredentials: true })
     },
