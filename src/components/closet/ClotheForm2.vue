@@ -260,18 +260,18 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "maxHeight",
+      "calculatedMaxHeight",
       "categories",
       "occasions",
       "seasons"
     ]),
     cardContentHeight () {
-      // return this.maxHeight - 105 - 250 // 95 + margin10 = 105
+      // return this.calculatedMaxHeight - 105 - 250 // 95 + margin10 = 105
       // +10 = margin
       const marginDiscount = 20
       const bottomPaginator = 48
       const padding = 32
-      const height = this.maxHeight - bottomPaginator - this.cardImageHeight - marginDiscount - padding
+      const height = this.calculatedMaxHeight - bottomPaginator - this.cardImageHeight - marginDiscount - padding
       return `${height}px`
     },
     imageReadable () {

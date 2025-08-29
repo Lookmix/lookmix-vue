@@ -180,7 +180,7 @@
     <!-- <template v-for="(look, index) of looks"> -->
     <v-virtual-scroll
       :items="looks"
-      :height="maxHeight-filtersHeight-looksCounterHeight"
+      :height="calculatedMaxHeight - filtersHeight - looksCounterHeight"
       item-height="225"
     >
       <template v-slot:default="{ item, index }">
@@ -244,7 +244,7 @@ export default {
     ...mapGetters([
       "lookset",
       "occasions",
-      "maxHeight"
+      "calculatedMaxHeight"
       // "lookset2"
     ]),
     looks () {

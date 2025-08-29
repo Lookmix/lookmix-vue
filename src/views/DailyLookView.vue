@@ -3,15 +3,15 @@
     <template v-if="!showDialog && !dailyLookSetup">
       <div 
         :style="{
-          'height': maxHeight+'px',
+          'height': computedMaxHeight+'px',
           'display': 'flex', 
           'flex-direction': 'column',
         }"
       >
         <v-card 
           elevation="0"
-          :min-height="maxHeight"
-          :max-height="maxHeight"
+          :min-height="computedMaxHeight"
+          :max-height="computedMaxHeight"
         >  
           <v-card-text style="text-align: center;">
             <br/>
@@ -433,7 +433,7 @@ export default {
     hasSelectedAllFilters () {
       return this.selectedCloset !== undefined && this.selectedPeriod !== undefined
     },
-    maxHeight () {
+    computedMaxHeight () {
       const header = 56
       const footer = 56
       let innerHeight = window.innerHeight

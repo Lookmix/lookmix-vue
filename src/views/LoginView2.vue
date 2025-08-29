@@ -4,7 +4,7 @@
       style="margin: auto; height: 530px;"
       elevation="3"
       rounded="shaped"
-      :width="width"
+      :width="calculatedWidth"
       :disabled="loadingLogin"
       :loading="loadingLogin"
     >
@@ -150,7 +150,7 @@ export default {
     }
   },
   computed: {
-    width () {
+    calculatedWidth () {
       switch (this.$vuetify.display.name) {
         case 'xs': return 290
         default: return 326

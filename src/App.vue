@@ -8,8 +8,8 @@
     <v-main class="overflow-hidden">
       <v-sheet
         :color="backgroundColor"
-        :max-height="maxHeight"
-        :min-height="maxHeight"
+        :max-height="calculatedMaxHeight"
+        :min-height="calculatedMaxHeight"
         id="sheet-main"
         class="overflow-y-auto"
         :class="{
@@ -50,7 +50,7 @@ export default {
       "authenticated", 
       "isNewUserRoute", 
       "isLoginRoute", 
-      "maxHeight",
+      "calculatedMaxHeight",
       "backgroundColor",
       "isMobileOnlyRoute"
     ])

@@ -70,7 +70,7 @@ export const store = createStore({
     isNewUserRoute: state => state.isNewUserRoute,
     isLoginRoute: state => state.isLoginRoute,
     isMobileOnlyRoute: state => state.isMobileOnlyRoute,
-    maxHeight (state) {
+    calculatedMaxHeight (state) {
       if (state.maxHeightCurrentRoute) {
         return state.maxHeight
       }
