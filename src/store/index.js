@@ -27,6 +27,7 @@ export const store = createStore({
     maxHeight: window.innerHeight,
     isNewUserRoute: false,
     isLoginRoute: false,
+    isMobileOnlyRoute: window.location.pathname === "/mobile-only",
     appBarMobileHeight: 56,
     appBarDesktopHeight: 64,
     currentAppBarHeight: undefined,
@@ -68,6 +69,7 @@ export const store = createStore({
     authenticated: state => state.authenticated,
     isNewUserRoute: state => state.isNewUserRoute,
     isLoginRoute: state => state.isLoginRoute,
+    isMobileOnlyRoute: state => state.isMobileOnlyRoute,
     maxHeight (state) {
       if (state.maxHeightCurrentRoute) {
         return state.maxHeight
@@ -123,6 +125,9 @@ export const store = createStore({
     },
     setIsLoginRoute (state, data) {
       state.isLoginRoute = data
+    },
+    setIsMobileOnlyRoute (state, data) {
+      state.isMobileOnlyRoute = data
     },
     setShowNavDrawer (state, data) {
       state.showNavDrawer = data

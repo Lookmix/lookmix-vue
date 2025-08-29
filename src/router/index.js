@@ -4,12 +4,27 @@ import { createRouter, createWebHistory } from "vue-router"
 import publicPrivateRoutes from "@/router/routes/publicPrivateRoutes.js"
 import { store } from "@/store/index.js"
 import * as resize from "./../resize.js"
-
+import MobileOnlyView from "@/views/MobileOnlyView.vue"
+import { isMobileDevice } from "./../utils.js"
 // Vue.use(VueRouter)
 
 export const router = new createRouter({
   history: createWebHistory(),
-  routes: [].concat(publicPrivateRoutes)
+  routes: [
+    {
+      path: "/mobile-only",
+      name: "mobileOnly",
+      component: MobileOnlyView,
+      // components: {
+      //   fullPage: () => import("@/views/MobileOnlyView.vue"),
+      // },
+      meta: { 
+        maxHeight: true,
+        pageTitle: "Acesse via smartphone",
+        backgroundColor: "initial"
+      }
+    },
+  ].concat(publicPrivateRoutes)
 })
 
 function handleRedirect (to, next, isPublicRoute) {
@@ -38,6 +53,21 @@ function handleRedirect (to, next, isPublicRoute) {
 }
 
 router.beforeEach((to, from, next) => {
+  if (to.fullPath === "/mobile-only" && !isMobileDevice()) {
+    return next()
+  }
+  if (isMobileDevice() && to.fullPath === "/mobile-only") {
+    store.commit("setIsMobileOnlyRoute", false)
+    return next({
+      path: "/home"
+    })
+  }
+  if (!isMobileDevice()) {
+    store.commit("setIsMobileOnlyRoute", true)
+    return next({
+      path: "/mobile-only"
+    })
+  }
   const authenticated = store.getters.authenticated
   const isPublicRoute = to.matched.some(record => record.meta.public)
 

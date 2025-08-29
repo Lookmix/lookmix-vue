@@ -40,3 +40,7 @@ export function subtractDaysAndGetDate (daysToSubtract) {
   let date = new Date();
   return date.subtractDays(daysToSubtract);
 }
+
+export function isMobileDevice () {
+  return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+}

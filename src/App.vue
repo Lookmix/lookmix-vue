@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <template v-if="authenticated">
+    <template v-if="authenticated && !isMobileOnlyRoute">
       <AppToolbar/>
       <NavigationDrawer/>
     </template>
@@ -52,6 +52,7 @@ export default {
       "isLoginRoute", 
       "maxHeight",
       "backgroundColor",
+      "isMobileOnlyRoute"
     ])
   },
 }

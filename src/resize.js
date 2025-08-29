@@ -30,7 +30,7 @@ export function onResize () {
   }
   store.commit("setMaxHeight", innerHeight)
 
-  if (!store.getters.isNewUserRoute && !store.getters.isLoginRoute) {
+  if (!store.getters.isNewUserRoute && !store.getters.isLoginRoute && !store.getters.isMobileOnlyRoute) {
     store.commit("setMaxHeight", innerHeight - appBarHeight)
     store.commit("setCurrentAppBarHeight", appBarHeight)
   }
