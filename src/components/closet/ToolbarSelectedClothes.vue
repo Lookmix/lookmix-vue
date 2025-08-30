@@ -1,55 +1,55 @@
 <template>
   <div>
     <v-toolbar
-      :height="56"
       density="compact"
       bottom
       flat
       color="primary"
       elevation="0"
     >
-      <v-btn 
-        variant="text"
-        :ripple="false"
-        color="backgroundBase"
-        elevation="0"
-        class="mx-0"
-        @click="cancelSelectedClick()"
-      >
-        cancelar
-      </v-btn>
+      <v-toolbar-items class="w-100 justify-space-evenly">
+        <v-btn 
+          variant="text"
+          :ripple="false"
+          color="backgroundBase"
+          elevation="0"
+          class="mx-0"
+          size="small"
+          @click="cancelSelectedClick()"
+        >
+          CANCELAR
+        </v-btn>
+  
+        <v-btn 
+          variant="text"
+          :disabled="!existsSelectedClothes"
+          :ripple="false"
+          color="backgroundBase"
+          elevation="0"
+          :class="{
+            'mx-0': true
+          }"
+          size="small"
+          @click="editSelectedClick()"
+        >
+          ATUALIZAR
+        </v-btn>
 
-      <v-spacer/>
-
-      <v-btn 
-        variant="text"
-        :disabled="!existsSelectedClothes"
-        :ripple="false"
-        color="backgroundBase"
-        elevation="0"
-        :class="{
-          'mx-0': true
-        }"
-        @click="editSelectedClick()"
-      >
-        atualizar
-      </v-btn>
-
-      <v-spacer/>
-
-      <v-btn 
-        variant="text"
-        :disabled="!existsSelectedClothes"
-        :ripple="false"
-        color="backgroundBase"
-        elevation="0"
-        :class="{
-          'mx-0': true
-        }"
-        @click="removeSelectedClick()"
-      >
-        excluir
-      </v-btn>
+        <v-btn 
+          variant="text"
+          :disabled="!existsSelectedClothes"
+          :ripple="false"
+          color="backgroundBase"
+          elevation="0"
+          :class="{
+            'mx-0': true
+          }"
+          size="small"
+          @click="removeSelectedClick()"
+        >
+          EXCLUIR
+        </v-btn>
+      </v-toolbar-items>
     </v-toolbar>
 
     <DialogConfirmation 
