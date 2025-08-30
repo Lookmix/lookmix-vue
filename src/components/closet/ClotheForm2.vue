@@ -293,8 +293,8 @@ export default {
       let occasions = []
       let seasons = []
 
-      if (this.selectedCategoryIndex != undefined) {
-        category = this.categories[this.selectedCategoryIndex]._id
+      if (this.selectedCategoryIndex[0] !== undefined) {
+        category = this.categories[this.selectedCategoryIndex[0]]._id
       }
       if (this.selectedOccasions.length > 0) {
         for (let occasionIndex of this.selectedOccasions) {
@@ -324,7 +324,7 @@ export default {
     },
     setClotheData () {
       const category = this.categories.filter(category => category._id === this.editClothe.category_id)[0]
-      this.selectedCategoryIndex = this.categories.indexOf(category)
+      this.selectedCategoryIndex = [this.categories.indexOf(category)]
       this.selectedCloset = this.closets.filter(closet => closet.value === this.editClothe.type)[0].value
       
       const clotheOccasions = this.editClothe.occasions
