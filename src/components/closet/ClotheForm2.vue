@@ -1,7 +1,7 @@
 <template>
   <v-card
-    :min-width="cardWidth+'px'"
-    :max-width="cardWidth+'px'"
+    :min-width="cardWidthCalculated+'px'"
+    :max-width="cardWidthCalculated+'px'"
     elevation="2"
     :ref="'card-' + id"
     border="sm"
@@ -35,7 +35,7 @@
         'background': 'linear-gradient(0deg, transparent 5%, #ffffff 88%)', 
         'position': 'fixed',
         'display': 'block',
-        'width': cardWidth+'px',
+        'width': cardWidthCalculated+'px',
         'z-index': '2',
         'top': 204-43+'px'
       }"
@@ -196,7 +196,7 @@
         'background': 'linear-gradient(0deg, #ffffff 5%, transparent 100%)',
         'position': 'fixed',
         'display': 'block',
-        'width': cardWidth+'px',
+        'width': cardWidthCalculated+'px',
         'border-radius': '8px',
         'z-index': '2',
         'top': cardHeight-43+'px'
@@ -219,7 +219,7 @@ export default {
   },
   props: {
     image: [String, File],
-    cardWidth: Number,
+    cardWidthCalculated: Number,
     cardHeight: Number,
     editClothe: Object
   },
@@ -284,7 +284,7 @@ export default {
     },
     widthContentCard () {
       const padding = 32
-      return `${this.cardWidth - padding}px`
+      return `${this.cardWidthCalculated - padding}px`
     }
   },
   methods: {

@@ -77,7 +77,7 @@ export default {
   },
   props: {
     title: String,
-    clothes: {
+    clotheList: {
       type: Array,
       default: function () {
         return []
@@ -93,7 +93,7 @@ export default {
     }
   },
   watch: {
-    clothes: {
+    clotheList: {
       immediate: true,
       handler: function (value, oldValue) {
         const result = value.map(clothe => {

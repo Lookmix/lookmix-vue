@@ -71,7 +71,7 @@
             :key="clothe._id"
             :image="clothe.image"
             :editClothe="edit ? clothe : undefined"
-            :cardWidth="cardWidth"
+            :cardWidthCalculated="cardWidth"
             :cardHeight="swiperHeight"
             @payloadSave="setClothe($event, clothe._id)"
             @payloadUpdate="setUpdatedClothe($event, clothe._id)"

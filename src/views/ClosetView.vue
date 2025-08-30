@@ -67,7 +67,7 @@
             v-for="item in casualClothesByCategories" 
             :key="item.categoryId" 
             :title="item.category"
-            :clothes="item.clothes"
+            :clothe-list="item.clothes"
             :showCheckbox="enableCasualClotheSelect"
           />
         </div>
@@ -117,7 +117,7 @@
             v-for="item in socialClothesByCategories" 
             :key="item.categoryId" 
             :title="item.category"
-            :clothes="item.clothes"
+            :clothe-list="item.clothes"
             :showCheckbox="enableSocialClotheSelect"
           />
         </div>
