@@ -14,10 +14,12 @@
       </v-icon>
     </v-app-bar-nav-icon>
 
-    <v-toolbar-title class="font-weight-bold"> 
+    <v-toolbar-title class="font-weight-bold flex-0-0" 
+    >
       {{ toolbarTitle }} 
     </v-toolbar-title>
 
+    <v-spacer></v-spacer>
 
     <toolbar-top-buttons/>
   </v-app-bar>

@@ -1,17 +1,18 @@
 <template>
-  <div style="display: flex;">
-    <v-btn 
-      class="mr-n3"
-      v-if="isClothesFormRoute" 
-      icon
-      color="primary"
-      :disabled="disableSaveClothesButton"
-      @click="saveClothesButtonClick()"
-    >
-      <v-icon>
-        mdi-check-outline
-      </v-icon>
-    </v-btn>
+  <div class="d-flex mr-1">
+    <div>
+      <v-btn 
+        v-if="isClothesFormRoute" 
+        icon
+        color="primary"
+        :disabled="disableSaveClothesButton"
+        @click="saveClothesButtonClick()"
+      >
+        <v-icon>
+          mdi-check-outline
+        </v-icon>
+      </v-btn>
+    </div>
 
     <template v-if="isDailyLookRoute" >
       <v-btn 
