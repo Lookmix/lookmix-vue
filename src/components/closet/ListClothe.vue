@@ -26,7 +26,7 @@
           @click="showCheckbox ? selectClothe(clothe) : openDetails(clothe)"
         >
           <v-checkbox
-            :value="clothe.selected"
+            :model-value="clothe.selected"
             class="mt-0 pt-0"
             color="backgroundBase"
             :style="{
