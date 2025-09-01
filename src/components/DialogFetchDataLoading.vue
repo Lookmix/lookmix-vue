@@ -32,7 +32,8 @@
       >
         <v-btn 
           v-if="showCloseButton"
-          variant="outlined text"
+          variant="text"
+          border
           size="small"
           @click="closeButtonClick()" 
         >
