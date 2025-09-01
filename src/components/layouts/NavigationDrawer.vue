@@ -118,7 +118,7 @@ export default {
         })
     },
     redirectToLogin () {
-      this.$router.push("/login")
+      this.$router.push("/login2")
     },
     handleLogoutErrors (error) {
       const errors = {

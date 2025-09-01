@@ -64,7 +64,7 @@ axiosInstance.interceptors.response.use(
     let status = null
 
     if (response) {
-      isLogin = response.config.url.includes("/login")
+      isLogin = response.config.url.includes("/login2")
       isRefresh = response.config.url.includes("/refresh")
       status = response.status
     }
@@ -76,7 +76,7 @@ axiosInstance.interceptors.response.use(
           })
       }
       store.commit("setAuthenticated", false)
-      router.push("/login")
+      router.push("/login2")
     }
     if (response === undefined || response === null) {
       console.log(" - CONNECTION OFFLINE - ")

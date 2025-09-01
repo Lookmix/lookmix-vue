@@ -669,7 +669,7 @@ export default {
     },
     redirectToLogin () {
       this.closeDialog()
-      this.$router.push('/login')
+      this.$router.push('/login2')
       this.currentStep = "1"
     },
     redirectToHome () {
