@@ -129,8 +129,8 @@ export const store = createStore({
     setIsMobileOnlyRoute (state, data) {
       state.isMobileOnlyRoute = data
     },
-    setShowNavDrawer (state, data) {
-      state.showNavDrawer = data
+    setShowNavDrawer (state) {
+      state.showNavDrawer = !state.showNavDrawer
     },
     setCurrentAppBarHeight (state, data) {
       state.currentAppBarHeight = data

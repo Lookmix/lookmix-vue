@@ -4,7 +4,7 @@
       :model-value="showNavDrawer"
       temporary
       width="250"
-      @update:model-value="updateDrawerState($event)"
+      @update:model-value="updateDrawerState()"
     >
       <v-list-item 
         :style="{
@@ -18,7 +18,7 @@
         <!-- </v-list-item-avatar> -->
 
         <!-- <v-list-item-content> -->
-          <v-list-item-title>John Leider</v-list-item-title>
+          <v-list-item-title>Bem-vindo</v-list-item-title>
         <!-- </v-list-item-content> -->
       </v-list-item>
 
@@ -101,10 +101,8 @@ export default {
     ...mapActions([
       "logout"
     ]),
-    updateDrawerState(event) {
-      if (!event) {
-        this.setShowNavDrawer(false)
-      }
+    updateDrawerState() {
+      this.setShowNavDrawer()
     },
     doLogout() {
       this.logout()

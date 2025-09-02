@@ -7,7 +7,7 @@
     :elevation="0"
   >
     <v-app-bar-nav-icon 
-      @click="leftArrowFunction ? redirectToPrevious() : setShowNavDrawer(true)"
+      @click="leftArrowFunction ? redirectToPrevious() : setShowNavDrawer()"
     >
       <v-icon> 
         {{ leftArrowFunction ? "mdi-arrow-left" : "mdi-menu" }} 
