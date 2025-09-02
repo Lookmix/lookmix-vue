@@ -285,7 +285,6 @@ export default {
     ]),
     setClothe (clothe, _id) {
       const index = this.clothes.findIndex(item => item._id === _id)
-
       if (index !== -1) {
         this.addClotheOnIndex({ index: index, value: { _id, ...clothe } })
       }

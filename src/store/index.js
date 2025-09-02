@@ -338,19 +338,13 @@ export const store = createStore({
       try {
         commit("setLoadingDialog", true)
         const url = `${DOMAIN}/clothe/save`
-
         const formData = new FormData();
-
         const clothes = state.clothes
-
         let count = 0
-
         for (let clothe of clothes) {
           const file = clothe.image
           const clotheId = clothe._id
-
           formData.append(count+"file", file, clotheId);
-  
           const document = {
             id: clotheId,
             category_id: clothe.category_id,
