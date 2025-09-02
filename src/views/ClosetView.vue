@@ -247,7 +247,7 @@ export default {
       return innerHeight
     }
   },
-  beforeDestroy () {
+  unmounted () {
     this.resetSelectionMode()
     this.setShowToolbarSelectedClothes(false)
   }

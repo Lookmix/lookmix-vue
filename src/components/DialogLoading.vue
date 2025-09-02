@@ -191,7 +191,7 @@ export default {
       return this.showLoadingDialog && this.dialog
     }
   },
-  beforeDestroy () {
+  unmounted () {
     this.resetInterval()
   }
 }

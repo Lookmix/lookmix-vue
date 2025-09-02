@@ -155,7 +155,7 @@ export default {
   props: [
     "edit"
   ],
-  beforeDestroy () {
+  unmounted () {
     this.clearUploadInterval()
     this.resetClothes()
     this.resetUpdatedClothes()
