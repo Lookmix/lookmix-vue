@@ -50,8 +50,8 @@
     </div>
 
     <div
-      v-if="existsClothes"
       :style="{ 
+        'display': existsClothes ? 'block' : 'none',
         'height': swiperHeight+'px', 
         'margin-top': '10px' 
       }"
