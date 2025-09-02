@@ -62,7 +62,7 @@
       <div class="py-4 d-flex">
         <v-btn-toggle
           v-model="selectedCloset"
-          @change="emitPayload()"
+          @update:modelValue="emitPayload()"
           mandatory="force"
           variant="outlined"
           color="primary"
@@ -95,7 +95,7 @@
           border="thin"
           :color="'#FAFAFA'"
           v-model:selected="selectedCategoryIndex"
-          @change="emitPayload()"
+          @update:selected="emitPayload()"
           :mandatory="true"
         >
           <v-list-item
@@ -105,7 +105,6 @@
             v-for="(category, index) in categories"
             :key="index"
             :value="index"
-            @change="emitPayload()"
           >
             <v-list-item-title>
               {{ category.name }}
@@ -138,7 +137,7 @@
             multiple
             column
             v-model="selectedSeasons"
-            @change="emitPayload()"
+            @update:modelValue="emitPayload()"
           >
             <v-chip 
               v-for="(season, index) in seasons"
@@ -175,7 +174,7 @@
             multiple
             column
             v-model="selectedOccasions"
-            @change="emitPayload()"
+            @update:modelValue="emitPayload()"
           >
             <v-chip 
               v-for="(item, index) in occasions" 
@@ -217,6 +216,7 @@ export default {
     const scrollTo = useGoTo()
     return { scrollTo }
   },
+  emits: ["payloadSave", "payloadUpdate", "remove"],
   props: {
     image: [String, File],
     cardWidthCalculated: Number,
@@ -292,7 +292,6 @@ export default {
       let category = -1
       let occasions = []
       let seasons = []
-
       if (this.selectedCategoryIndex[0] !== undefined) {
         category = this.categories[this.selectedCategoryIndex[0]]._id
       }

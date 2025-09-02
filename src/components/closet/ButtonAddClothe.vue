@@ -13,7 +13,7 @@
         multiple
         prepend-icon=""
         v-model="images"
-        @change="readImages()"
+        @update:modelValue="readImages()"
       >
         <template v-slot:append>
           <v-btn 
@@ -37,7 +37,7 @@
         multiple
         prepend-icon=""
         v-model="images"
-        @change="readImages()"
+        @update:modelValue="readImages()"
       >
         <template v-slot:append>
           <v-btn
