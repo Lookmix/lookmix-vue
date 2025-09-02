@@ -1,8 +1,7 @@
 <template>
   <div
+    class="d-flex flex-column"
     :style="{
-      'display': 'flex', 
-      'flex-direction': 'column',
       'height': !checkbox ? '50px' : '173px'
     }"
   >
@@ -11,7 +10,7 @@
       hide-details
       style="margin-left: -3px;"
     >
-      <template slot="label">
+      <template v-slot:label>
         <div 
           :class="{
             'text-body-1': true,
@@ -25,7 +24,7 @@
     </v-checkbox>
 
     <template v-if="checkbox">
-      <div style="display: flex;" class="mt-3 pl-8 mb-2">
+      <div class="d-flex pl-8">
         <span
           class="mr-5 text-body-2"
           style="margin-top: auto; margin-bottom: auto;"
@@ -36,7 +35,7 @@
         <v-chip-group
           v-model="selectedDay"
           :mandatory="enableMandatoryDay"
-          active-class="pink-accent-2 text-white"
+          selected-class="bg-primary text-white"
         >
           <v-chip
             class="font-weight-medium text-uppercase"
@@ -59,7 +58,7 @@
         <v-chip-group
           v-model="selectedNight"
           :mandatory="enableMandatoryNight"
-          active-class="pink-accent-2 text-white"
+          selected-class="bg-primary text-white"
         >
           <v-chip
             class="font-weight-medium text-uppercase"
