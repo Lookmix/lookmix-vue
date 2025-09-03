@@ -48,7 +48,7 @@
       <template v-slot:append>
         <v-list>
           <v-list-item
-            title="Versão 0.0.1"
+            title="Versão 0.0.2"
           >
             <template v-slot:append>
               <v-badge
