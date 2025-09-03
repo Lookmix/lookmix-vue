@@ -1,11 +1,11 @@
 {
   "name": "Lookmix",
   "short_name": "Lookmix",
-  "theme_color": "#ffb6c1ad",
-  "background_color": "#ffb6c1ad",
+  "theme_color": "#ffcdd5",
+  "background_color": "#ffcdd5",
   "display": "standalone",
-  "scope": "https://lookmix.github.io/lookmix-vue/#/",
-  "start_url": "https://lookmix.github.io/lookmix-vue/#/login",
+  "scope": "https://lookmix.app/",
+  "start_url": "https://lookmix.app/login2",
   "icons": [
     {
       "src": "icons/icon-72x72.png",

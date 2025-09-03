@@ -21,7 +21,6 @@
     "jsrsasign": "^11.0.0",
     "jsrsasign-util": "^1.0.5",
     "regenerator-runtime": "0.13.9",
-    "register-service-worker": "^1.7.1",
     "uuid": "^8.3.2",
     "vite": "^6.0.6",
     "vite-plugin-vuetify": "^2.1.1",
