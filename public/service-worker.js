@@ -38,7 +38,8 @@ const urlsToCache = [
   // "/icons/icon-192.png",
   // "/icons/icon-512.png"
 	"/assets/",
-	"/icons/"
+	"/icons/",
+  "/offline.html"
 ];
 
 // Instalando o Service Worker
@@ -68,13 +69,14 @@ self.addEventListener("activate", (event) => {
 // Interceptando requisições
 self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      return (response || 
-				fetch(event.request).catch(() => 
-					false
-          // caches.match("/offline.html") // opcional: exibir algo offline
-        )
-      );
-    })
+    fetch(event.request)
+      .then((response) => {
+        return response;
+      })
+      .catch(() => {
+        return caches.match(event.request).then((cachedResponse) => {
+          return cachedResponse || caches.match("/offline.html");
+        });
+      })
   );
 });
