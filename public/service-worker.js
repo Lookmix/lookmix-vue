@@ -1,35 +1,4 @@
-// ------------------ Google Generated
-
-// const CACHE_NAME = "lookmix-cache-v1";
-// const urlsToCache = [
-// 	"/",
-// 	"/index.html",
-// 	// "/assets/index.css", // Adjust based on your build output
-// 	// "/assets/index.js",  // Adjust based on your build output
-// 	// "/pwa-192x192.png",
-// 	// "/pwa-512x512.png"
-// 	"/assets/",
-// 	"/icons/"
-// ];
-
-// self.addEventListener("install", (event) => {
-// 	event.waitUntil(
-//     caches.open(CACHE_NAME).then((cache) => {
-// 			return cache.addAll(urlsToCache);
-//     })
-// 	);
-// });
-
-// self.addEventListener("fetch", (event) => {
-// 	event.respondWith(
-//     caches.match(event.request).then((response) => {
-// 			return response || fetch(event.request);
-//     })
-// 	);
-// });
-
-// ------------------ chatGPT GENERATED
-
+// chatGPT generated: https://chatgpt.com/share/68b79dd4-58e0-8008-9c19-0254db824182
 const CACHE_NAME = "lookmix-cache-v1";
 const urlsToCache = [
   "/", // cache a página principal
