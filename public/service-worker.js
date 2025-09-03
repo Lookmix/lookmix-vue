@@ -8,6 +8,7 @@ const urlsToCache = [
   // "/icons/icon-512.png"
 	"/assets/",
 	"/icons/",
+  "/img/screenshots/",
   "/offline.html"
 ];
 

@@ -47,5 +47,38 @@
       "sizes": "512x512",
       "type": "image/png"
     }
+  ],
+  "description": "Seu app de moda personalizado.",
+  "screenshots": [
+    {
+      "src": "img/screenshots/daily-1.png",
+      "type": "image/png",
+      "sizes": "360x640",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "img/screenshots/daily-2.png",
+      "type": "image/png",
+      "sizes": "360x640",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "img/screenshots/clothe-form.png",
+      "type": "image/png",
+      "sizes": "360x640",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "img/screenshots/details.png",
+      "type": "image/png",
+      "sizes": "360x640",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "img/screenshots/closet.png",
+      "type": "image/png",
+      "sizes": "360x640",
+      "form_factor": "narrow"
+    }
   ]
 }
