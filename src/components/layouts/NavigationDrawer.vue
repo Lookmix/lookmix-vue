@@ -11,15 +11,11 @@
           'height': currentAppBarHeight+'px'
         }"
       >
-        <!-- <v-list-item-avatar> -->
         <template v-slot:prepend>
           <v-avatar image="../../assets/icon-512x512.png"></v-avatar>
         </template>
-        <!-- </v-list-item-avatar> -->
 
-        <!-- <v-list-item-content> -->
-          <v-list-item-title>Bem-vindo</v-list-item-title>
-        <!-- </v-list-item-content> -->
+        <v-list-item-title>Bem-vindo</v-list-item-title>
       </v-list-item>
 
       <v-divider></v-divider>
@@ -29,31 +25,42 @@
           v-for="item in items"
           :key="item.title"
           link
+          :disabled="item.disabled"
         >
-          <!-- <v-list-item-icon> -->
           <template v-slot:prepend>
             <v-icon>{{ item.icon }}</v-icon>
           </template>
-          <!-- </v-list-item-icon> -->
 
-          <!-- <v-list-item-content> -->
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          <!-- </v-list-item-content> -->
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item>
 
         <v-list-item link @click="doLogout()">
-          <!-- <v-list-item-icon> -->
           <template v-slot:prepend>
             <v-icon>mdi-logout</v-icon>
           </template>
-          <!-- </v-list-item-icon> -->
 
-          <!-- <v-list-item-content> -->
-            <v-list-item-title>SAIR</v-list-item-title>
-          <!-- </v-list-item-content> -->
+          <v-list-item-title>SAIR</v-list-item-title>
         </v-list-item>
-
       </v-list>
+
+      <v-divider></v-divider>
+
+      <template v-slot:append>
+        <v-list>
+          <v-list-item
+            title="Versão 0.0.1"
+          >
+            <template v-slot:append>
+              <v-badge
+                color="primary"
+                content="BETA"
+                inline
+              ></v-badge>
+            </template>
+          </v-list-item>
+        </v-list>
+      </template>
+
     </v-navigation-drawer>
 
     <v-snackbar
@@ -83,7 +90,7 @@ export default {
     return {
       drawer: null,
       items: [
-        { title: 'PERFIL', icon: 'mdi-account-outline' },
+        { title: 'PERFIL', icon: 'mdi-account-outline', disabled: true }
       ],
       logoutFailError: "logoutFail",
       errorSnackbar: false,

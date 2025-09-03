@@ -13,6 +13,7 @@
       :ripple="false"
       variant="plain"
       :to="item.to"
+      :disabled="item.disabled"
     >
       <v-icon> {{ item.icon }} </v-icon>
       
@@ -29,7 +30,7 @@
         options: [
           { text: "Feed", icon: "mdi-home-outline", to: "/home" },
           { text: "Diário", icon: "mdi-calendar-outline", to: "/daily-look" },
-          { text: "Aleatório", icon: "mdi-shuffle", to: "/shuffle-look" },
+          { text: "Aleatório", icon: "mdi-shuffle", to: "/shuffle-look", disabled: true },
           { text: "Closet", icon: "mdi-hanger", to: "/closet" }
         ]
       }
