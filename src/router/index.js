@@ -72,7 +72,7 @@ router.beforeEach((to, from, next) => {
   const isPublicRoute = to.matched.some(record => record.meta.public)
 
   // validation for user refresh page (F5) cenario
-  if (authenticated === undefined && !isPublicRoute) {
+  if (authenticated === undefined) {
     return store.dispatch("checkTokenValidity")
       .then((response) => {
         if (response) {
