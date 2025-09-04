@@ -1,37 +1,26 @@
 # lookmix
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-git checkout gh-pages
-
-git rebase main
-
-npm run build
-
-git add .
-
-git commit -m "Updating dist"
-
-git push origin `git subtree split --prefix dist gh-pages`:gh-pages --force```
-```
-
 ### Lints and fixes files
 ```
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Run a prod bundle locally
+(optional)
+```
+npx serve --help 
+```
+
+generate the bundle
+```
+npm run build
+```
+
+serve the bundle
+```
+npx serve dist -s --listen tcp://127.10.10.10:8080
+```
+
 
 ### Run in local environment to get a browser without security
 Ideal for test scenarios
