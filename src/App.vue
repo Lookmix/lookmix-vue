@@ -24,6 +24,8 @@
     <ToolbarBottom/>
 
     <SnackbarOfflineError />
+
+    <DialogInstall />
   </v-app>
 </template>
 
@@ -33,6 +35,7 @@ import AppToolbar from "./components/layouts/AppToolbar.vue";
 import NavigationDrawer from "./components/layouts/NavigationDrawer.vue";
 import SnackbarOfflineError from "./components/SnackbarOfflineError.vue";
 import ToolbarBottom from "./components/ToolbarBottom.vue"
+import DialogInstall from "./components/DialogInstall.vue"
 import * as resize from "./resize.js"
 
 export default {
@@ -41,6 +44,7 @@ export default {
     NavigationDrawer,
     ToolbarBottom,
     SnackbarOfflineError,
+    DialogInstall
   },
   mounted () {
     resize.onResize()

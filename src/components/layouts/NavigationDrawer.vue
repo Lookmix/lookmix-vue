@@ -47,6 +47,17 @@
 
       <template v-slot:append>
         <v-list>
+          <!-- 
+          <v-list-item
+            id="install-button"
+            title="Instalar"
+            hidden
+          >
+          </v-list-item>
+
+          <v-divider></v-divider>
+          -->
+
           <v-list-item
             title="Versão 0.0.2"
           >
@@ -139,6 +150,34 @@ export default {
       errorHandlerFunction(self)
     }
   }
+  // mounted () {
+  //   TODO: use a composable for this 
+  //   let installPrompt = null;
+  //   const installButton = document.querySelector("#install-button");
+  //   window.addEventListener("beforeinstallprompt", (event) => {
+  //     event.preventDefault();
+  //     installPrompt = event;
+  //     installButton.removeAttribute("hidden");
+  //   });
+
+  //   installButton.addEventListener("click", async () => {
+  //     if (!installPrompt) {
+  //       return;
+  //     }
+  //     const result = await installPrompt.prompt();
+  //     console.log(`Install prompt was: ${result.outcome}`);
+  //     disableInAppInstallPrompt();
+  //   });
+
+  //   window.addEventListener("appinstalled", () => {
+  //     disableInAppInstallPrompt();
+  //   });
+
+  //   function disableInAppInstallPrompt() {
+  //     installPrompt = null;
+  //     installButton.setAttribute("hidden", "");
+  //   }
+  // }
 }
 </script>
 
