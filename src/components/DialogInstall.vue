@@ -1,6 +1,6 @@
 <template>
   <v-dialog
-    v-model="dialog"
+    :model-value="isInstallerVisibe"
     max-width="500"
     persistent
   >
@@ -18,7 +18,7 @@
 
         <v-btn
           text
-          @click="dialog = false"
+          @click="closeInstaller()"
         >
           Depois
         </v-btn>
@@ -34,50 +34,28 @@
   </v-dialog>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted, ref } from "vue"
+<script setup lang="ts">
+import { usePWAInstaller } from "./../composables/installer"
+import { onMounted } from "vue"
 
-export default defineComponent({
-  setup() {
-    let dialog = ref<boolean>(false)
-
-    // https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/How_to/Trigger_install_prompt
-    // TODO: turn it into a composable
-    let installPrompt: Event | any = null
-
-    onMounted(() => {
-      // const installButton = document.querySelector("#install-button");
-      window.addEventListener("beforeinstallprompt", (event) => {
-        event.preventDefault();
-        installPrompt = event;
-        // installButton.removeAttribute("hidden");
-        // mostrar o dialog
-        dialog.value = true
-      });
-
-      window.addEventListener("appinstalled", () => {
-        disableInAppInstallPrompt();
-        // não mostrar o dialog
-        dialog.value = false
-      });
-    })
-
-    const install = (): void => {
-      // clicou em instalar no dialog
-      if (!installPrompt) {
-        return;
-      }
-      const result = installPrompt.prompt();
-      console.log(`Install prompt was: ${result.outcome}`);
-      disableInAppInstallPrompt();
-    };
-
-    const disableInAppInstallPrompt = (): void => {
-      installPrompt = null;
-      // installButton.setAttribute("hidden", "");
-    }
-
-    return { dialog, install }
+const { 
+  isInstallerVisibe, 
+  install, 
+  showInstaller, 
+  closeInstaller, 
+  hasInstallPrompt
+// } = usePWAInstaller(async (userChoise) => {
+} = usePWAInstaller((userChoise) => {
+  // userChoise.then((choiceResult: any) => {
+  //   console.log("user choice result", choiceResult["outcome"])
+  // })
+  // const result = await userChoise
+  // console.log("user choice result", result)
+  // console.log("isInstallerVisibe", isInstallerVisibe.value)
+  if (hasInstallPrompt.value) {
+    console.log("dialoginstall hasInstallPrompt.value", hasInstallPrompt.value)
+    showInstaller()
   }
 })
+
 </script>

@@ -47,16 +47,17 @@
 
       <template v-slot:append>
         <v-list>
-          <!-- 
           <v-list-item
-            id="install-button"
             title="Instalar"
-            hidden
+            v-if="hasInstallPrompt"
+            @click="install()"
           >
+            <template v-slot:prepend>
+              <v-icon>mdi-download</v-icon>
+            </template>
           </v-list-item>
 
           <v-divider></v-divider>
-          -->
 
           <v-list-item
             title="Versão 0.0.2"
@@ -95,6 +96,7 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
+import { usePWAInstaller } from "./../../composables/installer"
 
 export default {
   data () {
@@ -149,35 +151,12 @@ export default {
 
       errorHandlerFunction(self)
     }
+  },
+  setup () {
+    const { install, hasInstallPrompt } = usePWAInstaller()
+    // console.log("alreadyInstalled", alreadyInstalled.value)
+    return { hasInstallPrompt, install }
   }
-  // mounted () {
-  //   TODO: use a composable for this 
-  //   let installPrompt = null;
-  //   const installButton = document.querySelector("#install-button");
-  //   window.addEventListener("beforeinstallprompt", (event) => {
-  //     event.preventDefault();
-  //     installPrompt = event;
-  //     installButton.removeAttribute("hidden");
-  //   });
-
-  //   installButton.addEventListener("click", async () => {
-  //     if (!installPrompt) {
-  //       return;
-  //     }
-  //     const result = await installPrompt.prompt();
-  //     console.log(`Install prompt was: ${result.outcome}`);
-  //     disableInAppInstallPrompt();
-  //   });
-
-  //   window.addEventListener("appinstalled", () => {
-  //     disableInAppInstallPrompt();
-  //   });
-
-  //   function disableInAppInstallPrompt() {
-  //     installPrompt = null;
-  //     installButton.setAttribute("hidden", "");
-  //   }
-  // }
 }
 </script>
 
