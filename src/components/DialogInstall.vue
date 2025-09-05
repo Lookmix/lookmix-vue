@@ -36,7 +36,8 @@
 
 <script setup lang="ts">
 import { usePWAInstaller } from "./../composables/installer"
-import { onMounted } from "vue"
+
+let alreadyShowInstaller: boolean = false
 
 const { 
   isInstallerVisibe, 
@@ -44,17 +45,10 @@ const {
   showInstaller, 
   closeInstaller, 
   hasInstallPrompt
-// } = usePWAInstaller(async (userChoise) => {
-} = usePWAInstaller((userChoise) => {
-  // userChoise.then((choiceResult: any) => {
-  //   console.log("user choice result", choiceResult["outcome"])
-  // })
-  // const result = await userChoise
-  // console.log("user choice result", result)
-  // console.log("isInstallerVisibe", isInstallerVisibe.value)
-  if (hasInstallPrompt.value) {
-    console.log("dialoginstall hasInstallPrompt.value", hasInstallPrompt.value)
+} = usePWAInstaller(() => {
+  if (hasInstallPrompt.value && !alreadyShowInstaller) {
     showInstaller()
+    alreadyShowInstaller = true
   }
 })
 

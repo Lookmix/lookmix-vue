@@ -3,60 +3,41 @@
 import { ref, computed } from "vue"
 import type { Ref } from "vue"
 
-export function usePWAInstaller(beforeInstallPromptCallback: (event: any) => void = () => {}) {
+export function usePWAInstaller(beforeInstallPromptCallback: () => void = () => {}) {
 	let installPrompt: Ref<any> = ref<any>(null)
 	let isInstallerVisibe: Ref<boolean> = ref<boolean>(false)
 	let alreadyInstalled: Ref<boolean> = ref<boolean>(false)
-	const alreadyShowInstaller = ref<boolean>(false)
 
-	const handleBeforeInstallPrompt = (event: any) => {
+	window.addEventListener("beforeinstallprompt", (event) => {
 		event.preventDefault()
 		installPrompt.value = event
-		// mostrar o installer
-		console.log("window.addEventListener('beforeinstallprompt'")
-		beforeInstallPromptCallback(event["userChoice"])
-	}
-
-	window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt)
+		beforeInstallPromptCallback()		
+	})
 
 	window.addEventListener("appinstalled", () => {
 		disableInAppInstallPrompt();
-		// não mostrar o installer
 		closeInstaller()
 		alreadyInstalled.value = true
-		console.log(`appinstalled event was fired.`);
 	})
 
-	// const install = (): void => {
-	function install() {
-		// console.log(`install(): ${hasInstallPrompt()} ${installPrompt}`)
+	const install = (): void => {
 		if (!hasInstallPrompt.value) {
 			return
 		}
-		console.log("installPrompt.value", installPrompt.value) // verificar se existe diferença no conteúdo dessa variavel antes e depois de instalar o app, se houver, será possível criar um if que cheque se o app está instalado para mostrar ou não o dialog e o botão de instalar
-		const result = installPrompt.value.prompt()
-		console.log(`Install prompt was: ${result.outcome}`)
-
+		installPrompt.value.prompt()
 		disableInAppInstallPrompt()
 		closeInstaller()
-		
-		// window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt)
 	}
 
-	// const disableInAppInstallPrompt = (): void => {
-	function disableInAppInstallPrompt() {
+	const disableInAppInstallPrompt = (): void => {
 		installPrompt.value = null
 	}
 
-	function showInstaller() {
-		if (alreadyShowInstaller.value) {
-			return
-		}
+	const showInstaller = (): void => {
 		isInstallerVisibe.value = true
-		alreadyShowInstaller.value = true
 	}
 
-	function closeInstaller() {
+	const closeInstaller = (): void => {
 		isInstallerVisibe.value = false
 	}
 

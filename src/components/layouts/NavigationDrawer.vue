@@ -154,7 +154,6 @@ export default {
   },
   setup () {
     const { install, hasInstallPrompt } = usePWAInstaller()
-    // console.log("alreadyInstalled", alreadyInstalled.value)
     return { hasInstallPrompt, install }
   }
 }
