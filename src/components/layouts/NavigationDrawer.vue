@@ -60,7 +60,7 @@
           <v-divider></v-divider>
 
           <v-list-item
-            title="Versão 0.0.2"
+            title="Versão 0.0.3"
           >
             <template v-slot:append>
               <v-badge

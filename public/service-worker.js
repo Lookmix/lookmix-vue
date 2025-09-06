@@ -1,5 +1,5 @@
 // chatGPT generated: https://chatgpt.com/share/68b79dd4-58e0-8008-9c19-0254db824182
-const CACHE_NAME = "lookmix-cache-v0.0.2";
+const CACHE_NAME = "lookmix-cache-v0.0.3";
 const urlsToCache = [
   "/", // cache a página principal
   "/index.html",
