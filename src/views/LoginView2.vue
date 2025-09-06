@@ -134,8 +134,7 @@ export default {
     DialogConfirmEmail
   },
   mounted () {
-    const darkTheme = this.$vuetify.theme.dark
-    utils.updateMetaTagTheme(darkTheme, '#ffb6c1ad')
+    utils.updateMetaTagTheme("#ffcdd5")
   },
   data () {
     return {

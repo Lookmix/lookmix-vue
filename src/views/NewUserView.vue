@@ -79,9 +79,7 @@ export default {
   },
   directives: { mask },
   mounted() {
-    const darkTheme = this.$vuetify.theme.dark;
-
-    utils.updateMetaTagTheme(darkTheme, "#8341a1d4");
+    utils.updateMetaTagTheme("#9861b1");
   },
   data () {
     return {

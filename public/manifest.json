@@ -3,7 +3,7 @@
   "short_name": "Lookmix",
   "theme_color": "#ffcdd5",
   "background_color": "#ffcdd5",
-  "display": "standalone",
+  "display": "fullscreen",
   "scope": "/",
   "start_url": "/home",
   "id": "/home",
